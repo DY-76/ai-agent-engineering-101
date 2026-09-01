@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agentic AI: 에이전트 시스템의 이론과 구축</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Mono:wght@400;500&family=Noto+Serif+KR:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FFFFFF;
+  --ink:#1C1917;
+  --body:#44403C;
+  --muted:#78716C;
+  --faint:#A8A29E;
+  --line:#E7E5E4;
+  --wash:#FAFAF9;
+  --link:#2563EB;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --sans:'Pretendard Variable', Pretendard, -apple-system, sans-serif;
+  --serif:Fraunces, 'Noto Serif KR', Georgia, serif;
+  --maxw:680px;
+  --r:8px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  background:var(--paper);color:var(--body);
+  font-family:var(--sans);font-weight:400;
+  line-height:1.8;font-size:15.5px;
+  word-break:keep-all;overflow-wrap:break-word;
+  -webkit-font-smoothing:antialiased;
+}
+::selection{background:var(--ink);color:var(--paper)}
+a{color:var(--link);text-decoration:none}
+a:hover{text-decoration:underline}
+.sheet{max-width:1040px;margin:0 auto;padding:0 24px}
+.col{max-width:var(--maxw);margin:0 auto}
+
+header.doc{padding:72px 0 0}
+
+.masthead{padding-bottom:64px;border-bottom:1px solid var(--line)}
+h1.title{font-family:var(--serif);font-weight:500;font-size:clamp(30px,4.6vw,44px);line-height:1.2;letter-spacing:-0.01em;color:var(--ink);text-wrap:balance}
+h1.title .en{display:block;font-family:var(--mono);font-size:12px;font-weight:400;color:var(--muted);letter-spacing:.06em;margin-top:14px}
+.lede{margin-top:26px;max-width:580px;font-size:16px;line-height:1.85;color:var(--muted)}
+
+section{padding:56px 0 8px}
+.secmark{display:flex;align-items:baseline;gap:14px;margin-bottom:32px;border-top:1px solid var(--line);padding-top:20px}
+.secmark .no{font-family:var(--mono);font-weight:500;font-size:10.5px;color:var(--faint);letter-spacing:.12em;white-space:nowrap;text-transform:uppercase}
+.secmark h2{font-family:var(--serif);font-weight:500;font-size:clamp(21px,2.8vw,26px);line-height:1.3;color:var(--ink)}
+p{margin-bottom:20px}
+strong{font-weight:600;color:var(--ink)}
+.small{font-size:13.5px;color:var(--muted)}
+
+.bio{border:1px solid var(--line);border-radius:var(--r);padding:26px 28px 20px}
+.bio{display:flex;gap:28px;align-items:flex-start}
+.bio .photo{flex:0 0 210px;width:210px;height:262px;object-fit:cover;object-position:38% 12%;border-radius:6px;display:block}
+.bio .info{flex:1 1 auto;min-width:0}
+.bio .name{font-family:var(--serif);font-weight:500;font-size:19px;color:var(--ink);margin-bottom:2px}
+.bio .role{font-family:var(--mono);font-size:10.5px;color:var(--muted);letter-spacing:.1em;margin-bottom:14px;text-transform:uppercase}
+.bio p{font-size:14px;line-height:1.85;color:var(--body);margin-bottom:12px}
+.bio .sub{font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--faint);margin:18px 0 6px;text-transform:uppercase}
+.bio ul{list-style:none;margin:0 0 4px}
+.bio li{font-size:13px;line-height:1.7;color:var(--body);padding:3px 0}
+.bio li .y{font-family:var(--mono);font-size:11px;color:var(--faint)}
+.bio .links{font-family:var(--mono);font-size:11.5px;margin-top:14px}
+.bio .links a{white-space:nowrap}
+.bio .links span{color:var(--faint);margin:0 8px}
+@media(max-width:640px){.bio{flex-direction:column}.bio .photo{width:100%;height:200px;flex:none}.bio{padding:22px 18px 16px}}
+
+.phase{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;color:var(--muted);font-weight:500;margin:40px 0 8px;text-transform:uppercase}
+.weeks{margin:0 0 8px}
+.weeks>li{list-style:none;border-bottom:1px solid var(--line)}
+.weeks>li:first-child{border-top:1px solid var(--line)}
+.weeks a,.weeks .row{
+  display:flex;gap:18px;align-items:baseline;padding:15px 4px;
+  color:var(--ink);
+}
+.weeks a:hover{background:var(--wash);text-decoration:none}
+.weeks .row{color:var(--faint)}
+.weeks .row .t{font-weight:500}
+.weeks .no{font-family:var(--mono);font-size:11px;color:var(--faint);font-weight:500;flex:0 0 42px}
+.weeks .t{font-weight:600;font-size:14.5px}
+.weeks .sub{font-size:12px;color:var(--faint);margin-left:auto;font-family:var(--mono);white-space:nowrap}
+@media(max-width:640px){.weeks .sub{display:none}}
+
+footer{
+  margin-top:64px;border-top:1px solid var(--line);
+  padding:20px 0 56px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  font-family:var(--mono);font-size:10.5px;color:var(--faint);letter-spacing:.03em;
+}
+footer .o{color:var(--muted)}
+@media(max-width:640px){body{font-size:15px}}
+</style>
+</head>
+<body>
+<div class="sheet">
+
+<header class="doc">
+  <div class="col">
+
+    <div class="masthead">
+      <h1 class="title">에이전트 시스템의<br>이론과 구축
+        <span class="en">AI Agent Engineering 101</span>
+      </h1>
+      <p class="lede">1995년의 에이전트 정의에서 출발해 40년의 프로토콜 계보를 재현 실험으로 검증한다. 후반부에는 에이전트끼리 발견하고 협상하고 결제하는 거래 스택을 팀 프로젝트로 직접 만든다. 주차마다 강의 노트 한 편으로 배포한다.</p>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="col">
+    <div class="secmark"><span class="no">INSTRUCTOR</span><h2>Introduction</h2></div>
+    <div class="bio">
+      <img class="photo" src="assets/speaker-lecture.jpeg" alt="강의 중인 이재규">
+      <div class="info">
+      <div class="name">이재규 <span style="font-weight:400;color:var(--faint)">Jaegyu Lee</span></div>
+      <div class="role">SOFTWARE ENGINEER / OPEN SOURCE MAINTAINER</div>
+      <p>10년차 소프트웨어 엔지니어로, 지금은 ZEP에 있다. 이 수업이 열리는 서울과학기술대학교 대학원에서 석사를 마쳤고, 데이터 파이프라인과 분산 시스템을 연구해 BIGCOMP와 Frontiers in Big Data에 논문을 냈다.</p>
+      <p>ZEP에서는 400만 MAU 규모의 WebRTC 클러스터를 운영한다. LiveKit Cloud에 있던 이 클러스터를 OCI 자체 운영으로 옮기며 인프라 비용을 60% 줄였다.</p>
+      <p>오픈소스 Agent OS인 Ouroboros를 만들고 있다. 인터뷰로 요구사항을 Seed로 확정하고, 실행 결과를 deterministic gate로 검증하는 에이전트 프레임워크다. ZEP QUIZ(월 60만 건 이상의 퀴즈)에는 도구를 스스로 개선하는 에이전트가 있다. 이 구조로 ICML 2026 AI×Education 워크숍에서 발표했다.</p>
+      <div class="sub">LECTURES</div>
+      <ul>
+        <li>서울대학교 첨단융합학부, 실리콘밸리 AI 시대의 디자인 씽킹과 Socratic reasoning <span class="y">2026</span></li>
+        <li>서울대학교 첨단융합학부, AI 교육 <span class="y">2026</span></li>
+        <li>서울대학교 실리콘밸리 투어, AI Native <span class="y">2026</span></li>
+        <li>KT AI 역량강화, Harness Engineering: 확률적 AI를 결정론적 시스템으로 제어하는 방법 <span class="y">2026</span></li>
+        <li>한화 AX 강연 <span class="y">2026</span></li>
+        <li>Oracle Digital Native Roundtable, 400만 MAU를 받아내는 RTC cluster 구축하기 <span class="y">2026</span></li>
+      </ul>
+      <div class="sub">COMMUNITY</div>
+      <ul>
+        <li>랄프톤 #1 1등, 랄프톤 #2 심사위원과 스피커</li>
+        <li>GDG 한일 해커톤 심사위원</li>
+        <li>GDG Build with AI 인천, 하네스 엔지니어링에 필요한 전공 지식 세션</li>
+        <li>Hermes Meetup RLM-FORGE 세션, Arize AI 밋업 Agent OS 세션</li>
+      </ul>
+      <div class="links"><a href="https://wpti.dev">wpti.dev</a><span>/</span><a href="https://github.com/Q00">github</a><span>/</span><a href="https://www.linkedin.com/in/q00">linkedin</a><span>/</span><a href="https://www.youtube.com/@Q00_Dev">youtube</a><span>/</span><a href="https://x.com/Jqonly">x</a><span>/</span><a href="mailto:jaegyu.lee@ourolabs.ai">jaegyu.lee@ourolabs.ai</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="col">
+    <div class="secmark"><span class="no">SYLLABUS</span><h2>15주 구성</h2></div>
+    <p class="small">전반부 8주는 학술 트랙이다. 정의와 계보를 세우고, 고전 MAS와 현대 프로토콜을 매주 재현 실험으로 검증한다. 후반부 7주는 프로젝트 트랙이다. 에이전트 간 거래 스택(발견→협상→실행→결제→기록)을 팀으로 구축해 데모데이에서 상호 테스트한다.</p>
+
+    <div class="phase">PHASE 1: 정의, 계보, 프로토콜</div>
+    <ul class="weeks">
+      <li><a href="week-01.html"><span class="no">W01</span><span class="t">에이전트란 무엇인가</span><span class="sub">Wooldridge &amp; Jennings 1995</span></a></li>
+      <li><span class="row"><span class="no">W02</span><span class="t">하네스와 메타 하네스</span><span class="sub">ReAct</span></span></li>
+      <li><span class="row"><span class="no">W03</span><span class="t">고전 MAS 1: Contract Net</span><span class="sub">Smith 1980</span></span></li>
+      <li><span class="row"><span class="no">W04</span><span class="t">통신 언어: 화행에서 FIPA-ACL까지</span><span class="sub">KQML / FIPA</span></span></li>
+      <li><span class="row"><span class="no">W05</span><span class="t">현대 프로토콜 1: MCP</span><span class="sub">Model Context Protocol</span></span></li>
+      <li><span class="row"><span class="no">W06</span><span class="t">현대 프로토콜 2: A2A</span><span class="sub">Agent2Agent</span></span></li>
+      <li><span class="row"><span class="no">W07</span><span class="t">에이전트 계약과 검증</span><span class="sub">contract / verification</span></span></li>
+      <li><span class="row"><span class="no">W08</span><span class="t">ACP: Agent Client Protocol과 거래 스택</span><span class="sub">ACP</span></span></li>
+    </ul>
+
+    <div class="phase">PHASE 2: 에이전트 거래 스택 구축</div>
+    <ul class="weeks">
+      <li><span class="row"><span class="no">W09</span><span class="t">프로젝트 킥오프</span><span class="sub">team formation</span></span></li>
+      <li><span class="row"><span class="no">W10</span><span class="t">미니앱 에이전트 설계</span><span class="sub">design</span></span></li>
+      <li><span class="row"><span class="no">W11</span><span class="t">에이전트 간 협상</span><span class="sub">negotiation</span></span></li>
+      <li><span class="row"><span class="no">W12</span><span class="t">메모리와 선택적 공개</span><span class="sub">memory / disclosure</span></span></li>
+      <li><span class="row"><span class="no">W13</span><span class="t">결제, 정산, 기록</span><span class="sub">payment / ledger</span></span></li>
+      <li><span class="row"><span class="no">W14</span><span class="t">상호 테스트</span><span class="sub">cross testing</span></span></li>
+      <li><span class="row"><span class="no">W15</span><span class="t">데모데이</span><span class="sub">demo day</span></span></li>
+    </ul>
+  </div>
+</section>
+
+<footer class="sheet">
+  <span>AGENTIC AI: <span class="o">에이전트 시스템의 이론과 구축</span></span>
+  <span>SEOULTECH 2026 FALL</span>
+</footer>
+
+</div>
+</body>
+</html>

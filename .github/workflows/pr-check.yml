@@ -1,0 +1,42 @@
+name: pr-check
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Collect changed files
+        id: diff
+        run: |
+          git diff --name-only ${{ github.event.pull_request.base.sha }}...HEAD > changed.txt
+          echo "Changed files:"
+          cat changed.txt
+
+      - name: Ownership check (only your own roster file and submissions dir)
+        run: |
+          xargs python scripts/check_pr_paths.py "${{ github.event.pull_request.user.login }}" < changed.txt
+
+      - name: Week-01 structural checks
+        run: |
+          dirs=$(grep -oE '^submissions/[0-9]+/week-01' changed.txt | sort -u || true)
+          if [ -z "$dirs" ]; then
+            echo "No week-01 submission touched; skipping."
+            exit 0
+          fi
+          for d in $dirs; do
+            echo "==> checking $d"
+            python scripts/check_week01.py "$d"
+          done
