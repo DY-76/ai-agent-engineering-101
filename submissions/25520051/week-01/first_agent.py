@@ -111,6 +111,7 @@ def run(goal: str, max_steps: int = 8):
 
 
 if __name__ == "__main__":
+    sys.stdout.reconfigure(encoding="utf-8")   # Windows consoles default to cp949; model output may include Unicode punctuation
     goal = sys.argv[1] if len(sys.argv) > 1 else \
         "Read notes.txt and sum the numbers in it."
     print(run(goal))
