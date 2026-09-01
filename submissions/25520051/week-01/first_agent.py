@@ -7,6 +7,7 @@ import os
 import sys
 import ast
 import operator
+from datetime import datetime
 
 import anthropic
 
@@ -41,7 +42,13 @@ def read_file(path: str) -> str:
         return f.read()[:4000]
 
 
-TOOLS_IMPL = {"calculator": calculator, "read_file": read_file}
+# ---- tool 3: clock (no arguments, no side effects) ----
+def clock() -> str:
+    """Return the current local date and time."""
+    return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+
+TOOLS_IMPL = {"calculator": calculator, "read_file": read_file, "clock": clock}
 
 # ---- tool schemas handed to the model (the description IS the interface) ----
 TOOLS = [
@@ -55,6 +62,9 @@ TOOLS = [
      "input_schema": {"type": "object",
                       "properties": {"path": {"type": "string"}},
                       "required": ["path"]}},
+    {"name": "clock",
+     "description": "Return the current local date and time. Use this when the task needs to know what time it is right now, e.g. timestamping a note or checking how much time has passed.",
+     "input_schema": {"type": "object", "properties": {}}},
 ]
 
 
