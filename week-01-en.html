@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agentic AI Week 01: What Is an Agent?</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Mono:wght@400;500&family=Noto+Serif+KR:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FFFFFF;
+  --ink:#1C1917;
+  --body:#44403C;
+  --muted:#78716C;
+  --faint:#A8A29E;
+  --line:#E7E5E4;
+  --wash:#FAFAF9;
+  --link:#2563EB;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --sans:'Pretendard Variable', Pretendard, -apple-system, sans-serif;
+  --serif:Fraunces, 'Noto Serif KR', Georgia, serif;
+  --maxw:680px;
+  --r:8px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  background:var(--paper);
+  color:var(--body);
+  font-family:var(--sans);
+  font-weight:400;
+  line-height:1.8;
+  font-size:15.5px;
+  word-break:keep-all;
+  overflow-wrap:break-word;
+  -webkit-font-smoothing:antialiased;
+}
+::selection{background:var(--ink);color:var(--paper)}
+a{color:var(--link);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* ---------- layout ---------- */
+.sheet{max-width:1040px;margin:0 auto;padding:0 24px}
+.col{max-width:var(--maxw);margin:0 auto;position:relative}
+
+/* ---------- header ---------- */
+header.doc{padding:40px 0 0}
+.topnav{font-family:var(--mono);font-size:11px;letter-spacing:.04em;margin-bottom:56px;display:flex;justify-content:space-between;gap:16px}
+
+.masthead{padding-bottom:64px;border-bottom:1px solid var(--line)}
+.masthead .wk{
+  font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--faint);margin-bottom:16px;
+}
+h1.title{
+  font-family:var(--serif);font-weight:500;
+  font-size:clamp(30px,4.6vw,44px);line-height:1.2;
+  letter-spacing:-0.01em;color:var(--ink);text-wrap:balance;
+}
+h1.title .en{display:block;font-family:var(--mono);font-size:12px;font-weight:400;color:var(--muted);letter-spacing:.06em;margin-top:14px}
+.lede{
+  margin-top:26px;max-width:560px;font-size:16px;line-height:1.85;color:var(--muted);
+}
+.lede .q{font-weight:600;color:var(--ink)}
+
+/* ---------- section scaffolding ---------- */
+section{padding:56px 0 8px}
+.secmark{
+  display:flex;align-items:baseline;gap:14px;margin-bottom:32px;
+  border-top:1px solid var(--line);padding-top:20px;
+}
+.secmark .no{
+  font-family:var(--mono);font-weight:500;font-size:10.5px;color:var(--faint);
+  letter-spacing:.12em;white-space:nowrap;text-transform:uppercase;
+}
+.secmark h2{font-family:var(--serif);font-weight:500;font-size:clamp(21px,2.8vw,26px);line-height:1.3;letter-spacing:-0.005em;color:var(--ink);text-wrap:balance}
+h3{font-family:var(--serif);font-weight:500;font-size:18px;margin:44px 0 14px;color:var(--ink)}
+h3 .tag{font-family:var(--mono);font-size:10px;color:var(--faint);letter-spacing:.12em;display:block;margin-bottom:6px;font-weight:500}
+p{margin-bottom:20px}
+strong{font-weight:600;color:var(--ink)}
+em{font-style:normal;font-weight:600;color:var(--ink);box-shadow:inset 0 -0.35em 0 rgba(28,25,23,.07)}
+.small{font-size:13.5px;color:var(--muted)}
+.nb{white-space:nowrap}
+
+/* part banner */
+.part{
+  margin:72px 0 8px;border-top:2px solid var(--ink);
+  padding:24px 0 6px;
+}
+.part .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;color:var(--muted);font-weight:500;margin-bottom:10px;text-transform:uppercase}
+.part h2{font-family:var(--serif);font-weight:500;font-size:clamp(20px,2.6vw,25px);line-height:1.35;color:var(--ink)}
+.part .meta{font-family:var(--mono);font-size:10.5px;color:var(--faint);margin-top:10px;letter-spacing:.03em}
+
+/* marginalia */
+.note{
+  font-family:var(--mono);font-size:11px;line-height:1.75;color:var(--faint);
+  border-left:2px solid var(--line);padding-left:12px;margin:26px 0;
+}
+@media(min-width:1120px){
+  .note{position:absolute;width:190px;left:calc(50% + var(--maxw)/2 + 36px);margin:0;transform:translateY(-100%)}
+}
+.note b{color:var(--muted);font-weight:500;display:block;margin-bottom:4px;letter-spacing:.08em}
+
+/* pull quote */
+.pull{
+  margin:40px 0;padding:2px 0 2px 24px;border-left:2px solid var(--ink);
+  font-family:var(--serif);font-size:19px;line-height:1.65;font-weight:500;color:var(--ink);
+}
+.pull .src{display:block;font-family:var(--mono);font-size:10.5px;color:var(--faint);font-weight:400;margin-top:10px;letter-spacing:.03em}
+
+/* definition */
+.define{margin:48px 0;background:var(--wash);border:1px solid var(--line);border-radius:var(--r);padding:32px 32px 26px;position:relative}
+.define::before{
+  content:"DEFINITION";position:absolute;top:14px;left:32px;
+  font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;color:var(--faint);font-weight:500;
+}
+.define p{margin:16px 0 0;font-family:var(--serif);font-size:clamp(16px,2.1vw,19px);line-height:1.7;font-weight:500;color:var(--ink)}
+.define .sub{font-family:var(--sans);font-size:12.5px;font-weight:400;color:var(--muted);margin-top:14px}
+.define ul{margin:14px 0 0 22px;padding:0}
+.define li{font-family:var(--serif);font-size:clamp(15px,2vw,17px);line-height:1.9;font-weight:500;color:var(--ink)}
+@media(max-width:640px){.define{padding:28px 20px 22px}.define::before{left:20px}}
+
+/* instructor */
+.bio{margin:8px 0 0;border:1px solid var(--line);border-radius:var(--r);padding:26px 28px 20px}
+.bio{display:flex;gap:28px;align-items:flex-start}
+.bio .photo{flex:0 0 210px;width:210px;height:262px;object-fit:cover;object-position:38% 12%;border-radius:6px;display:block}
+.bio .info{flex:1 1 auto;min-width:0}
+.bio .name{font-family:var(--serif);font-weight:500;font-size:19px;color:var(--ink);margin-bottom:2px}
+.bio .role{font-family:var(--mono);font-size:10.5px;color:var(--muted);letter-spacing:.1em;margin-bottom:14px;text-transform:uppercase}
+.bio p{font-size:14px;line-height:1.85;color:var(--body);margin-bottom:12px}
+.bio .links{font-family:var(--mono);font-size:11.5px;letter-spacing:.02em}
+.bio .links a{white-space:nowrap}
+.bio .links span{color:var(--faint);margin:0 8px}
+@media(max-width:640px){.bio{flex-direction:column}.bio .photo{width:100%;height:200px;flex:none}.bio{padding:22px 18px 16px}}
+
+/* table */
+.tbl-wrap{margin:28px 0;overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13.5px;line-height:1.7}
+th{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-align:left;text-transform:uppercase;
+  border-bottom:1px solid var(--ink);
+  padding:10px 14px;font-weight:500;color:var(--muted);
+}
+td{padding:13px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+td.stage{font-weight:600;color:var(--ink);white-space:nowrap;font-size:13px}
+td .m{font-family:var(--mono);font-size:11.5px;color:var(--muted)}
+
+/* figure */
+.fig{margin:40px 0;border:1px solid var(--line);border-radius:var(--r);padding:26px 22px 14px}
+.fig .cap{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.04em;color:var(--faint);
+  margin-top:12px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
+}
+.fig .cap b{color:var(--muted);font-weight:500}
+.fig svg{width:100%;height:auto;display:block}
+.fig img{width:100%;height:auto;display:block}
+svg text{font-family:var(--mono)}
+
+/* code */
+.code{
+  margin:28px 0;background:var(--wash);color:var(--ink);
+  font-family:var(--mono);font-size:12.5px;line-height:1.7;
+  padding:20px 22px;overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);
+}
+.code .file{
+  display:block;font-size:10px;letter-spacing:.1em;color:var(--muted);
+  margin-bottom:14px;font-weight:500;text-transform:uppercase;
+}
+.code pre{font-family:inherit;white-space:pre;margin:0}
+.code .cm{color:var(--faint)}
+.code .kw{color:#1D4ED8}
+.code .st{color:#15803D}
+code.inline{
+  font-family:var(--mono);font-size:.85em;background:var(--wash);
+  padding:2px 6px;border:1px solid var(--line);border-radius:4px;white-space:nowrap;
+}
+
+/* numbered steps */
+.pre{counter-reset:pre;margin:24px 0}
+.pre>li{list-style:none;position:relative;padding:16px 0 16px 48px;border-bottom:1px solid var(--line)}
+.pre>li:first-child{border-top:1px solid var(--line)}
+.pre>li::before{
+  counter-increment:pre;content:counter(pre);
+  position:absolute;left:4px;top:18px;width:24px;height:24px;
+  border:1px solid var(--faint);border-radius:50%;color:var(--muted);
+  font-family:var(--mono);font-weight:500;font-size:11.5px;
+  display:flex;align-items:center;justify-content:center;
+}
+.pre b.lead{font-weight:600;color:var(--ink)}
+
+/* discussion */
+.open{border:1px solid var(--line);border-radius:var(--r);padding:26px 28px;margin:40px 0;background:var(--wash)}
+.open .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;color:var(--muted);font-weight:500;margin-bottom:14px;text-transform:uppercase}
+.open ol{margin-left:20px}
+.open li{margin-bottom:12px;line-height:1.8}
+@media(max-width:640px){.open{padding:20px 18px}}
+
+/* checkpoint */
+.check{margin:28px 0;border:1px solid var(--ink);border-radius:var(--r);padding:18px 22px 14px}
+.check .lbl{font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:var(--paper);background:var(--ink);border-radius:4px;display:inline-block;padding:3px 9px;font-weight:500;margin-bottom:12px}
+.check ul{margin-left:20px}
+.check li{margin-bottom:8px;line-height:1.75}
+
+/* recorder metrics */
+.recorder{margin:32px 0;border-top:1px solid var(--ink)}
+.recorder>div{display:flex;gap:18px;padding:13px 0;border-bottom:1px solid var(--line)}
+.recorder .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;color:var(--muted);font-weight:500;flex:0 0 120px;padding-top:3px;text-transform:uppercase}
+.recorder .v{font-size:13.5px;line-height:1.7;color:var(--body)}
+@media(max-width:640px){.recorder>div{flex-direction:column;gap:4px}}
+
+/* notice */
+.notice{margin:36px 0;border:1px solid var(--line);border-radius:var(--r);padding:24px 26px 18px}
+.notice .lbl{font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:var(--muted);font-weight:500;margin-bottom:14px;text-transform:uppercase}
+.notice p{margin-bottom:13px;font-size:14px}
+.notice ul{margin:0 0 13px 22px}
+.notice li{margin-bottom:8px;font-size:13.5px;line-height:1.75}
+@media(max-width:640px){.notice{padding:20px 18px 14px}}
+
+/* homework */
+.hw{margin:40px 0;border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.hw .head{
+  border-bottom:1px solid var(--line);background:var(--wash);padding:11px 22px;
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;font-weight:500;color:var(--muted);text-transform:uppercase;
+}
+.hw .body{padding:22px 24px 8px}
+.hw .due{font-family:var(--mono);font-size:11px;color:var(--faint);letter-spacing:.05em;margin-bottom:13px;font-weight:500}
+
+/* readings */
+.readings{margin:24px 0}
+.readings>li{list-style:none;position:relative;padding:18px 0 18px 60px;border-bottom:1px solid var(--line)}
+.readings>li:first-child{border-top:1px solid var(--line)}
+.readings .badge{
+  position:absolute;left:0;top:20px;
+  font-family:var(--mono);font-weight:500;font-size:10px;letter-spacing:.06em;
+  padding:3px 8px;border-radius:4px;
+}
+.readings .badge.req{background:var(--ink);color:var(--paper)}
+.readings .badge.opt{border:1px solid var(--faint);color:var(--faint)}
+.readings b.lead{font-weight:600;color:var(--ink)}
+.readings .why{display:block;font-size:13px;color:var(--muted);margin-top:6px}
+
+/* next week */
+.next{margin:64px 0 0;border-top:2px solid var(--ink);padding-top:22px}
+.next .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;color:var(--muted);font-weight:500;margin-bottom:12px;text-transform:uppercase}
+.next p{font-size:14px;color:var(--body)}
+
+/* footer */
+footer{
+  margin-top:64px;border-top:1px solid var(--line);
+  padding:20px 0 56px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  font-family:var(--mono);font-size:10.5px;color:var(--faint);letter-spacing:.03em;
+}
+footer .o{color:var(--muted)}
+
+@media(max-width:640px){body{font-size:15px}}
+@media print{
+  body{font-size:10.5pt}
+  .topnav{display:none}
+}
+</style>
+</head>
+<body>
+<div class="sheet">
+
+<header class="doc">
+  <div class="col">
+    <div class="topnav"><a href="index.html">← COURSE HOME</a><a href="week-01.html">KO</a></div>
+    <div class="masthead">
+      <div class="wk">WEEK 01</div>
+      <h1 class="title">What Is an Agent?
+        <span class="en">에이전트란 무엇인가</span>
+      </h1>
+      <p class="lede"><span class="q">Is ChatGPT an agent?</span> Today we start from the 1995 definition and check how today's tools measure up against it.</p>
+    </div>
+  </div>
+</header>
+
+<!-- ============ instructor ============ -->
+<section>
+  <div class="col">
+    <div class="secmark"><span class="no">00</span><h2>Introduction</h2></div>
+    <div class="bio">
+      <img class="photo" src="assets/speaker-lecture.jpeg" alt="Jaegyu Lee lecturing">
+      <div class="info">
+      <div class="name">Jaegyu Lee <span style="font-weight:400;color:var(--faint)">이재규</span></div>
+      <div class="role">SOFTWARE ENGINEER / OPEN SOURCE MAINTAINER</div>
+      <p>I am a software engineer of ten years, currently at ZEP. I finished my master's at Seoul National University of Science and Technology, where this course is taught, researching data pipelines and distributed systems, with papers at BIGCOMP and in Frontiers in Big Data.</p>
+      <p>At ZEP I run a WebRTC cluster serving 4M MAU. I moved it from LiveKit Cloud to self-run OCI infrastructure, cut infrastructure cost by 60%, and presented the migration at the Oracle Digital Native Roundtable.</p>
+      <p>I build Ouroboros, an open-source Agent OS: a framework that pins requirements down into a Seed through interviews and verifies execution results with deterministic gates. ZEP QUIZ (over 600K quizzes a month) runs an agent that improves its own tools. I presented this architecture at the ICML 2026 AI×Education workshop.</p>
+      <div class="links"><a href="https://wpti.dev">wpti.dev</a><span>/</span><a href="https://github.com/Q00">github</a><span>/</span><a href="https://www.linkedin.com/in/q00">linkedin</a><span>/</span><a href="https://www.youtube.com/@Q00_Dev">youtube</a><span>/</span><a href="https://x.com/Jqonly">x</a><span>/</span><a href="mailto:jaegyu.lee@ourolabs.ai">jaegyu.lee@ourolabs.ai</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ outline ============ -->
+<section>
+  <div class="col">
+    <div class="secmark"><span class="no">01</span><h2>Outline</h2></div>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>Part</th><th>Topic</th></tr>
+        <tr><td class="stage">A1</td><td>History of the agent definition</td></tr>
+        <tr><td class="stage">A2</td><td>Forty-year lineage: Contract Net to A2A</td></tr>
+        <tr><td class="stage">A3</td><td>Anatomy of an LLM agent</td></tr>
+        <tr><td class="stage">DISC</td><td>The Bitter Lesson</td></tr>
+        <tr><td class="stage">LAB</td><td>First agent, repo fork and first PR</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PART A ============ -->
+<div class="col">
+  <div class="part">
+    <div class="lbl">PART A: LECTURE</div>
+    <h2>What is an agent: the history of the definition, retested today</h2>
+    <div class="meta">A1 history of the definition, A2 forty-year lineage, A3 anatomy of an LLM agent, discussion</div>
+  </div>
+</div>
+
+<section>
+  <div class="col">
+    <div class="secmark"><span class="no">A1</span><h2>History of the agent definition: two notions from 1995</h2></div>
+    <p>Today the word &lsquo;agent&rsquo; gets attached to chatbots, automation scripts, and background daemons alike. Since we use one word for different things, we need a criterion for deciding which systems to call agents. The starting point is the 1995 paper by Michael Wooldridge and Nicholas Jennings, &ldquo;Intelligent Agents: Theory and Practice&rdquo;. The paper sorted the loosely used term into two clear notions. The distinction still holds thirty years later.</p>
+
+    <p>The first the authors call the <strong><span class="nb">weak notion</span></strong>: to be called an agent, a system must have at least four properties.</p>
+
+    <div class="define">
+      <p>An agent in the weak notion satisfies four properties.</p>
+      <ul>
+        <li><span class="nb">autonomy</span></li>
+        <li><span class="nb">reactivity</span></li>
+        <li><span class="nb">pro-activeness</span></li>
+        <li><span class="nb">social ability</span></li>
+      </ul>
+      <p class="sub">M. Wooldridge &amp; N. Jennings, &ldquo;Intelligent Agents: Theory and Practice&rdquo; (1995)</p>
+    </div>
+
+    <p><strong>Autonomy</strong> means the system operates without direct intervention from humans or others, and has some control over its actions and internal state. Something that moves only when a person presses a button at every step is a tool, not an agent. <strong>Reactivity</strong> is the ability to perceive the environment and respond to changes in a timely way. The environment keeps changing, so a system that only replays a prearranged sequence is not reactive. <strong>Pro-activeness</strong> points the other way: not merely responding to stimuli, but setting goals and taking the initiative toward them. Reactivity alone stays at passive reflex; pro-activeness alone misses changes in the environment. Finally, <strong>social ability</strong> is the capacity to interact with other agents or humans through a communication language.</p>
+
+    <p>The second is the <strong><span class="nb">strong notion</span></strong>. Used mainly by AI researchers, it grants the system mental attitudes on top of the four properties, attitudes we would normally reserve for humans. The best known is the BDI model: <span class="nb">belief</span>, <span class="nb">desire</span>, <span class="nb">intention</span>. The agent holds beliefs about the world, has desires it wants realized, and commits to the intentions it actually pursues. Knowledge, and sometimes emotion, get added on. The strong notion treats the agent as an <span class="nb">intentional system</span>: an entity whose behavior is usefully explained as &lsquo;it does Y because it believes X&rsquo;.</p>
+
+    <p>Wooldridge and Jennings stressed using this intentional vocabulary as a <strong>tool for design and analysis</strong>. Instead of tracing a complex system's behavior at the physical or code level, describing it with &lsquo;belief&rsquo; and &lsquo;intention&rsquo; makes prediction and explanation far more compact. When we write a prompt like &ldquo;you judged the user to be in a hurry, so take the fastest route&rdquo;, we are designing a system in exactly that vocabulary. Thirty years ago the vocabulary had to be forced into code; now the model already understands it.</p>
+
+    <p>To draw the boundaries between three concepts, let us extend the contrast the authors gave. A <strong>program</strong> takes input and produces output by a fixed procedure. Neither autonomy nor reactivity is required. Call the function and it returns a value; leave it alone and it does nothing. An <strong><span class="nb">object</span></strong> goes one step further: it encapsulates state and behavior and exchanges messages, but it cannot decide for itself whether to comply. When another object calls a public method, the object must perform the request. Control lies with the caller. An agent, by contrast, receives a request and judges against its own goals whether to accept or refuse it. The authors' own words sum up the difference.</p>
+
+    <div class="pull">Objects do it for free. Agents do it because they want to.<span class="src">Wooldridge, on the difference between agents and objects</span></div>
+
+    <p>Ask of any system, &ldquo;does it do this because it was requested, or because it judged the request to fit its own goals&rdquo;, and you can see whether it belongs with objects or with agents. The code we build in today's lab sits on this boundary. A single while loop turns it from an object into an agent.</p>
+
+    <div class="note"><b>WEAK VS STRONG</b>This course grades mostly against the weak notion. The strong notion (belief, desire, intention) is useful design vocabulary, but there is no way to prove a system actually &lsquo;has&rsquo; them. We judge by observable behavior.</div>
+  </div>
+</section>
+
+<section>
+  <div class="col">
+    <div class="secmark"><span class="no">A2</span><h2>Forty-year lineage: Contract Net to A2A</h2></div>
+    <p>The history of agent communication spans roughly forty years. The 1980s and 1990s poured out ambitious protocols. The 2000s went quiet even as standardization advanced. From 2022 on, the same problems reappeared under different names alongside large language models.</p>
+
+    <p>The starting point is 1980 and Reid G. Smith's <strong>Contract Net Protocol</strong>, an answer to the question of how to divide work among scattered processing nodes in distributed problem solving. A manager node makes a <span class="nb">task announcement</span>, capable nodes <span class="nb">bid</span>, and the manager <span class="nb">awards</span> the contract. It brought the market metaphor into computational resource allocation. Manager and contractor roles switch dynamically per task. We reproduce this protocol with LLM agents in the week 3 lab.</p>
+
+    <p>The 1990s ripened attempts to standardize the <strong>form</strong> of communication. KQML (Knowledge Query and Manipulation Language) and its successor FIPA-ACL (Agent Communication Language) are the result. Drawing on <span class="nb">speech act theory</span> from the philosophy of language, they attached <span class="nb">performatives</span> such as &lsquo;inform&rsquo;, &lsquo;request&rsquo;, and &lsquo;propose&rsquo; to messages. The attempt failed; why it failed, and which parts LLMs resolve, is week 4's topic.</p>
+
+    <p>The 2000s were, paradoxically, quiet. Standards documents grew precise, but no widely used agent ecosystem arrived. The protocols existed; agents smart enough to fill them did not.</p>
+
+    <p>The turning point is 2022 and <strong>ReAct</strong>, proposed by Yao et al. It wove <span class="nb">reasoning</span> and <span class="nb">acting</span> together inside a language model: think, use a tool, observe the result, think again. Then in 2024 <strong>MCP</strong> (Model Context Protocol) standardized how models and agents connect to tools and context. In 2025, <strong>A2A</strong> (Agent2Agent) took on discovery and task delegation between autonomous agents, and <strong>ACP</strong> (Agent Client Protocol) set out to standardize sessions, prompts, tool calls, diffs, and permission interactions between code editors and coding agents.</p>
+
+    <div class="fig" id="fig1">
+      <svg viewBox="0 0 680 300" role="img" aria-label="Forty-year timeline of agent communication protocols: from Contract Net in 1980 to A2A and the Agent Client Protocol in 2025">
+        <line x1="40" y1="150" x2="640" y2="150" stroke="#1C1917" stroke-width="1.5"/>
+        <path d="M628 144 L642 150 L628 156" fill="none" stroke="#1C1917" stroke-width="1.5"/>
+        <rect x="250" y="120" width="150" height="60" fill="none" stroke="#A8A29E" stroke-width="1" stroke-dasharray="4 4"/>
+        <text x="325" y="112" text-anchor="middle" fill="#A8A29E" font-size="10">2000s: standards and silence</text>
+        <g>
+          <circle cx="70" cy="150" r="5" fill="#1C1917"/>
+          <circle cx="200" cy="150" r="5" fill="#78716C"/>
+          <circle cx="325" cy="150" r="5" fill="#A8A29E"/>
+          <circle cx="440" cy="150" r="5" fill="#1C1917"/>
+          <circle cx="530" cy="150" r="5" fill="#78716C"/>
+          <circle cx="620" cy="150" r="5" fill="#1C1917"/>
+        </g>
+        <g font-size="12" fill="#78716C" text-anchor="middle">
+          <text x="70" y="180" font-weight="600">1980</text>
+          <text x="70" y="196" font-size="10" fill="#78716C">Contract Net</text>
+          <text x="200" y="128" font-weight="600">1990s</text>
+          <text x="200" y="112" font-size="10" fill="#78716C">KQML / FIPA</text>
+          <text x="440" y="180" font-weight="600">2022</text>
+          <text x="440" y="196" font-size="10" fill="#78716C">ReAct</text>
+          <text x="530" y="128" font-weight="600">2024</text>
+          <text x="530" y="112" font-size="10" fill="#78716C">MCP</text>
+          <text x="620" y="180" font-weight="600">2025</text>
+          <text x="620" y="196" font-size="10" fill="#78716C">A2A / ACP</text>
+        </g>
+        <text x="355" y="245" font-size="10" fill="#1C1917" text-anchor="middle">Twenty years of protocols with no agents to use them</text>
+      </svg>
+      <div class="cap"><span><b>FIG. 01</b> Forty years of agent communication</span><span>1980 → 2025</span></div>
+    </div>
+
+    <p>A2A's agent card revives the discovery problem FIPA tried to solve, and ACP reduces the N×M problem of integrating every coding agent into every IDE to a single common client-agent boundary.</p>
+  </div>
+</section>
+
+<section>
+  <div class="col">
+    <div class="secmark"><span class="no">A3</span><h2>Anatomy of an LLM agent</h2></div>
+    <p>To answer &ldquo;is ChatGPT an agent?&rdquo; we first need to see what an LLM agent is actually made of.</p>
+
+    <p>An LLM agent has three parts. First, the <strong>model</strong>: a function that takes text and returns the next text, with no state, no memory, and no effect on the outside world by itself. Second, the <strong>context</strong>: everything handed to the model on each call, that is, the system prompt, the conversation so far, observed results, and the list of available tools with their descriptions. The model sees only what is in the context. Third, the <strong>tool loop</strong>: when the model outputs &ldquo;call this tool with these arguments&rdquo;, an outside program actually runs the tool, appends the result to the context, and calls the model again. The call, run, feed-back cycle repeats until it stops.</p>
+
+    <div class="define">
+      <p>LLM agent = model + context + tool loop.</p>
+      <p class="sub">This course's working definition. The four W&amp;J properties, implemented with these three parts</p>
+    </div>
+
+    <p><em>Autonomy comes from the loop, not the model.</em> A single model call is just a program: input in, output out. But wrap it in a while loop that runs the tools and feeds results back, and the system starts choosing its next action, reacting to observations, and running until it reaches the goal. You will write this loop yourself in the lab, in twenty lines.</p>
+
+    <p>Now grade the LLM agent against the four W&amp;J properties. <strong>Autonomy</strong>: while the loop runs, no human intervenes at each step. Starting, stopping, and approving risky actions, though, often stay with a person. <strong>Reactivity</strong>: tool results feed back into the context, and the model changes its next move accordingly. <strong>Pro-activeness</strong>: given a goal in the prompt, the model plans the intermediate steps on its own. This is what ReAct provided. It decomposes a given goal; it does not set new ones. <strong>Social ability</strong>: a standard by which LLM agents reliably discover, delegate to, and verify each other does not yet exist.</p>
+
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>W&amp;J 1995 property</th><th>LLM agent</th><th>Verdict</th></tr>
+        <tr><td class="stage">Autonomy</td><td>No intervention while the loop runs. Start, stop, approval stay human</td><td><span class="m">Partial</span></td></tr>
+        <tr><td class="stage">Reactivity</td><td>Tool results feed back into context and change the next move</td><td><span class="m">Met</span></td></tr>
+        <tr><td class="stage">Pro-activeness</td><td>Decomposes a given goal into steps on its own (ReAct)</td><td><span class="m">Mostly met</span></td></tr>
+        <tr><td class="stage">Social ability</td><td>No standard for discovery, delegation, verification between agents</td><td><span class="m">Not met (this course's subject)</span></td></tr>
+      </table>
+    </div>
+
+    <p>The basic form of ChatGPT, responding only to what the user types in a chat window, is reactive but, strictly speaking, neither autonomous nor pro-active. It waits for human input every turn, so the human owns the loop. It is a dialogue system, and falls short of the name agent. But wrap the same model in tools and a while loop, so that it updates its own context until it reaches the goal, and it largely qualifies as an agent in the weak notion.</p>
+
+  </div>
+</section>
+
+<!-- ============ discussion ============ -->
+<section>
+  <div class="col">
+    <div class="open">
+      <div class="lbl">DISCUSSION: THE BITTER LESSON</div>
+      <p class="small" style="margin-bottom:16px">In his 2019 essay &ldquo;The Bitter Lesson&rdquo;, Richard Sutton argued that across seventy years of AI, methods that hand-coded human knowledge lost, again and again, to general methods backed by computation and data at <span class="nb">scale</span>. Search and learning, riding scale, win in the end. The claim collides head-on with this course's premise. If scale eventually solves everything, is careful research on protocols, contracts, and verification a waste of time?</p>
+      <ol>
+        <li>If the Bitter Lesson is right, are agent communication protocols (FIPA, MCP, A2A) also just &lsquo;hand-coded knowledge&rsquo;, destined to be absorbed by bigger models? Or are protocols a different kind of problem, one that learning cannot replace?</li>
+        <li>Are trust, non-repudiation, and the scope of delegated authority problems that vanish as agents &lsquo;get smarter&rsquo;, or <em>structural</em> problems: even the smartest agents need grounds to trust each other? If scale can grow intelligence but not trust, where is the line?</li>
+        <li>If we take the Bitter Lesson as a design principle rather than a cautionary tale, what should our replication experiments refuse to hand-code? Which parts of a protocol go to the model's common sense, and which stay explicit rules?</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PART B ============ -->
+<div class="col">
+  <div class="part">
+    <div class="lbl">PART B: LAB</div>
+    <h2>First agent: a while loop + two tools</h2>
+    <div class="meta">GOAL: write the twenty-line loop that turns a model into an agent, fork the course repo, open your first PR</div>
+  </div>
+</div>
+
+<section>
+  <div class="col">
+    <div class="secmark"><span class="no">LAB</span><h2>The loop makes the agent</h2></div>
+    <p>We confirm in practice that autonomy comes from the loop, not the model. Hand the model two tools, a calculator and a file reader, and build a while loop in which the model picks its own tools, observes the results, and runs until it reaches the answer. You need Python 3.10 or later, the <code class="inline">anthropic</code> or <code class="inline">openai</code> package, and one API key. The example below uses only the standard library and the <code class="inline">anthropic</code> package.</p>
+
+    <ol class="pre">
+      <li><b class="lead">Define the two tools as Python functions.</b> The calculator takes an expression string and returns a number; the file reader takes a path and returns contents. A tool's &lsquo;description&rsquo; is the interface the model reads.</li>
+      <li><b class="lead">Hand the model the tool list as context.</b> Pass each tool's name, description, and argument schema. The model knows only the tools on this list.</li>
+      <li><b class="lead">Wrap the while loop.</b> When the model calls a tool, run it and feed the result back; when the model gives a final answer, end the loop.</li>
+      <li><b class="lead">Add a stop condition and guardrails.</b> A maximum step count against infinite loops, and minimal defenses like a path restriction on file reads.</li>
+    </ol>
+
+    <div class="code"><span class="file">first_agent.py</span><pre><span class="kw">import</span> os, ast, operator, anthropic
+
+<span class="cm"># ---- Tool 1: calculator (safe, no eval) ----</span>
+_OPS = {ast.Add: operator.add, ast.Sub: operator.sub,
+        ast.Mult: operator.mul, ast.Div: operator.truediv,
+        ast.Pow: operator.pow, ast.USub: operator.neg}
+
+<span class="kw">def</span> _ev(node):
+    <span class="kw">if</span> isinstance(node, ast.Constant): <span class="kw">return</span> node.value
+    <span class="kw">if</span> isinstance(node, ast.BinOp):
+        <span class="kw">return</span> _OPS[type(node.op)](_ev(node.left), _ev(node.right))
+    <span class="kw">if</span> isinstance(node, ast.UnaryOp):
+        <span class="kw">return</span> _OPS[type(node.op)](_ev(node.operand))
+    <span class="kw">raise</span> ValueError(<span class="st">"disallowed expression"</span>)
+
+<span class="kw">def</span> calculator(expression: str) -&gt; str:
+    <span class="st">"""Evaluate an arithmetic expression string, e.g. '3 * (4 + 5)'."""</span>
+    <span class="kw">return</span> str(_ev(ast.parse(expression, mode=<span class="st">"eval"</span>).body))
+
+<span class="cm"># ---- Tool 2: file reader (blocks paths outside the working directory) ----</span>
+<span class="kw">def</span> read_file(path: str) -&gt; str:
+    <span class="st">"""Return the contents of a text file."""</span>
+    full = os.path.abspath(path)
+    <span class="kw">if</span> <span class="kw">not</span> full.startswith(os.getcwd()):
+        <span class="kw">return</span> <span class="st">"refused: path outside working directory"</span>
+    <span class="kw">with</span> open(full, encoding=<span class="st">"utf-8"</span>) <span class="kw">as</span> f:
+        <span class="kw">return</span> f.read()[:4000]
+
+TOOLS_IMPL = {<span class="st">"calculator"</span>: calculator, <span class="st">"read_file"</span>: read_file}
+
+<span class="cm"># ---- Tool schemas handed to the model (description = interface) ----</span>
+TOOLS = [
+  {<span class="st">"name"</span>: <span class="st">"calculator"</span>,
+   <span class="st">"description"</span>: <span class="st">"Evaluate an arithmetic expression."</span>,
+   <span class="st">"input_schema"</span>: {<span class="st">"type"</span>: <span class="st">"object"</span>,
+     <span class="st">"properties"</span>: {<span class="st">"expression"</span>: {<span class="st">"type"</span>: <span class="st">"string"</span>}},
+     <span class="st">"required"</span>: [<span class="st">"expression"</span>]}},
+  {<span class="st">"name"</span>: <span class="st">"read_file"</span>,
+   <span class="st">"description"</span>: <span class="st">"Read a text file in the working directory."</span>,
+   <span class="st">"input_schema"</span>: {<span class="st">"type"</span>: <span class="st">"object"</span>,
+     <span class="st">"properties"</span>: {<span class="st">"path"</span>: {<span class="st">"type"</span>: <span class="st">"string"</span>}},
+     <span class="st">"required"</span>: [<span class="st">"path"</span>]}},
+]
+
+<span class="kw">def</span> run(goal: str, max_steps: int = 8):
+    client = anthropic.Anthropic()  <span class="cm"># uses ANTHROPIC_API_KEY</span>
+    messages = [{<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>: goal}]
+
+    <span class="kw">for</span> step <span class="kw">in</span> range(max_steps):   <span class="cm"># ← this loop makes the agent</span>
+        resp = client.messages.create(
+            model=<span class="st">"claude-sonnet-4-5"</span>, max_tokens=1024,
+            tools=TOOLS, messages=messages)
+        messages.append({<span class="st">"role"</span>: <span class="st">"assistant"</span>, <span class="st">"content"</span>: resp.content})
+
+        <span class="kw">if</span> resp.stop_reason != <span class="st">"tool_use"</span>:   <span class="cm"># final answer → stop</span>
+            <span class="kw">return</span> <span class="st">""</span>.join(b.text <span class="kw">for</span> b <span class="kw">in</span> resp.content
+                           <span class="kw">if</span> b.type == <span class="st">"text"</span>)
+
+        results = []
+        <span class="kw">for</span> block <span class="kw">in</span> resp.content:        <span class="cm"># run tool calls → observe</span>
+            <span class="kw">if</span> block.type == <span class="st">"tool_use"</span>:
+                out = TOOLS_IMPL[block.name](**block.input)
+                print(<span class="st">f"  [tool] </span>{block.name}<span class="st">(</span>{block.input}<span class="st">) → </span>{out}<span class="st">"</span>)
+                results.append({<span class="st">"type"</span>: <span class="st">"tool_result"</span>,
+                    <span class="st">"tool_use_id"</span>: block.id, <span class="st">"content"</span>: str(out)})
+        messages.append({<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>: results})
+
+    <span class="kw">return</span> <span class="st">"stopped: max steps exceeded"</span>   <span class="cm"># stop condition = guardrail</span>
+
+<span class="kw">if</span> __name__ == <span class="st">"__main__"</span>:
+    print(run(<span class="st">"Read notes.txt and add up the numbers in it."</span>))</pre></div>
+
+    <p>The heart of this code is the single line <code class="inline">for step in range(max_steps)</code>. Delete the loop and call <code class="inline">messages.create</code> once, and the system is a program again. Only the model's text saying it would call a tool remains; no tool actually runs. Put a few numbers in <code class="inline">notes.txt</code> and run it. The model calls <code class="inline">read_file</code> first, then, after seeing the result, <code class="inline">calculator</code>. Both calls print to the console.</p>
+
+    <h3><span class="tag">SUBMIT</span>Fork the repo, open your first PR</h3>
+    <p>Every assignment in this course is submitted as a PR from your fork of the course repository. Deadlines are judged by the time the PR was opened. In this lab you fork and open your first PR.</p>
+
+    <ol class="pre">
+      <li><b class="lead">Fork and clone the course repository.</b> The README and <code class="inline">AGENTS.md</code> hold all the rules. If you use a coding agent, have it read <code class="inline">AGENTS.md</code> first.</li>
+      <li><b class="lead">Add your file to the roster.</b> Create <code class="inline">roster/&lt;student-id&gt;.md</code> with your GitHub username.</li>
+      <li><b class="lead">Open a PR to upstream and watch the automated check.</b> Actions matches the filename against the GitHub username. Once it passes we merge in class; every later <code class="inline">submissions/&lt;student-id&gt;/</code> check compares against the username in this file.</li>
+    </ol>
+
+    <div class="check">
+      <div class="lbl">CHECKPOINT</div>
+      <ul>
+        <li><code class="inline">first_agent.py</code> chains <code class="inline">read_file</code> → <code class="inline">calculator</code> on its own and returns the right answer.</li>
+        <li>You removed the loop and confirmed no tool actually runs.</li>
+        <li>Your roster PR from the fork passed the automated check.</li>
+        <li>You confirmed the max step count and the file path restriction actually work.</li>
+      </ul>
+    </div>
+
+    <p>Submission rules are the same every week.</p>
+    <div class="recorder">
+      <div><span class="k">Commits</span><span class="v">No squashing. Commits from failed attempts are grading evidence.</span></div>
+      <div><span class="k">Logs</span><span class="v">Commit the agent's console output as files under <code class="inline">logs/</code>.</span></div>
+      <div><span class="k">API keys</span><span class="v">Never commit them. Environment variables only.</span></div>
+    </div>
+
+    <div class="notice">
+      <div class="lbl">LLM policy</div>
+      <p>LLMs and agent tools are welcome on every assignment. What you asked for and what you threw away must remain in the commit history and logs.</p>
+      <p style="margin-bottom:0">Copyright in assignment code and projects stays with the student who made it.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ assignment ============ -->
+<section>
+  <div class="col">
+    <div class="secmark"><span class="no">HW</span><h2>Assignment</h2></div>
+    <div class="hw">
+      <div class="head">ASSIGNMENT: WEEK 01</div>
+      <div class="body">
+        <div class="due">DUE: before next week's class</div>
+        <p><strong>Deliverable</strong>: add <strong>one more</strong> tool to the agent from the lab and solve a real task with it. Any tool works: fetch to pull text from the web, clock to tell the current time, write_note to save a memo to a file. Observe how the model's tool choice changes when the toolbox grows by one.</p>
+        <p><strong>Format</strong>: commit to <code class="inline">submissions/&lt;student-id&gt;/week-01/</code> in your fork and open a PR to upstream. (1) A working <code class="inline">first_agent.py</code> (three tools), (2) one paragraph on why you described the new tool the way you did (<code class="inline">TOOLS.md</code>), (3) the agent's run logs (<code class="inline">logs/</code>).</p>
+        <p><strong>Grading</strong>: half is whether the code actually runs (reproducibility). Someone else must get the same result from your code and settings alone. State every setting except the API key: model name, tool schemas, how to run. The other half is whether what you tried and what you discarded shows honestly in the commit history and logs.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ readings ============ -->
+<section>
+  <div class="col">
+    <div class="secmark"><span class="no">READ</span><h2>Readings</h2></div>
+    <ul class="readings">
+      <li><span class="badge req">REQ</span><b class="lead">M. Wooldridge &amp; N. Jennings, &ldquo;Intelligent Agents: Theory and Practice&rdquo; (1995)</b><span class="why">The source text for this lecture. Read the four properties of the weak notion and the strong notion in the original, then grade LLM agents against the four properties yourself.</span></li>
+      <li><span class="badge req">REQ</span><b class="lead">R. Sutton, &ldquo;The Bitter Lesson&rdquo; (2019)</b><span class="why">Preparation for the discussion. Read the &lsquo;scale wins&rsquo; claim first-hand and decide your own answer to why protocol research is worth doing.</span></li>
+    </ul>
+
+    <div class="next">
+      <div class="lbl">NEXT: WEEK 02</div>
+      <p><strong>Same model, different results: why?</strong> Next week starts from this question. The difference comes from the design of the loop, the &lsquo;harness&rsquo;. Read ReAct (Yao et al. 2022) and learn context management, tool granularity, stop conditions, error recovery, and human intervention points. In the lab you attach two harness variants to the same task and measure the difference A/B.</p>
+    </div>
+  </div>
+</section>
+
+<footer class="sheet">
+  <span>AGENTIC AI: <span class="o">AI Agent Engineering 101</span></span>
+  <span>SEOULTECH 2026 FALL, WEEK 01/15</span>
+</footer>
+
+</div>
+</body>
+</html>
