@@ -8,6 +8,7 @@ import sys
 import ast
 import operator
 from datetime import datetime
+from zoneinfo import ZoneInfo
 
 import anthropic
 
@@ -42,10 +43,11 @@ def read_file(path: str) -> str:
         return f.read()[:4000]
 
 
-# ---- tool 3: clock (no arguments, no side effects) ----
-def clock() -> str:
-    """Return the current local date and time."""
-    return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+# ---- tool 3: clock (optional IANA timezone, no side effects) ----
+def clock(timezone: str = None) -> str:
+    """Return the current date and time, optionally in a given IANA timezone."""
+    tz = ZoneInfo(timezone) if timezone else None
+    return datetime.now(tz).strftime("%Y-%m-%d %H:%M:%S %Z").strip()
 
 
 TOOLS_IMPL = {"calculator": calculator, "read_file": read_file, "clock": clock}
@@ -63,8 +65,9 @@ TOOLS = [
                       "properties": {"path": {"type": "string"}},
                       "required": ["path"]}},
     {"name": "clock",
-     "description": "Return the current local date and time. Use this when the task needs to know what time it is right now, e.g. timestamping a note or checking how much time has passed.",
-     "input_schema": {"type": "object", "properties": {}}},
+     "description": "Return the current date and time. Optionally pass an IANA timezone name (e.g. 'Asia/Seoul', 'UTC') to get the time in that zone instead of local time.",
+     "input_schema": {"type": "object",
+                      "properties": {"timezone": {"type": "string"}}}},
 ]
 
 
