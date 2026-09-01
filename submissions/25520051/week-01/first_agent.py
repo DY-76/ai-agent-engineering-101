@@ -1,7 +1,7 @@
 """Week 01 — OpenAI-compatible API version (works with OpenRouter).
 
 Three tools: calculator, read_file, clock.
-Requires: pip install openai, and in the environment:
+Requires: pip install openai python-dotenv, and in .env (or the environment):
   OPENAI_API_KEY   your key (an OpenRouter key works)
   OPENAI_BASE_URL  optional; set to https://openrouter.ai/api/v1 for OpenRouter
   AGENT_MODEL      optional; defaults to gpt-4o-mini. For OpenRouter free
@@ -15,7 +15,10 @@ import operator
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
+from dotenv import load_dotenv
 from openai import OpenAI
+
+load_dotenv()
 
 # ---- tool 1: calculator (safe, no eval) ----
 _OPS = {ast.Add: operator.add, ast.Sub: operator.sub,
