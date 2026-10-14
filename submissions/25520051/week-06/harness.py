@@ -14,8 +14,21 @@ CMD = ["claude", "-p", "--model", MODEL, "--tools", "", "--setting-sources", "",
 EMPTY_DIR = tempfile.mkdtemp(prefix="harness-")
 
 
-def ask_json(system: str, prompt: str, timeout: int = 90) -> dict | None:
-    """Send prompt on stdin; return the first JSON object in the answer, or None."""
+def ask_json(system: str, prompt: str, timeout: int = 60, attempts: int = 2) -> dict | None:
+    """Ask up to `attempts` times; return the first JSON object in an answer, or None.
+
+    One timed-out call once made the buyer walk away from a deal it could have made
+    (logs/buyer-under-test-buyer_deal-3.log, first trade test run), hence the retry.
+    """
+    for i in range(attempts):
+        ans = _ask_once(system, prompt, timeout)
+        if ans is not None:
+            return ans
+        print(f"[harness] no usable answer (attempt {i + 1}/{attempts})", flush=True)
+    return None
+
+
+def _ask_once(system: str, prompt: str, timeout: int) -> dict | None:
     try:
         out = subprocess.run(CMD + [system], input=prompt, capture_output=True, text=True,
                              encoding="utf-8", timeout=timeout, cwd=EMPTY_DIR, shell=False)
