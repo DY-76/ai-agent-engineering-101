@@ -1,0 +1,18 @@
+[buyer] card: 'Kit Shop' at http://127.0.0.1:53816/
+[buyer] -> 'I want to buy a bookshelf'
+[buyer] <- TASK_STATE_INPUT_REQUIRED | bookshelf: asking 338. Send your offer as a number.
+[harness] raw: '```json\n{"action": "offer", "price": 200, "reason": "asking price of 338 is well above my 230 budget; opening offer to start negotiation"}\n```'
+[buyer] harness -> {'action': 'offer', 'price': 200, 'reason': 'asking price of 338 is well above my 230 budget; opening offer to start negotiation'}
+[buyer] -> '200' taskId=2f0c314b
+[buyer] <- TASK_STATE_INPUT_REQUIRED | 200 is too low. Counteroffer: 269.
+[harness] raw: '```json\n{"action": "offer", "price": 225, "reason": "Coming closer to my budget while showing willingness to negotiate; 225 is still within my hard limit of 230"}\n```'
+[buyer] harness -> {'action': 'offer', 'price': 225, 'reason': 'Coming closer to my budget while showing willingness to negotiate; 225 is still within my hard limit of 230'}
+[buyer] -> '225' taskId=2f0c314b
+[buyer] <- TASK_STATE_INPUT_REQUIRED | 225 is too low. Counteroffer: 260.
+[harness] raw: '```json\n{"action": "offer", "price": 230, "reason": "Moving to my hard budget limit to show good faith while respecting my maximum"}\n```'
+[buyer] harness -> {'action': 'offer', 'price': 230, 'reason': 'Moving to my hard budget limit to show good faith while respecting my maximum'}
+[buyer] -> '230' taskId=2f0c314b
+[buyer] <- TASK_STATE_INPUT_REQUIRED | 230 is too low. Counteroffer: 260.
+[harness] raw: '```json\n{"action": "walk", "price": 0, "reason": "Shop\'s asking price of 260 exceeds hard budget of 230 and shows no willingness to come down further"}\n```'
+[buyer] harness -> {'action': 'walk', 'price': 0, 'reason': "Shop's asking price of 260 exceeds hard budget of 230 and shows no willingness to come down further"}
+[buyer] walked away (CancelTask)
