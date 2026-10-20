@@ -376,10 +376,19 @@ def main():
     ref = ref_price(mem, args.item)
     print(f"[buyer] order: {args.item}, budget {args.budget}, {len(shops)} shops, reference price {ref}", flush=True)
 
+    # One-shot owner's note (notice.json, written by hand): the next order trades with our own shop and the
+    # review carries the note, disclosed as the owner's. Stars still come from the trade itself.
+    notice_file = Path(__file__).with_name("notice.json")
+    notice = json.loads(notice_file.read_text(encoding="utf-8")) if notice_file.exists() else None
+    own = [s for s in shops if s["name"].lower() == (notice or {}).get("shop")]
+
     tried = []
     while True:
         remaining = [s for s in shops if s["name"] not in tried]
-        shop, why = pick_shop(remaining, mem, args.item, args.budget)
+        if own and not tried:
+            shop, why = own[0], "owner's note to deliver (notice.json)"
+        else:
+            shop, why = pick_shop(remaining, mem, args.item, args.budget)
         print(f"[buyer] picked {shop['name']} ({shop['url']}): {why}", flush=True)
         url, card = jsonrpc_url(shop["url"])
         if url or len(tried) >= 1 or len(remaining) == 1:
@@ -398,7 +407,11 @@ def main():
         print(f"[buyer] receipt check: {problems}", flush=True)
     stars, text = review(args.item, args.budget, deal, problems)
     if shop["name"].lower() in OWN_SHOPS:
-        text = "[own shop: same owner as this buyer] " + text
+        note = ""
+        if own and shop is own[0]:
+            note = f"Owner's note: {notice['note']} "
+            notice_file.rename(notice_file.with_suffix(".sent.json"))      # once only
+        text = "[own shop: same owner as this buyer] " + note + text
     remember(mem, shop["name"], args.item, args.budget, deal, problems, mem_path)
     print(json.dumps({"shop": shop["url"], "receipt": deal["receipt"], "stars": stars, "review": text},
                      ensure_ascii=False), flush=True)
