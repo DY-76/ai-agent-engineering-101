@@ -14,6 +14,7 @@ import hashlib
 import hmac
 import json
 import os
+import random
 import re
 import sys
 import threading
@@ -47,7 +48,13 @@ BRAND = ("Moss & Oak: simple, well-made furniture with only the parts you need, 
 # - make-good: a member who says 'support' gets our final price at once, one time per member code
 PROMISES = ("Receipt promise: the receipt always shows the agreed price, signed. Member price promise: members "
             "never start above what they last paid us for the same item. Make-good: if a negotiation with us broke "
-            "off, say 'support' with your member code for our final price at once (once per code).")
+            "off, say 'support' with your member code for our final price at once (once per code). "
+            "Points: each purchase earns points worth one to five percent of the price (more on pricier items), "
+            "and every fifth purchase draws a coupon for ten, twenty-five, fifty or one hundred percent off. "
+            "Points and coupons lower the next asking price, never below our floor price.")
+POINT_RATE = {"lamp": 0.01, "chair": 0.03, "bookshelf": 0.05}
+COUPONS, COUPON_ODDS = [10, 25, 50, 100], [60, 25, 10, 5]
+PCT_WORDS = {10: "ten", 25: "twenty-five", 50: "fifty", 100: "one hundred"}
 MEMBERS = Path(__file__).with_name(".market") / "members.json"
 
 
@@ -113,10 +120,19 @@ def is_member(text: str) -> bool:
 
 
 def members() -> dict:
+    """{"codes": {code: account}, "accounts": {account: state}}; every code a member got points to one account,
+    so points and coupons follow the member and cannot be spent twice through an old code."""
     try:
-        return json.loads(MEMBERS.read_text(encoding="utf-8"))
+        d = json.loads(MEMBERS.read_text(encoding="utf-8"))
     except (OSError, ValueError):
-        return {}
+        d = {}
+    if "codes" not in d:                                   # first format: {code: state}
+        d = {"codes": {c: c for c in d}, "accounts": dict(d)}
+    return d
+
+
+def account(book: dict, code: str | None) -> dict | None:
+    return book["accounts"].setdefault(book["codes"].setdefault(code, code), {}) if code else None
 
 
 def save_members(d: dict):
@@ -128,7 +144,24 @@ def save_members(d: dict):
 
 def member_cap(code: str | None, item: str) -> int | None:
     """Member price promise: the last price this member paid for the item."""
-    return members().get(code, {}).get(item) if code else None
+    state = account(members(), code)
+    return state.get(item) if state else None
+
+
+def perks(code: str | None, ask: int, reserve: int) -> tuple[int, str, int, int | None]:
+    """(new ask, words for the buyer, points used, coupon used). Never below the reserve."""
+    state = account(members(), code)
+    if not state:
+        return ask, "", 0, None
+    pts, cpn = int(state.get("points", 0)), state.get("coupon")
+    after = ask - round(ask * cpn / 100) if cpn else ask
+    used = max(0, min(pts, after - reserve))
+    new = max(reserve, after - used)
+    if new == ask:
+        return ask, "", 0, None
+    said = " and ".join(x for x in ["your points" if used else "",
+                                     f"your {PCT_WORDS[cpn]} percent coupon (down to our floor)" if cpn else ""] if x)
+    return new, f" Member perks applied: {said}.", used, cpn
 
 # Every reply is written for any buyer model, large or small:
 # - the current price is the only digit in the text, and it comes last ("Counteroffer: 115.")
@@ -190,12 +223,14 @@ class Seller(AgentExecutor):
             cap = member_cap(code, item)
             if cap is not None:
                 ask = min(ask, cap)                                   # member price promise
+            ask, perk_text, pts_used, cpn_used = perks(code, max(ask, RESERVE[item]), RESERVE[item])
             deal = {"item": item, "reserve": RESERVE[item], "ask": max(ask, RESERVE[item]), "offers": 0,
-                    "member": member, "code": code, "list": asks[item], "step": step}
+                    "member": member, "code": code, "list": asks[item], "step": step,
+                    "pts_used": pts_used, "cpn_used": cpn_used}
             self.open[task.id] = deal
             hello = await asyncio.to_thread(pitch, item, member)
-            await self.reply(up, deal, f"{hello} Send your offer as a number, or reply 'accept' to buy now. "
-                                       f"{item.capitalize()}: asking {deal['ask']}.")
+            await self.reply(up, deal, f"{hello}{perk_text} Send your offer as a number, or reply 'accept' to "
+                                       f"buy now. {item.capitalize()}: asking {deal['ask']}.")
             return
 
         if not deal["member"] and is_member(text):                       # a code given after the opening
@@ -208,9 +243,9 @@ class Seller(AgentExecutor):
             text = MEMBER.sub("", text.upper())
         if deal["code"] and re.search(r"\bsupport\b", text, re.I) and not re.search(r"\d", MEMBER.sub("", text.upper())):
             book = members()
-            used = book.setdefault(deal["code"], {}).get("_make_good")
-            if not used:                                                  # make-good: final price at once, once
-                book[deal["code"]]["_make_good"] = deal["item"]
+            state = account(book, deal["code"])
+            if not state.get("_make_good"):                               # make-good: final price at once, once
+                state["_make_good"] = deal["item"]
                 save_members(book)
                 deal["ask"] = deal["reserve"]
                 await self.reply(up, deal, f"Sorry for the trouble; here is our make-good. Final price: {deal['ask']}.")
@@ -255,14 +290,24 @@ class Seller(AgentExecutor):
 
     async def sell(self, up, task_id, deal, price):
         receipt = sign_receipt({"shop": SHOP_NAME, "item": deal["item"], "price": price, "task": task_id})
-        book = members()                                                  # member price promise: remember the price
-        for code in {deal.get("code"), member_code(task_id)} - {None}:
-            book.setdefault(code, {})[deal["item"]] = price
+        book = members()
+        new_code = member_code(task_id)
+        state = account(book, deal.get("code") or new_code)
+        book["codes"][new_code] = book["codes"][deal.get("code") or new_code]   # same member, new code
+        state[deal["item"]] = price                                       # member price promise
+        state["points"] = int(state.get("points", 0)) - deal.get("pts_used", 0) + round(price * POINT_RATE[deal["item"]])
+        if deal.get("cpn_used"):
+            state.pop("coupon", None)
+        state["buys"] = int(state.get("buys", 0)) + 1
+        drew = None
+        if state["buys"] % 5 == 0 and not state.get("coupon"):
+            drew = state["coupon"] = random.choices(COUPONS, COUPON_ODDS)[0]
         save_members(book)
         await up.add_artifact(parts=[new_data_part(receipt)], name="receipt")
         await up.complete(up.new_agent_message(parts=[new_text_part(
             f"Deal: {deal['item']} at {price}. Signed receipt attached. Your Moss & Oak member code is "
-            f"{member_code(task_id)}; include it when you ask next time for member pricing.")]))
+            f"{new_code}; include it when you ask next time for member pricing and your points."
+            + (f" Fifth purchase: you drew a {PCT_WORDS[drew]} percent coupon for next time." if drew else ""))]))
         print(f"[seller] -> deal at {price} ({deal['item']}, opened {deal['list']}"
               f"{', member' if deal['member'] else ''})", flush=True)
         del self.open[task_id]
