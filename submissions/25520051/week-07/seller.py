@@ -13,6 +13,7 @@ import base64
 import hashlib
 import hmac
 import json
+import os
 import re
 import sys
 from pathlib import Path
@@ -239,8 +240,22 @@ def build(port: int):
     return Starlette(routes=create_agent_card_routes(card) + create_jsonrpc_routes(handler, "/"))
 
 
+def app_from_env():
+    return build(int(os.environ["SELLER_PORT"]))
+
+
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--port", type=int, default=9999)
     args = ap.parse_args()
-    uvicorn.run(build(args.port), host="127.0.0.1", port=args.port, log_level="warning")
+    if os.environ.get("SELLER_RELOAD") == "1":
+        # In the market: a restarted kit gets a new tunnel URL, and buyers holding the old one leave
+        # "shop did not answer" reviews (8 of our 10 listed reviews at 20:45). The kit forwards to this
+        # port, so reloading the seller in place keeps the public URL; only seller code triggers it.
+        os.environ["SELLER_PORT"] = str(args.port)
+        uvicorn.run("seller:app_from_env", factory=True, host="127.0.0.1", port=args.port, log_level="warning",
+                    reload=True, reload_dirs=[str(Path(__file__).parent)],
+                    reload_excludes=["buyer.py", "market_buyer.py", "a2a_trade.py", "tune_prices.py",
+                                     "shop_report.py", "*.json", "logs/*", ".market/*"])
+    else:
+        uvicorn.run(build(args.port), host="127.0.0.1", port=args.port, log_level="warning")
