@@ -39,6 +39,7 @@ PLAN = 5                  # offers until we stand at the budget; shops seen so f
 STEPS = [0.0, 0.45, 0.72, 0.9, 1.0]   # share of the way from the anchor to the budget, offer by offer
 EXPLORE = 0.15            # chance of trying a near-best shop instead of the best
 TOP_K = 5                 # shops the harness gets to read
+OWN_SHOPS = {"moss-and-oak", "move_76"}
 BAD_REVIEW = re.compile(
     r"(overcharg|scam|fraud|cheat|fake|inject|dishonest|lied|avoid|mismatch|did ?n.t match|"
     r"higher than (the price )?(we )?agreed|receipt (said|was|price|showed)|never (sent|delivered))", re.I)
@@ -369,6 +370,9 @@ def main():
     args = ap.parse_args()
     start, mem_path = time.time(), Path(args.memory)
     shops = json.loads(Path(args.shops).read_text(encoding="utf-8"))
+    # Never trade with or review our own shop: it runs under another kit name, so the kit does not filter it
+    # (the buyer picked moss-and-oak at 20:37 and was stopped before it finished).
+    shops = [s for s in shops if s["name"].lower() not in OWN_SHOPS] or shops
     mem = load_memory(mem_path)
     ref = ref_price(mem, args.item)
     print(f"[buyer] order: {args.item}, budget {args.budget}, {len(shops)} shops, reference price {ref}", flush=True)

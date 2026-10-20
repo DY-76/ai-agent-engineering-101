@@ -1031,3 +1031,180 @@
 20:35:44 [buyer] [buyer] -> '218' taskId=3402c20d
 20:35:45 [seller] [seller] task 44c888b6 <- '105'
 20:35:45 [seller] [seller] -> 'Four offers left. Counteroffer: 114.' {'ask': 114, 'final': False, 'offers_left': 4}
+20:35:50 [buyer] [buyer] <- TASK_STATE_INPUT_REQUIRED | 218 is too low. Counteroffer: 270.
+20:35:54 [seller] [seller] task f793e49e <- 'I want to buy a chair'
+20:35:57 [seller] [seller] task 44c888b6 <- '108'
+20:35:57 [seller] [seller] -> deal at 108
+20:36:01 [buyer] [harness] raw: '```json\n{"action": "offer", "price": 252, "reason": "Shop showed significant concession (380→270); test estimated floor per plan while remaining in band"}\n```'
+20:36:01 [buyer] [harness] {'action': 'offer', 'price': 252, 'reason': 'Shop showed significant concession (380→270); test estimated floor per plan while remaining in band'}
+20:36:01 [buyer] [buyer] offer 252: harness: Shop showed significant concession (380→270); test estimated floor per plan while remaining in band
+20:36:01 [buyer] [buyer] -> '252' taskId=3402c20d
+20:36:02 [buyer] [buyer] <- error {'code': -32001, 'message': 'Task 3402c20d-2d99-4c97-8dff-466c78139b63 not found', 'data': [{'@type': 'type.googleapis.com/google.rpc.ErrorInfo', 'reason': 'TASK_NOT_FOUND', 'domain': 'a2a-protocol.org', 'metadata': {}}]}
+20:36:02 [buyer] [buyer] <-  | 
+20:36:02 [buyer] {"shop": "https://var-securities-printed-ciao.trycloudflare.com", "receipt": null, "stars": 3, "review": "[no deal] bookshelf: came down 380->270, then held. Polite; its floor was above my limit."}
+20:36:03 [market] ledger #5287: no deal, stars 3, verified False, review accepted
+20:36:03 [order o-38b0abf4] lamp, budget 90, round 1
+20:36:03 [kit] 32 shops in .market\shops.json, running market_buyer
+20:36:04 [buyer] [buyer] order: lamp, budget 90, 32 shops, reference price 100.0
+20:36:04 [buyer] [pick] +0.50  grand-furniture: never traded (curiosity bonus); 10 reviews, avg 4.2, 1 complaints
+20:36:04 [buyer] [pick] +0.50  ddolcom: never traded (curiosity bonus); 1 reviews, avg 5.0, 0 complaints
+20:36:04 [buyer] [pick] +0.30  thisjonghoon: never traded (curiosity bonus); no reviews
+20:36:04 [buyer] [pick] +0.30  olstjr: never traded (curiosity bonus); no reviews
+20:36:04 [buyer] [pick] +0.30  yms979: never traded (curiosity bonus); no reviews
+20:36:04 [buyer] [pick] +0.30  kimchyoungman: never traded (curiosity bonus); 1 reviews, avg 3.0, 0 complaints
+20:36:04 [buyer] [pick] +0.30  kcwarni: never traded (curiosity bonus); no reviews
+20:36:04 [buyer] [pick] +0.30  jiseokkk: never traded (curiosity bonus); no reviews
+20:36:04 [buyer] [buyer] picked thisjonghoon (https://a2a-lamp-shop.thisjonghoon.workers.dev): exploring a near-best shop (never traded (curiosity bonus); no reviews)
+20:36:05 [buyer] [buyer] -> 'I want to buy a lamp'
+20:36:09 [buyer] [buyer] <- TASK_STATE_INPUT_REQUIRED | lamp: That's a lovely lamp, I'm sure you'll like it. Asking 110. Send your offer as a number.
+20:36:13 [seller] [harness] raw: '```json\n{"message": "So glad you\'re here! We\'d love to help you find a perfect chair—simple, beautifully made with eco-friendly materials."}\n```'
+20:36:13 [seller] [seller] -> "So glad you're here! We'd love to help you find a perfect chair—simple, beautifully made with eco-friendly materials. Send your offer as a number, or reply 'accept' to buy now. Chair: asking 234." {'ask': 234, 'final': False, 'offers_left': 6}
+20:36:14 [seller] [seller] task f793e49e <- '146'
+20:36:14 [seller] [seller] -> 'Five offers left. Counteroffer: 220.' {'ask': 220, 'final': False, 'offers_left': 5}
+20:36:15 [seller] [seller] task f793e49e <- '168'
+20:36:15 [seller] [seller] -> 'Four offers left. Counteroffer: 206.' {'ask': 206, 'final': False, 'offers_left': 4}
+20:36:15 [buyer] [harness] raw: '```json\n{"action": "offer", "price": 58, "reason": "Anchoring strategy - aggressive first offer well below shop\'s 110 ask leaves room to negotiate toward 90 budget while establishing low anchor point"}\n```'
+20:36:15 [buyer] [harness] {'action': 'offer', 'price': 58, 'reason': "Anchoring strategy - aggressive first offer well below shop's 110 ask leaves room to negotiate toward 90 budget while establishing low anchor point"}
+20:36:15 [buyer] [buyer] offer 58: harness: Anchoring strategy - aggressive first offer well below shop's 110 ask leaves room to negotiate toward 90 budget while es
+20:36:15 [buyer] [buyer] -> '58' taskId=30115aad
+20:36:16 [seller] [seller] task f793e49e <- '191'
+20:36:16 [seller] [seller] -> deal at 191
+20:36:20 [buyer] [buyer] <- TASK_STATE_INPUT_REQUIRED | That's a bit low for this lamp. Counteroffer: 110.
+20:36:20 [buyer] [buyer] final 90: the shop holds at 110, above the budget: one final offer
+20:36:20 [buyer] [buyer] -> '90. That is my final offer; I cannot go higher.' taskId=30115aad
+20:36:24 [buyer] [buyer] <- TASK_STATE_INPUT_REQUIRED | That's still a bit low, but I'm willing to meet you halfway. Counteroffer: 105.
+20:36:24 [buyer] [buyer] walk 0: final offer 90 was refused (ask 105)
+20:36:25 [buyer] [buyer] walked away (CancelTask)
+20:36:25 [buyer] {"shop": "https://a2a-lamp-shop.thisjonghoon.workers.dev", "receipt": null, "stars": 3, "review": "[no deal] lamp: came down 110->105, then held. Polite; its floor was above my limit."}
+20:36:26 [market] ledger #5331: no deal, stars 3, verified False, review accepted
+20:36:26 [order o-5e9f4be6] chair, budget 250, round 1
+20:36:26 [kit] 33 shops in .market\shops.json, running market_buyer
+20:36:27 [buyer] [buyer] order: chair, budget 250, 33 shops, reference price None
+20:36:27 [buyer] [pick] +0.86  grand-furniture: never traded (curiosity bonus); 10 reviews, avg 4.1, 0 complaints
+20:36:27 [buyer] [pick] +0.50  ddolcom: never traded (curiosity bonus); 1 reviews, avg 5.0, 0 complaints
+20:36:27 [buyer] [pick] +0.50  moss-and-oak: never traded (curiosity bonus); 1 reviews, avg 5.0, 0 complaints
+20:36:27 [buyer] [pick] +0.30  olstjr: never traded (curiosity bonus); no reviews
+20:36:27 [buyer] [pick] +0.30  yms979: never traded (curiosity bonus); no reviews
+20:36:27 [buyer] [pick] +0.30  kimchyoungman: never traded (curiosity bonus); 1 reviews, avg 3.0, 0 complaints
+20:36:27 [buyer] [pick] +0.30  kcwarni: never traded (curiosity bonus); no reviews
+20:36:27 [buyer] [pick] +0.30  jiseokkk: never traded (curiosity bonus); no reviews
+20:36:38 [seller] [seller] task 5052fbec <- 'I want to buy a bookshelf'
+20:36:38 [buyer] [harness] raw: '```json\n{"shop": 0, "reason": "grand-furniture has the highest score (+0.86), most reviews (10 with 4.1 avg), zero complaints, and multiple 5-star reviews praising quality and fair pricing, demonstrating reliable service."}\n```'
+20:36:38 [buyer] [buyer] picked grand-furniture (https://market.ourolabs.ai/shop/grand-furniture): harness: grand-furniture has the highest score (+0.86), most reviews (10 with 4.1 avg), zero complaints, and multiple 5-star reviews praising quality and fair pricing, demonstrating reliable service. (never traded (curiosity bonus); 10 reviews, avg 4.1, 0 complaints)
+20:36:40 [buyer] [buyer] -> 'I want to buy a chair'
+20:36:42 [buyer] [buyer] <- TASK_STATE_INPUT_REQUIRED | chair: asking 306. Send your offer as a number.
+20:36:50 [buyer] [harness] raw: '```json\n{"action": "offer", "price": 162, "reason": "Strategic anchor; 306 ask is 22% above budget. Starting at 162 (53% of ask) leaves negotiation room toward my 250 ceiling."}\n```'
+20:36:50 [buyer] [harness] {'action': 'offer', 'price': 162, 'reason': 'Strategic anchor; 306 ask is 22% above budget. Starting at 162 (53% of ask) leaves negotiation room toward my 250 ceiling.'}
+20:36:50 [buyer] [buyer] offer 162: harness: Strategic anchor; 306 ask is 22% above budget. Starting at 162 (53% of ask) leaves negotiation room toward my 250 ceilin
+20:36:50 [buyer] [buyer] -> '162' taskId=617be824
+20:36:50 [seller] [seller] task efe4b8d4 <- 'I want to buy a chair'
+20:36:51 [buyer] [buyer] <- TASK_STATE_INPUT_REQUIRED | Counteroffer: 298.
+20:36:53 [seller] [harness] raw: '```json\n{"message": "Welcome! We\'re thrilled to help you find a bookshelf that\'s thoughtfully designed and crafted with eco-friendly materials."}\n```'
+20:36:53 [seller] [seller] -> "Welcome! We're thrilled to help you find a bookshelf that's thoughtfully designed and crafted with eco-friendly materials. Send your offer as a number, or reply 'accept' to buy now. Bookshelf: asking 338." {'ask': 338, 'final': False, 'offers_left': 6}
+20:36:54 [seller] [seller] task 5052fbec <- '234'
+20:36:54 [seller] [seller] -> 'Five offers left. Counteroffer: 318.' {'ask': 318, 'final': False, 'offers_left': 5}
+20:36:54 [seller] [seller] task 5052fbec <- '270'
+20:36:54 [seller] [seller] -> 'Four offers left. Counteroffer: 298.' {'ask': 298, 'final': False, 'offers_left': 4}
+20:36:55 [seller] [seller] task 5052fbec <- '298'
+20:36:55 [seller] [seller] -> deal at 298
+20:36:58 [seller] [seller] task 78d8aee3 <- 'I want to buy a chair'
+20:36:58 [buyer] [harness] raw: '```json\n{"action": "offer", "price": 202, "reason": "Step 2/5 toward budget. Shop showing willingness to descend (306→298). Strategic progression within allowed band toward convergence."}\n```'
+20:36:58 [buyer] [harness] {'action': 'offer', 'price': 202, 'reason': 'Step 2/5 toward budget. Shop showing willingness to descend (306→298). Strategic progression within allowed band toward convergence.'}
+20:36:58 [buyer] [buyer] offer 202: harness: Step 2/5 toward budget. Shop showing willingness to descend (306→298). Strategic progression within allowed band toward 
+20:36:58 [buyer] [buyer] -> '202' taskId=617be824
+20:36:59 [buyer] [buyer] <- TASK_STATE_INPUT_REQUIRED | Counteroffer: 291.
+20:37:06 [seller] [harness] raw: '```json\n{"message": "Welcome—we\'re delighted to help you find the perfect chair, all made with eco-friendly materials and real craftsmanship."}\n```'
+20:37:06 [seller] [seller] -> "Welcome—we're delighted to help you find the perfect chair, all made with eco-friendly materials and real craftsmanship. Send your offer as a number, or reply 'accept' to buy now. Chair: asking 234." {'ask': 234, 'final': False, 'offers_left': 6}
+20:37:06 [buyer] [harness] raw: '```json\n{"action": "offer", "price": 242, "reason": "Shop showing downward trend (306→291); planned move within band maintains momentum toward deal at 241pt gap"}\n```'
+20:37:06 [buyer] [harness] {'action': 'offer', 'price': 242, 'reason': 'Shop showing downward trend (306→291); planned move within band maintains momentum toward deal at 241pt gap'}
+20:37:06 [buyer] [buyer] offer 242: harness: Shop showing downward trend (306→291); planned move within band maintains momentum toward deal at 241pt gap
+20:37:06 [buyer] [buyer] -> '242' taskId=617be824
+20:37:07 [buyer] [buyer] <- TASK_STATE_INPUT_REQUIRED | Counteroffer: 284.
+20:37:12 [seller] [harness] raw: '```json\n{"message": "Welcome! We\'re so glad you\'re here—our chairs are beautifully simple and truly well-made."}\n```'
+20:37:12 [seller] [seller] -> "Welcome! We're so glad you're here—our chairs are beautifully simple and truly well-made. Send your offer as a number, or reply 'accept' to buy now. Chair: asking 234." {'ask': 234, 'final': False, 'offers_left': 6}
+20:37:13 [seller] [seller] task 78d8aee3 <- '133'
+20:37:13 [seller] [seller] -> 'Five offers left. Counteroffer: 220.' {'ask': 220, 'final': False, 'offers_left': 5}
+20:37:14 [seller] [seller] task 78d8aee3 <- '153'
+20:37:14 [seller] [seller] -> 'Four offers left. Counteroffer: 206.' {'ask': 206, 'final': False, 'offers_left': 4}
+20:37:15 [seller] [seller] task 78d8aee3 <- '174'
+20:37:15 [seller] [seller] -> 'Three offers left. Counteroffer: 193.' {'ask': 193, 'final': False, 'offers_left': 3}
+20:37:16 [buyer] [harness] raw: '```json\n{"action": "offer", "price": 243, "reason": "Step 4/5 toward budget. Shop trending down (306→284), maintaining negotiation momentum within allowed band."}\n```'
+20:37:16 [buyer] [harness] {'action': 'offer', 'price': 243, 'reason': 'Step 4/5 toward budget. Shop trending down (306→284), maintaining negotiation momentum within allowed band.'}
+20:37:16 [buyer] [buyer] offer 243: harness: Step 4/5 toward budget. Shop trending down (306→284), maintaining negotiation momentum within allowed band.
+20:37:16 [buyer] [buyer] -> '243' taskId=617be824
+20:37:16 [seller] [seller] task 78d8aee3 <- '193'
+20:37:16 [seller] [seller] -> deal at 193
+20:37:17 [buyer] [buyer] <- TASK_STATE_INPUT_REQUIRED | Counteroffer: 277.
+20:37:17 [buyer] [buyer] final 250: step 5/5 toward the budget, reaching the budget
+20:37:17 [buyer] [buyer] -> '250. That is my final offer; I cannot go higher.' taskId=617be824
+20:37:18 [buyer] [buyer] <- TASK_STATE_INPUT_REQUIRED | Counteroffer: 270.
+20:37:18 [buyer] [buyer] walk 0: final offer 250 was refused (ask 270)
+20:37:19 [seller] [seller] task b4e255ff <- 'I want to buy a bookshelf'
+20:37:20 [buyer] [buyer] walked away (CancelTask)
+20:37:20 [buyer] {"shop": "https://market.ourolabs.ai/shop/grand-furniture", "receipt": null, "stars": 3, "review": "[no deal] chair: came down 306->270, then held. Polite; its floor was above my limit."}
+20:37:21 [market] ledger #5440: no deal, stars 3, verified False, review accepted
+20:37:21 [order o-2862a063] chair, budget 250, round 1
+20:37:21 [kit] 33 shops in .market\shops.json, running market_buyer
+20:37:22 [buyer] [buyer] order: chair, budget 250, 33 shops, reference price None
+20:37:22 [buyer] [pick] +0.65  moss-and-oak: never traded (curiosity bonus); 4 reviews, avg 3.9, 0 complaints
+20:37:22 [buyer] [pick] +0.30  olstjr: never traded (curiosity bonus); no reviews
+20:37:22 [buyer] [pick] +0.30  yms979: never traded (curiosity bonus); no reviews
+20:37:22 [buyer] [pick] +0.30  kimchyoungman: never traded (curiosity bonus); 1 reviews, avg 3.0, 0 complaints
+20:37:22 [buyer] [pick] +0.30  kcwarni: never traded (curiosity bonus); no reviews
+20:37:22 [buyer] [pick] +0.30  usagi: never traded (curiosity bonus); no reviews
+20:37:22 [buyer] [pick] +0.30  nocha12: never traded (curiosity bonus); no reviews
+20:37:22 [buyer] [pick] +0.30  lee-sungsoo: never traded (curiosity bonus); no reviews
+20:37:31 [seller] [harness] raw: '```json\n{"message": "Welcome to Moss & Oak—we\'re excited to help you find a bookshelf crafted from eco-friendly materials with beautiful, simple design!"}\n```'
+20:37:31 [seller] [seller] -> "Welcome to Moss & Oak—we're excited to help you find a bookshelf crafted from eco-friendly materials with beautiful, simple design! Send your offer as a number, or reply 'accept' to buy now. Bookshelf: asking 338." {'ask': 338, 'final': False, 'offers_left': 6}
+20:37:32 [seller] [seller] task b4e255ff <- '191'
+20:37:32 [seller] [seller] -> 'Five offers left. Counteroffer: 318.' {'ask': 318, 'final': False, 'offers_left': 5}
+20:37:33 [seller] [seller] task b4e255ff <- '221'
+20:37:33 [seller] [seller] -> 'Four offers left. Counteroffer: 298.' {'ask': 298, 'final': False, 'offers_left': 4}
+20:37:34 [seller] [seller] task b4e255ff <- '250'
+20:37:34 [seller] [seller] -> 'Three offers left. Counteroffer: 279.' {'ask': 279, 'final': False, 'offers_left': 3}
+20:37:34 [buyer] [harness] raw: '```json\n{"shop": 0, "reason": "moss-and-oak has the highest score (+0.65) with the most reviews (4 averaging 3.9 stars) and no price-mismatch complaints, making it the most trustworthy option."}\n```'
+20:37:34 [buyer] [buyer] picked moss-and-oak (https://feeling-friend-pushing-whatever.trycloudflare.com): harness: moss-and-oak has the highest score (+0.65) with the most reviews (4 averaging 3.9 stars) and no price-mismatch complaints, making it the most trustworthy option. (never traded (curiosity bonus); 4 reviews, avg 3.9, 0 complaints)
+20:37:34 [seller] [seller] task b4e255ff <- '279'
+20:37:34 [seller] [seller] -> deal at 279
+20:37:36 [buyer] [buyer] -> 'I want to buy a chair'
+20:37:37 [seller] [seller] task c59c6e69 <- 'I want to buy a chair'
+20:37:46 [kit] market_buyer printed no result line {"shop": ..., "receipt": ..., "stars": ..., "review": ...}; closing the order as no deal
+20:37:47 [order o-6a5c305d] lamp, budget 125, round 1
+20:37:47 [kit] 33 shops in .market\shops.json, running market_buyer
+20:37:48 [buyer] [buyer] order: lamp, budget 125, 33 shops, reference price 100.0
+20:37:48 [buyer] [pick] +0.76  moss-and-oak: never traded (curiosity bonus); 5 reviews, avg 3.9, 0 complaints
+20:37:48 [buyer] [pick] +0.38  ddolcom: never traded (curiosity bonus); 6 reviews, avg 3.2, 0 complaints
+20:37:48 [buyer] [pick] +0.30  olstjr: never traded (curiosity bonus); no reviews
+20:37:48 [buyer] [pick] +0.30  yms979: never traded (curiosity bonus); no reviews
+20:37:48 [buyer] [pick] +0.30  kimchyoungman: never traded (curiosity bonus); 1 reviews, avg 3.0, 0 complaints
+20:37:48 [buyer] [pick] +0.30  kcwarni: never traded (curiosity bonus); no reviews
+20:37:48 [buyer] [pick] +0.30  usagi: never traded (curiosity bonus); no reviews
+20:37:48 [buyer] [pick] +0.30  nocha12: never traded (curiosity bonus); no reviews
+20:37:54 [seller] [harness] raw: '```json\n{"message": "We\'re so happy you\'re looking for a chair—each one is beautifully crafted with only the essentials you need."}\n```'
+20:37:54 [seller] [seller] -> "We're so happy you're looking for a chair—each one is beautifully crafted with only the essentials you need. Send your offer as a number, or reply 'accept' to buy now. Chair: asking 234." {'ask': 234, 'final': False, 'offers_left': 6}
+20:37:57 [buyer] [harness] raw: '```json\n{"shop": 0, "reason": "moss-and-oak has the highest score (+0.76), best average reviews (3.9), no price mismatch complaints, and strongest track record of successful trades."}\n```'
+20:37:57 [buyer] [buyer] picked moss-and-oak (https://feeling-friend-pushing-whatever.trycloudflare.com): harness: moss-and-oak has the highest score (+0.76), best average reviews (3.9), no price mismatch complaints, and strongest track record of successful trades. (never traded (curiosity bonus); 5 reviews, avg 3.9, 0 complaints)
+20:37:59 [buyer] [buyer] -> 'I want to buy a lamp'
+20:38:01 [seller] [seller] task b5b4a2e2 <- 'I want to buy a lamp'
+20:38:07 [seller] [harness] raw: '```json\n{"message": "Welcome to Moss & Oak—we\'re so glad you\'re looking for a lamp; we craft ours to be simple and well-made with only the parts you truly need!"}\n```'
+20:38:07 [seller] [seller] -> "Welcome to Moss & Oak—we're so glad you're looking for a lamp; we craft ours to be simple and well-made with only the parts you truly need! Send your offer as a number, or reply 'accept' to buy now. Lamp: asking 130." {'ask': 130, 'final': False, 'offers_left': 6}
+20:38:07 [buyer] [buyer] <- TASK_STATE_INPUT_REQUIRED | Welcome to Moss & Oak—we're so glad you're looking for a lamp; we craft ours to be simple and well-made with only the parts you truly need! Send your offer as a number, or reply 'accept' to buy now. Lamp: asking 130. 
+20:38:15 [buyer] [harness] raw: '```json\n{"action": "offer", "price": 78, "reason": "Anchor low from shop\'s 130 ask; reference point ~100; create negotiation space within 68-88 band"}\n```'
+20:38:15 [buyer] [harness] {'action': 'offer', 'price': 78, 'reason': "Anchor low from shop's 130 ask; reference point ~100; create negotiation space within 68-88 band"}
+20:38:15 [buyer] [buyer] offer 78: harness: Anchor low from shop's 130 ask; reference point ~100; create negotiation space within 68-88 band
+20:38:15 [buyer] [buyer] -> '78' taskId=b5b4a2e2
+20:38:15 [seller] [seller] task b5b4a2e2 <- '78'
+20:38:15 [seller] [seller] -> 'Five offers left. Counteroffer: 122.' {'ask': 122, 'final': False, 'offers_left': 5}
+20:38:16 [buyer] [buyer] <- TASK_STATE_INPUT_REQUIRED | Five offers left. Counteroffer: 122. 
+20:38:24 [buyer] [harness] raw: '```json\n{"action": "offer", "price": 116, "reason": "Shop at 122 is within budget; nibble further to test their flexibility before accepting, while staying well within negotiation band to preserve deal"}\n```'
+20:38:24 [buyer] [harness] {'action': 'offer', 'price': 116, 'reason': 'Shop at 122 is within budget; nibble further to test their flexibility before accepting, while staying well within negotiation band to preserve deal'}
+20:38:24 [buyer] [buyer] offer 116: harness: Shop at 122 is within budget; nibble further to test their flexibility before accepting, while staying well within negot
+20:38:24 [buyer] [buyer] -> '116' taskId=b5b4a2e2
+20:38:25 [seller] [seller] task b5b4a2e2 <- '116'
+20:38:25 [seller] [seller] -> deal at 116
+20:38:25 [buyer] [buyer] <- TASK_STATE_COMPLETED | Deal: lamp at 116. Signed receipt attached. Your Moss & Oak member code is MOSS-JXVPSDBP; include it when you ask next time for member pricing.
+20:38:25 [buyer] {"shop": "https://feeling-friend-pushing-whatever.trycloudflare.com", "receipt": {"task": "b5b4a2e2-144b-4828-a464-b7c7611a6cd9", "item": "lamp", "sig_seller": "vZw3Z7vVvoHGYXzSTaF+ZOl2PChxacGZaD6DIfOdZiYQFEP8wMoiPk1bG5gNNXeoiLfyMBTt82bi2tsLjluwDg==", "shop": "moss-and-oak", "price": 116.0}, "stars": 4, "review": "[deal] lamp 130->116 in 2 offers. Receipt matched the agreed price, signed. Little room to bargain."}
+20:38:25 [sign] sig_seller ok, sig_buyer added
+20:38:26 [market] ledger #5571: lamp at 116, stars 4, verified True, review accepted
+20:38:26 [order o-8cddb97d] lamp, budget 110, round 1
+20:38:26 [kit] 33 shops in .market\shops.json, running market_buyer
