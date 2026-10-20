@@ -1,5 +1,6 @@
 {
-  "harness": "Claude Code 2.1.169, claude -p --model haiku (both agents)",
+  "harness": "Claude Code 2.1.169, claude -p --model haiku (seller, buyer, market_buyer); market_buyer plans offers in code and lets haiku adjust inside a band and pick among the top shops",
   "seller": {"cmd": "python seller.py --port {port}"},
-  "buyer": {"cmd": "python buyer.py --url {url} --item {item} --budget {budget}"}
+  "buyer": {"cmd": "python buyer.py --url {url} --item {item} --budget {budget}"},
+  "market_buyer": {"cmd": "python market_buyer.py --shops {shops} --item {item} --budget {budget}"}
 }
