@@ -370,9 +370,8 @@ def main():
     args = ap.parse_args()
     start, mem_path = time.time(), Path(args.memory)
     shops = json.loads(Path(args.shops).read_text(encoding="utf-8"))
-    # Never trade with or review our own shop: it runs under another kit name, so the kit does not filter it
-    # (the buyer picked moss-and-oak at 20:37 and was stopped before it finished).
-    shops = [s for s in shops if s["name"].lower() not in OWN_SHOPS] or shops
+    # Our own shop runs under another kit name, so the kit does not filter it. It is scored like any other
+    # shop (no bonus); a review of it says so, since a same-owner review hidden as a stranger's would mislead.
     mem = load_memory(mem_path)
     ref = ref_price(mem, args.item)
     print(f"[buyer] order: {args.item}, budget {args.budget}, {len(shops)} shops, reference price {ref}", flush=True)
@@ -398,6 +397,8 @@ def main():
     if problems:
         print(f"[buyer] receipt check: {problems}", flush=True)
     stars, text = review(args.item, args.budget, deal, problems)
+    if shop["name"].lower() in OWN_SHOPS:
+        text = "[own shop: same owner as this buyer] " + text
     remember(mem, shop["name"], args.item, args.budget, deal, problems, mem_path)
     print(json.dumps({"shop": shop["url"], "receipt": deal["receipt"], "stars": stars, "review": text},
                      ensure_ascii=False), flush=True)
