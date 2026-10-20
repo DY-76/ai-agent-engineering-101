@@ -77,6 +77,17 @@ POPUPS = [
 ]
 SEASON_GOAL, VIP_ODDS = 10, 0.5      # ten purchases in one pop-up season enter a draw for a VIP pass
 POPUP_ASK = 0.95
+EVENT = Path(__file__).with_name("event.json")     # {"name": ..., "until": "YYYY-MM-DDTHH:MM:SS"}, read per negotiation
+
+
+def event() -> dict | None:
+    """A running first-visit event, or None. A free rental would be a receipt at zero, below the floor, so the
+    strongest offer the rules allow is the floor price itself, for a limited time."""
+    try:
+        e = json.loads(EVENT.read_text(encoding="utf-8"))
+        return e if datetime.now() < datetime.fromisoformat(e["until"]) else None
+    except (OSError, ValueError, KeyError):
+        return None
 
 
 def popup() -> dict:
@@ -253,7 +264,12 @@ class Seller(AgentExecutor):
                 ask = min(ask, cap)                                   # member price promise
             ask, perk_text, pts_used, cpn_used = perks(code, max(ask, RESERVE[item]), RESERVE[item])
             pop = popup()
-            if not member:
+            ev = None if member else event()
+            if ev:
+                ask = RESERVE[item]
+                perk_text += (f" {ev['name']} for first-time buyers, for a limited time: our floor price right "
+                              f"away, and double points on this purchase.")
+            elif not member:
                 ask = round(ask * WELCOME_ASK)
                 perk_text += " First visit: welcome offer applied, and double points on this purchase."
             if pop["item"] == item:
