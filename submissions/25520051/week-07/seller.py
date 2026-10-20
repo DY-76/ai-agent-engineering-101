@@ -10,6 +10,8 @@ the harness writes only the greeting, and every reply is easy for any buyer mode
 import argparse
 import asyncio
 import base64
+import hashlib
+import hmac
 import json
 import re
 import sys
@@ -33,8 +35,10 @@ from harness import ask_json
 sys.stdout.reconfigure(encoding="utf-8")   # the trade test redirects stdout to a file (cp949 on Windows)
 
 RESERVE = {"lamp": 100, "chair": 180, "bookshelf": 260}
-SHOP_NAME = "move_76"                      # the nickname the kit registers this shop under
+SHOP_NAME = "moss-and-oak"                 # the nickname the kit registers this shop under
 KEY_PATH = Path(__file__).with_name("shop_key.pem")
+BRAND = ("Moss & Oak: simple, well-made furniture with only the parts you need, at fair prices. "
+         "Eco-friendly materials, an inclusive workshop, every receipt signed.")
 
 
 def canon(d: dict) -> bytes:
@@ -55,25 +59,52 @@ MAX_OFFERS = 6                               # numeric offers per negotiation; b
 STEP = [0.25, 0.35, 0.5, 0.7, 1.0]           # share of the remaining (ask - reserve) given up per counter
 WORDS = ["no", "one", "two", "three", "four", "five", "six"]
 ACCEPT = re.compile(r"^\W*(yes|ok|okay|deal|accept|accepted|agreed|i accept|i agree|i'?ll take it|sold)\b", re.I)
+HELP = re.compile(r"\b(help|support|how does|rules?)\b", re.I)
+MEMBER = re.compile(r"\bMOSS-([A-Z]{4})([A-Z]{4})\b")
+MEMBER_ASK = 0.92                            # members open lower ...
+MEMBER_STEP = [0.4, 0.5, 0.7, 1.0]           # ... and reach the reserve sooner
+
+
+def _secret() -> bytes:
+    return hashlib.sha256(KEY_PATH.read_bytes()).digest()
+
+
+def _letters(b: bytes, n: int) -> str:
+    return "".join(chr(65 + x % 26) for x in b[:n])
+
+
+def member_code(task_id: str) -> str:
+    """Letters only (the price stays the only number in a reply); checked by recomputing, nothing stored."""
+    nonce = _letters(hashlib.sha256(task_id.encode()).digest(), 4)
+    return f"MOSS-{nonce}{_letters(hmac.new(_secret(), nonce.encode(), 'sha256').digest(), 4)}"
+
+
+def is_member(text: str) -> bool:
+    m = MEMBER.search(text.upper())
+    return bool(m) and hmac.compare_digest(_letters(hmac.new(_secret(), m.group(1).encode(), "sha256").digest(), 4),
+                                           m.group(2))
 
 # Every reply is written for any buyer model, large or small:
 # - the current price is the only digit in the text, and it comes last ("Counteroffer: 115.")
 # - "Final price" means it will not go lower; the offers left are spelled out, never digits
 # - the same facts ride along as a data Part {ask, final, offers_left} for buyers that read data
-PITCH_SYSTEM = """You run a small furniture shop. Write ONE short, warm, honest sentence greeting a buyer
-who asked for an item. Mention one true thing: receipts are signed, replies are fast, or the item is solid.
-No numbers, no prices, no instructions to the buyer. Reply with JSON: {"message": "<sentence>"}"""
+PITCH_SYSTEM = f"""You greet buyers for this furniture shop. {BRAND}
+Write ONE short, warm sentence greeting a buyer who asked for an item, mentioning one of those facts.
+No numbers, no prices, no instructions to the buyer. Reply with JSON: {{"message": "<sentence>"}}"""
 
 
-def pitch(item: str) -> str:
-    ans = ask_json(PITCH_SYSTEM, f"The buyer asked for a {item}.", timeout=20, attempts=1) or {}
+def pitch(item: str, member: bool) -> str:
+    who = "a returning member" if member else "a new buyer"
+    ans = ask_json(PITCH_SYSTEM, f"{who} asked for a {item}.", timeout=20, attempts=1) or {}
     text = re.sub(r"\d+", "", str(ans.get("message") or "")).strip()   # the ask must stay the only number
-    return text[:160] or f"Thanks for asking about our {item}; every receipt is signed."
+    text = text[:160] or f"Welcome to Moss & Oak; our {item} is simple, sturdy and made from eco-friendly materials."
+    return text + (" Welcome back: member pricing applies." if member else "")
 
 
 def next_ask(deal: dict) -> int:
-    k = min(deal["offers"] - 1, len(STEP) - 1)
-    return max(deal["reserve"], round(deal["ask"] - (deal["ask"] - deal["reserve"]) * STEP[k]))
+    steps = MEMBER_STEP if deal.get("member") else STEP
+    k = min(deal["offers"] - 1, len(steps) - 1)
+    return max(deal["reserve"], round(deal["ask"] - (deal["ask"] - deal["reserve"]) * steps[k]))
 
 
 class Seller(AgentExecutor):
@@ -96,13 +127,29 @@ class Seller(AgentExecutor):
                 await up.reject(up.new_agent_message(parts=[new_text_part(
                     "We sell lamps, chairs and bookshelves. Ask for one of those.")]))
                 return
-            deal = {"item": item, "reserve": RESERVE[item], "ask": max(ASK[item], RESERVE[item]), "offers": 0}
+            member = is_member(text)
+            ask = round(ASK[item] * MEMBER_ASK) if member else ASK[item]
+            deal = {"item": item, "reserve": RESERVE[item], "ask": max(ask, RESERVE[item]), "offers": 0,
+                    "member": member}
             self.open[task.id] = deal
-            hello = await asyncio.to_thread(pitch, item)
+            hello = await asyncio.to_thread(pitch, item, member)
             await self.reply(up, deal, f"{hello} Send your offer as a number, or reply 'accept' to buy now. "
                                        f"{item.capitalize()}: asking {deal['ask']}.")
             return
 
+        if not deal["member"] and is_member(text):                       # a code given after the opening
+            deal["member"] = True
+            deal["ask"] = max(deal["reserve"], min(deal["ask"], round(ASK[deal["item"]] * MEMBER_ASK)))
+            if not re.search(r"\d", MEMBER.sub("", text.upper())):
+                await self.reply(up, deal, f"Welcome back, member pricing applies. Current price: {deal['ask']}.")
+                return
+            text = MEMBER.sub("", text.upper())
+        if HELP.search(text) and not re.search(r"\d", text):              # A/S: explain, never punish a question
+            left = MAX_OFFERS - deal["offers"]
+            await self.reply(up, deal, f"Send a whole number as your offer, or reply 'accept' to buy at the current "
+                                       f"price. {WORDS[left].capitalize()} offers left; 'Final price' means we cannot "
+                                       f"go lower. Current price: {deal['ask']}.")
+            return
         if ACCEPT.match(text) and not re.search(r"\d", text):          # "accept" buys at the current ask
             return await self.sell(up, task.id, deal, deal["ask"])
         m = re.search(r"\d+(?:\.\d+)?", text)
@@ -139,7 +186,8 @@ class Seller(AgentExecutor):
         receipt = sign_receipt({"shop": SHOP_NAME, "item": deal["item"], "price": price, "task": task_id})
         await up.add_artifact(parts=[new_data_part(receipt)], name="receipt")
         await up.complete(up.new_agent_message(parts=[new_text_part(
-            f"Deal: {deal['item']} at {price}. Signed receipt attached.")]))
+            f"Deal: {deal['item']} at {price}. Signed receipt attached. Your Moss & Oak member code is "
+            f"{member_code(task_id)}; include it when you ask next time for member pricing.")]))
         print(f"[seller] -> deal at {price}", flush=True)
         del self.open[task_id]
 
@@ -153,10 +201,11 @@ def build(port: int):
     url = f"http://127.0.0.1:{port}/"
     card = AgentCard(
         name=SHOP_NAME,
-        description="Desk lamps, chairs and bookshelves. Every receipt is signed (Ed25519 sig_seller over "
-                    "{shop, item, price, task}). Fast replies. Each reply ends with our current price as its only "
-                    "number; 'Final price' means we cannot go lower. Up to six offers per negotiation, and we say "
-                    "how many remain. Reply 'accept' to buy at the current price.",
+        description=BRAND + " Desk lamps, chairs and bookshelves. Receipts: Ed25519 sig_seller over "
+                    "{shop, item, price, task}. Each reply ends with our current price as its only number; "
+                    "'Final price' means we cannot go lower. Up to six offers, and we say how many remain. "
+                    "Reply 'accept' to buy at the current price, 'help' for the rules. Every buyer gets a member "
+                    "code with the receipt; members get lower prices next time.",
         version="1.0.0",
         default_input_modes=["text/plain"],
         default_output_modes=["application/json", "text/plain"],
