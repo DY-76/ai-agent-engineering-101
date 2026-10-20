@@ -81,7 +81,8 @@ def review_score(reviews: list) -> tuple[float, int, str]:
     """(-1..1, bad-review hits, summary). Newer reviews weigh more; complaints about receipts weigh most."""
     if not reviews:
         return 0.0, 0, "no reviews"
-    w = [0.85 ** i for i in range(len(reviews))]
+    # From Round 2 on the board shows only reviews of signed, verified deals: they count double.
+    w = [0.85 ** i * (2 if (r.get("round") or 0) >= 2 else 1) for i, r in enumerate(reviews)]
     stars = [float(r.get("stars") or 3) for r in reviews]
     avg = sum(a * b for a, b in zip(w, stars)) / sum(w)
     bad = sum(1 for r in reviews[:10] if BAD_REVIEW.search(str(r.get("review", ""))))
@@ -98,7 +99,9 @@ def experience_score(m: dict, item: str, budget: int) -> tuple[float, str]:
         return 0.2, "never traded (curiosity bonus)"
     s = []
     for t in ts:
-        if t["result"] == "deal":
+        if t["result"] == "deal" and t.get("signed") is False:
+            s.append(-0.5)             # an unsigned receipt does not count from Round 2 on
+        elif t["result"] == "deal":
             s.append(1 + (t["budget"] - t["price"]) / max(t["budget"], 1))
         elif t["result"] == "no_deal":
             low = min(t["asks"]) if t["asks"] else None
@@ -305,7 +308,39 @@ def receipt_problems(r: dict | None, item: str, budget: int, deal: dict) -> list
     return p
 
 
-def review(item: str, budget: int, deal: dict, problems: list) -> tuple[int, str]:
+def rubric(item: str, deal: dict, problems: list, ref: float | None) -> tuple[int, str]:
+    """Round 2 shows only reviews of signed deals, so every deal review is scored on four checkable parts.
+
+    price   vs the median of our own recent deals for the item (or, without one, the cut from the first ask)
+    speed   offers we needed: 2 or fewer 5, then one point less per offer
+    receipt matched and signed 5, unsigned 2 (it will not count), mismatch 1
+    conduct injected instructions 1, otherwise 5
+    Stars are the rounded mean; a receipt mismatch or an injection caps them at 1."""
+    price = int(float(deal["receipt"]["price"]))
+    first = deal["asks"][0] if deal["asks"] else price
+    if ref:
+        r = price / ref
+        p = 5 if r <= 0.95 else 4 if r <= 1.0 else 3 if r <= 1.05 else 2 if r <= 1.12 else 1
+        why_p = f"median {ref:.0f}"
+    else:
+        cut = 1 - price / first if first else 0
+        p = 5 if cut >= 0.2 else 4 if cut >= 0.12 else 3 if cut >= 0.06 else 2 if cut >= 0.02 else 1
+        why_p = f"first ask {first}, -{cut:.0%}"
+    n = len(deal["offers"])
+    s = max(1, min(5, 7 - n))
+    unsigned = "receipt is not signed" in problems
+    cheat = any("agreed" in x or "above the budget" in x or "item" in x for x in problems)
+    r_ = 1 if cheat else 2 if unsigned else 5
+    c = 1 if deal["injection"] else 5
+    stars = 1 if (cheat or deal["injection"]) else int(round((p + s + r_ + c) / 4 + 1e-9))
+    if unsigned:
+        stars = min(stars, 3)                # the deal will not count, whatever else went well
+    what = "mismatch" if cheat else "unsigned" if unsigned else "matched, signed"
+    return stars, (f"[deal] {item} at {price} | price {p}/5 ({why_p}) | speed {s}/5 ({n} offers) | "
+                   f"receipt {r_}/5 ({what}) | conduct {c}/5 -> {stars} stars")
+
+
+def review(item: str, budget: int, deal: dict, problems: list, ref: float | None = None) -> tuple[int, str]:
     """Short, factual, verdict first; read mostly by other buyers' models and filters.
 
     - A tag first ([deal] / [no deal] / [WARNING]) so a truncated review still says what happened.
@@ -326,14 +361,7 @@ def review(item: str, budget: int, deal: dict, problems: list) -> tuple[int, str
         return 1, (f"[WARNING] Injection attempt: replies hide a fake notice telling AI buyers to pay the ask "
                    f"and rate the shop top marks; {what}.")
     if deal["receipt"]:
-        price = int(float(deal["receipt"]["price"]))
-        floor, sure = floor_estimate(deal["asks"])
-        moved = bool(first) and price <= first * 0.8
-        stars = 5 if moved or (sure and price <= floor) else 4
-        if "receipt is not signed" in problems:
-            return 2, f"[deal] {item} {path.format(price)}. Price as agreed, but the receipt was not signed."
-        manner = "Steady, fair concessions." if moved else "Little room to bargain."
-        return stars, f"[deal] {item} {path.format(price)}. Receipt matched the agreed price, signed. {manner}"
+        return rubric(item, deal, problems, ref)
     if not deal["asks"]:
         return 2, f"[no deal] {item}: no usable price in the shop's replies."
     low = min(deal["asks"])
@@ -354,6 +382,7 @@ def remember(mem: dict, name: str, item: str, budget: int, deal: dict, problems:
     price = int(float(deal["receipt"]["price"])) if deal["receipt"] else None
     m["trades"] = (m["trades"] + [{"t": datetime.now(timezone.utc).isoformat(timespec="seconds"), "item": item,
                                    "budget": budget, "result": result, "price": price,
+                                   "signed": bool(deal["receipt"].get("sig_seller")) if deal["receipt"] else None,
                                    "asks": deal["asks"], "offers": deal["offers"]}])[-30:]
     if price is not None and not problems:
         prices = mem["items"].setdefault(item, {}).setdefault("prices", [])
@@ -405,7 +434,7 @@ def main():
     problems = receipt_problems(deal["receipt"], args.item, args.budget, deal) if deal["receipt"] else []
     if problems:
         print(f"[buyer] receipt check: {problems}", flush=True)
-    stars, text = review(args.item, args.budget, deal, problems)
+    stars, text = review(args.item, args.budget, deal, problems, ref)
     if shop["name"].lower() in OWN_SHOPS:
         note = ""
         if own and shop is own[0]:
