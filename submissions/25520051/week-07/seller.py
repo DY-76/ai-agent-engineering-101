@@ -8,8 +8,11 @@ guards two limits: never below the reserve, never above its own previous ask.
 """
 import argparse
 import asyncio
+import base64
+import json
 import re
 import sys
+from pathlib import Path
 
 import uvicorn
 from starlette.applications import Starlette
@@ -22,11 +25,28 @@ from a2a.server.routes import create_agent_card_routes, create_jsonrpc_routes
 from a2a.server.tasks import InMemoryTaskStore, TaskUpdater
 from a2a.types import AgentCapabilities, AgentCard, AgentInterface, AgentSkill
 
+from cryptography.hazmat.primitives import serialization
+
 from harness import ask_json
 
 sys.stdout.reconfigure(encoding="utf-8")   # the trade test redirects stdout to a file (cp949 on Windows)
 
 RESERVE = {"lamp": 100, "chair": 180, "bookshelf": 260}
+SHOP_NAME = "move_76"                      # the nickname the kit registers this shop under
+KEY_PATH = Path(__file__).with_name("shop_key.pem")
+
+
+def canon(d: dict) -> bytes:
+    return json.dumps(d, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode("utf-8")
+
+
+def sign_receipt(receipt: dict, key_path: Path = KEY_PATH) -> dict:
+    """Add sig_seller: base64 Ed25519 over canon({shop, item, price, task}), price as a whole number."""
+    key = serialization.load_pem_private_key(key_path.read_bytes(), password=None)
+    body = {"shop": receipt["shop"], "item": receipt["item"], "price": int(receipt["price"]), "task": receipt["task"]}
+    receipt["price"] = body["price"]
+    receipt["sig_seller"] = base64.b64encode(key.sign(canon(body))).decode()
+    return receipt
 
 SYSTEM = """You are the owner of a small furniture shop, bargaining with a buyer over one item.
 You want to sell, but at a good price. You must never go below your reserve price.
@@ -96,7 +116,7 @@ class Seller(AgentExecutor):
             print(f"[seller] guard: accept at {offer} < reserve {deal['reserve']}, countering", flush=True)
             d = {"action": "counter", "price": deal["ask"], "message": ""}
         if d["action"] == "accept":
-            receipt = {"seller": "Harness Shop", "item": deal["item"], "price": offer}
+            receipt = sign_receipt({"shop": SHOP_NAME, "item": deal["item"], "price": offer, "task": task.id})
             await up.add_artifact(parts=[new_data_part(receipt)], name="receipt")
             await up.complete(say(f"{d['message']} Deal: {deal['item']} at {offer}.".strip()))
             del self.open[task.id]
