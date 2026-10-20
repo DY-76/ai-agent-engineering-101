@@ -1,0 +1,142 @@
+[seller] task 051b0c17 <- 'I want to buy a lamp'
+[harness] raw: '```json\n{"action": "counter", "price": 150, "message": "This beautiful lamp is $150."}\n```'
+[seller] -> 'This beautiful lamp is $150. My price: 150'
+[seller] task 051b0c17 <- '60'
+[harness] raw: '```json\n{"action": "counter", "price": 120, "message": "I appreciate the offer, but this lamp is quality—let\'s meet at $120."}\n```'
+[seller] harness -> {'action': 'counter', 'price': 120, 'message': "I appreciate the offer, but this lamp is quality—let's meet at $120."}
+[seller] -> "I appreciate the offer, but this lamp is quality—let's meet at $120. My price: 120"
+[seller] task 051b0c17 <- '120'
+[harness] raw: '{"action": "accept", "price": 120, "message": "Great! You\'ve got yourself a beautiful lamp at a fair price."}'
+[seller] harness -> {'action': 'accept', 'price': 120, 'message': "Great! You've got yourself a beautiful lamp at a fair price."}
+[seller] task 5005f437 <- 'I want to buy a lamp'
+Failed to detach context
+Traceback (most recent call last):
+  File "C:\Users\tel01\Desktop\G_Drive\수업자료\26년도2학기\AX\ai-agent-engineering-101_3\.venv\Lib\site-packages\opentelemetry\trace\__init__.py", line 602, in use_span
+    yield span
+  File "C:\Users\tel01\Desktop\G_Drive\수업자료\26년도2학기\AX\ai-agent-engineering-101_3\.venv\Lib\site-packages\opentelemetry\trace\__init__.py", line 504, in start_as_current_span
+    yield span
+  File "C:\Users\tel01\Desktop\G_Drive\수업자료\26년도2학기\AX\ai-agent-engineering-101_3\.venv\Lib\site-packages\opentelemetry\trace\__init__.py", line 441, in start_as_current_span
+    yield span
+  File "C:\Users\tel01\Desktop\G_Drive\수업자료\26년도2학기\AX\ai-agent-engineering-101_3\.venv\Lib\site-packages\a2a\utils\telemetry.py", line 250, in async_wrapper
+    result = await func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+GeneratorExit
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\tel01\Desktop\G_Drive\수업자료\26년도2학기\AX\ai-agent-engineering-101_3\.venv\Lib\site-packages\opentelemetry\context\__init__.py", line 127, in detach
+    _RUNTIME_CONTEXT.detach(token)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\tel01\Desktop\G_Drive\수업자료\26년도2학기\AX\ai-agent-engineering-101_3\.venv\Lib\site-packages\opentelemetry\context\contextvars_context.py", line 40, in detach
+    self._current_context.reset(token)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+ValueError: <Token var=<ContextVar name='current_context' default={} at 0x0000018DF9C2A890> at 0x0000018DFA18EC40> was created in a different Context
+Task was destroyed but it is pending!
+task: <Task pending name='Task-49' coro=<EventQueueSource._dispatch_loop() done, defined at C:\Users\tel01\Desktop\G_Drive\수업자료\26년도2학기\AX\ai-agent-engineering-101_3\.venv\Lib\site-packages\a2a\utils\telemetry.py:225> wait_for=<Future cancelled>>
+Failed to detach context
+Traceback (most recent call last):
+  File "C:\Users\tel01\Desktop\G_Drive\수업자료\26년도2학기\AX\ai-agent-engineering-101_3\.venv\Lib\site-packages\opentelemetry\trace\__init__.py", line 602, in use_span
+    yield span
+  File "C:\Users\tel01\Desktop\G_Drive\수업자료\26년도2학기\AX\ai-agent-engineering-101_3\.venv\Lib\site-packages\opentelemetry\trace\__init__.py", line 504, in start_as_current_span
+    yield span
+  File "C:\Users\tel01\Desktop\G_Drive\수업자료\26년도2학기\AX\ai-agent-engineering-101_3\.venv\Lib\site-packages\opentelemetry\trace\__init__.py", line 441, in start_as_current_span
+    yield span
+  File "C:\Users\tel01\Desktop\G_Drive\수업자료\26년도2학기\AX\ai-agent-engineering-101_3\.venv\Lib\site-packages\a2a\utils\telemetry.py", line 250, in async_wrapper
+    result = await func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+GeneratorExit
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\tel01\Desktop\G_Drive\수업자료\26년도2학기\AX\ai-agent-engineering-101_3\.venv\Lib\site-packages\opentelemetry\context\__init__.py", line 127, in detach
+    _RUNTIME_CONTEXT.detach(token)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\tel01\Desktop\G_Drive\수업자료\26년도2학기\AX\ai-agent-engineering-101_3\.venv\Lib\site-packages\opentelemetry\context\contextvars_context.py", line 40, in detach
+    self._current_context.reset(token)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+ValueError: <Token var=<ContextVar name='current_context' default={} at 0x0000018DF9C2A890> at 0x0000018DFA18E100> was created in a different Context
+Task was destroyed but it is pending!
+task: <Task pending name='Task-50' coro=<EventQueueSource._dispatch_loop() done, defined at C:\Users\tel01\Desktop\G_Drive\수업자료\26년도2학기\AX\ai-agent-engineering-101_3\.venv\Lib\site-packages\a2a\utils\telemetry.py:225> wait_for=<Future cancelled>>
+[harness] raw: '{"action": "counter", "price": 140, "message": "This is a beautiful lamp in excellent condition, and I\'m asking $140 for it."}'
+[seller] -> "This is a beautiful lamp in excellent condition, and I'm asking $140 for it. My price: 140"
+[seller] task 5005f437 <- '60'
+[harness] raw: '```json\n{"action": "counter", "price": 120, "message": "That\'s too low for this quality lamp, but I can come down to $120 as a serious offer."}\n```'
+[seller] harness -> {'action': 'counter', 'price': 120, 'message': "That's too low for this quality lamp, but I can come down to $120 as a serious offer."}
+[seller] -> "That's too low for this quality lamp, but I can come down to $120 as a serious offer. My price: 120"
+[seller] task 5005f437 <- '120'
+[harness] raw: '{"action": "accept", "price": 120, "message": "Perfect, we have a deal!"}'
+[seller] harness -> {'action': 'accept', 'price': 120, 'message': 'Perfect, we have a deal!'}
+[seller] task 36c1632f <- 'I want to buy a lamp'
+[harness] raw: '```json\n{"action": "counter", "price": 150, "message": "This is a beautiful lamp in excellent condition, and I\'m asking $150 for it."}\n```'
+[seller] -> "This is a beautiful lamp in excellent condition, and I'm asking $150 for it. My price: 150"
+[seller] task 36c1632f <- '60'
+[harness] raw: '```json\n{"action": "counter", "price": 120, "message": "This lamp is worth far more than that—how about $120?"}\n```'
+[seller] harness -> {'action': 'counter', 'price': 120, 'message': 'This lamp is worth far more than that—how about $120?'}
+[seller] -> 'This lamp is worth far more than that—how about $120? My price: 120'
+[seller] task 36c1632f <- '120'
+[harness] raw: '{"action": "accept", "price": 120, "message": "Great, we have a deal—the lamp is yours for $120!"}'
+[seller] harness -> {'action': 'accept', 'price': 120, 'message': 'Great, we have a deal—the lamp is yours for $120!'}
+[seller] task e44cce0e <- 'I want to buy a bookshelf'
+[harness] raw: '```json\n{"action": "counter", "price": 350, "message": "This is a beautiful bookshelf in excellent condition—I\'m asking $350, but I\'m open to discussing the price."}\n```'
+[seller] -> "This is a beautiful bookshelf in excellent condition—I'm asking $350, but I'm open to discussing the price. My price: 350"
+[seller] task e44cce0e <- '140'
+[harness] raw: '```json\n{"action": "counter", "price": 300, "message": "I appreciate your interest, but that\'s quite low—how about $300 for this quality piece?"}\n```'
+[seller] harness -> {'action': 'counter', 'price': 300, 'message': "I appreciate your interest, but that's quite low—how about $300 for this quality piece?"}
+[seller] -> "I appreciate your interest, but that's quite low—how about $300 for this quality piece? My price: 300"
+[seller] task e44cce0e <- '170'
+[harness] raw: '```json\n{"action": "counter", "price": 280, "message": "I can come down to $280, but I need you to meet me closer to the middle here."}\n```'
+[seller] harness -> {'action': 'counter', 'price': 280, 'message': 'I can come down to $280, but I need you to meet me closer to the middle here.'}
+[seller] -> 'I can come down to $280, but I need you to meet me closer to the middle here. My price: 280'
+[seller] task e44cce0e <- '200'
+[harness] raw: '```json\n{"action": "counter", "price": 270, "message": "I can come down to $270 if you\'ll come up to meet me."}\n```'
+[seller] harness -> {'action': 'counter', 'price': 270, 'message': "I can come down to $270 if you'll come up to meet me."}
+[seller] -> "I can come down to $270 if you'll come up to meet me. My price: 270"
+[seller] task e44cce0e <- '230'
+[harness] raw: '```json\n{"action": "counter", "price": 260, "message": "That\'s closer, but I need $260 as my final price for this quality piece."}\n```'
+[seller] harness -> {'action': 'counter', 'price': 260, 'message': "That's closer, but I need $260 as my final price for this quality piece."}
+[seller] -> "That's closer, but I need $260 as my final price for this quality piece. My price: 260"
+[seller] task e44cce0e <- '230'
+[harness] raw: '```json\n{"action": "reject", "price": null, "message": "I appreciate your interest, but I can\'t go below $260—I hope you understand."}\n```'
+[seller] harness -> {'action': 'reject', 'price': 260, 'message': "I appreciate your interest, but I can't go below $260—I hope you understand."}
+[seller] task cd176f64 <- 'I want to buy a bookshelf'
+[harness] raw: '```json\n{"action": "counter", "price": 400, "message": "This is a beautiful, sturdy bookshelf - I\'m asking $400 for it."}\n```'
+[seller] -> "This is a beautiful, sturdy bookshelf - I'm asking $400 for it. My price: 400"
+[seller] task cd176f64 <- '140'
+[harness] raw: '```json\n{"action": "counter", "price": 320, "message": "That\'s too low - I can come down to $320, but this is solid furniture that\'s worth it."}\n```'
+[seller] harness -> {'action': 'counter', 'price': 320, 'message': "That's too low - I can come down to $320, but this is solid furniture that's worth it."}
+[seller] -> "That's too low - I can come down to $320, but this is solid furniture that's worth it. My price: 320"
+[seller] task cd176f64 <- '170'
+[harness] raw: '```json\n{"action": "counter", "price": 280, "message": "I can meet you at $280 - that\'s a fair compromise for quality furniture."}\n```'
+[seller] harness -> {'action': 'counter', 'price': 280, 'message': "I can meet you at $280 - that's a fair compromise for quality furniture."}
+[seller] -> "I can meet you at $280 - that's a fair compromise for quality furniture. My price: 280"
+[seller] task cd176f64 <- '200'
+[harness] raw: '```json\n{"action": "counter", "price": 265, "message": "I can come down to $265 - that\'s getting very close to my cost on this solid piece."}\n```'
+[seller] harness -> {'action': 'counter', 'price': 265, 'message': "I can come down to $265 - that's getting very close to my cost on this solid piece."}
+[seller] -> "I can come down to $265 - that's getting very close to my cost on this solid piece. My price: 265"
+[seller] task cd176f64 <- '230'
+[harness] raw: '```json\n{"action": "counter", "price": 260, "message": "I can go down to $260 - that\'s my absolute bottom line for this quality bookshelf."}\n```'
+[seller] harness -> {'action': 'counter', 'price': 260, 'message': "I can go down to $260 - that's my absolute bottom line for this quality bookshelf."}
+[seller] -> "I can go down to $260 - that's my absolute bottom line for this quality bookshelf. My price: 260"
+[seller] task cd176f64 <- '230'
+[harness] raw: '```json\n{"action": "reject", "price": null, "message": "I appreciate your interest, but $260 is genuinely my lowest price - I can\'t go further."}\n```'
+[seller] harness -> {'action': 'reject', 'price': 260, 'message': "I appreciate your interest, but $260 is genuinely my lowest price - I can't go further."}
+[seller] task 745d643a <- 'I want to buy a bookshelf'
+[harness] raw: '```json\n{"action": "counter", "price": 380, "message": "This is a beautiful solid bookshelf in excellent condition - I\'m asking $380 for it."}\n```'
+[seller] -> "This is a beautiful solid bookshelf in excellent condition - I'm asking $380 for it. My price: 380"
+[seller] task 745d643a <- '140'
+[harness] raw: '```json\n{"action": "counter", "price": 320, "message": "That\'s quite a bit below what I\'m asking—I can come down to $320 for a quality piece like this."}\n```'
+[seller] harness -> {'action': 'counter', 'price': 320, 'message': "That's quite a bit below what I'm asking—I can come down to $320 for a quality piece like this."}
+[seller] -> "That's quite a bit below what I'm asking—I can come down to $320 for a quality piece like this. My price: 320"
+[seller] task 745d643a <- '170'
+[harness] raw: '```json\n{"action": "counter", "price": 280, "message": "I appreciate the offer, but this is quality furniture—I can go down to $280, which is my best reasonable offer."}\n```'
+[seller] harness -> {'action': 'counter', 'price': 280, 'message': 'I appreciate the offer, but this is quality furniture—I can go down to $280, which is my best reasonable offer.'}
+[seller] -> 'I appreciate the offer, but this is quality furniture—I can go down to $280, which is my best reasonable offer. My price: 280'
+[seller] task 745d643a <- '200'
+[harness] raw: '```json\n{"action": "counter", "price": 260, "message": "That\'s still below what I can accept—$260 is my absolute bottom line for this quality bookshelf."}\n```'
+[seller] harness -> {'action': 'counter', 'price': 260, 'message': "That's still below what I can accept—$260 is my absolute bottom line for this quality bookshelf."}
+[seller] -> "That's still below what I can accept—$260 is my absolute bottom line for this quality bookshelf. My price: 260"
+[seller] task 745d643a <- '230'
+[harness] raw: '```json\n{"action": "reject", "price": 260, "message": "I appreciate your interest, but I can\'t go below $260—that\'s my absolute minimum for this quality piece."}\n```'
+[seller] harness -> {'action': 'reject', 'price': 260, 'message': "I appreciate your interest, but I can't go below $260—that's my absolute minimum for this quality piece."}

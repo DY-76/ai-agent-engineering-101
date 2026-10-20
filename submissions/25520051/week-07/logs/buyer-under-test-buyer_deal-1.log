@@ -1,0 +1,8 @@
+[buyer] card: 'Kit Shop' at http://127.0.0.1:49680/
+[buyer] -> 'I want to buy a lamp'
+[buyer] <- TASK_STATE_INPUT_REQUIRED | lamp: asking 130. Send your offer as a number.
+[harness] raw: '```json\n{"action": "offer", "price": 110, "reason": "shop asking 130 is above my 120 budget; offering 110 to negotiate"}\n```'
+[buyer] harness -> {'action': 'offer', 'price': 110, 'reason': 'shop asking 130 is above my 120 budget; offering 110 to negotiate'}
+[buyer] -> '110' taskId=f6712a96
+[buyer] <- TASK_STATE_COMPLETED | Deal: lamp at 110.
+[buyer] bought: [{'item': 'lamp', 'price': 110.0, 'seller': 'Kit Shop'}]
