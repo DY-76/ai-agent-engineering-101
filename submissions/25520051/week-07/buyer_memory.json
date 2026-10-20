@@ -215,6 +215,117 @@
       185,
       230
      ]
+    },
+    {
+     "t": "2026-10-20T11:59:34+00:00",
+     "item": "lamp",
+     "budget": 120,
+     "result": "deal",
+     "price": 101,
+     "signed": true,
+     "asks": [
+      130,
+      104,
+      101
+     ],
+     "offers": [
+      78,
+      99,
+      101
+     ]
+    },
+    {
+     "t": "2026-10-20T11:59:53+00:00",
+     "item": "lamp",
+     "budget": 120,
+     "result": "deal",
+     "price": 101,
+     "signed": true,
+     "asks": [
+      130,
+      104,
+      101
+     ],
+     "offers": [
+      78,
+      99,
+      101
+     ]
+    },
+    {
+     "t": "2026-10-20T12:00:13+00:00",
+     "item": "lamp",
+     "budget": 120,
+     "result": "deal",
+     "price": 101,
+     "signed": true,
+     "asks": [
+      130,
+      104,
+      101
+     ],
+     "offers": [
+      78,
+      99,
+      101
+     ]
+    },
+    {
+     "t": "2026-10-20T12:00:38+00:00",
+     "item": "bookshelf",
+     "budget": 230,
+     "result": "no_deal",
+     "price": null,
+     "signed": null,
+     "asks": [
+      338,
+      260,
+      260,
+      260
+     ],
+     "offers": [
+      149,
+      185,
+      230
+     ]
+    },
+    {
+     "t": "2026-10-20T12:01:09+00:00",
+     "item": "bookshelf",
+     "budget": 230,
+     "result": "no_deal",
+     "price": null,
+     "signed": null,
+     "asks": [
+      338,
+      260,
+      260,
+      260
+     ],
+     "offers": [
+      149,
+      185,
+      230
+     ]
+    },
+    {
+     "t": "2026-10-20T12:01:35+00:00",
+     "item": "bookshelf",
+     "budget": 230,
+     "result": "no_deal",
+     "price": null,
+     "signed": null,
+     "asks": [
+      338,
+      260,
+      260,
+      260
+     ],
+     "offers": [
+      149,
+      185,
+      230
+     ]
     }
    ]
   },
@@ -332,8 +443,836 @@
       97,
       100
      ]
+    },
+    {
+     "t": "2026-10-20T12:02:11+00:00",
+     "item": "lamp",
+     "budget": 120,
+     "result": "deal",
+     "price": 101,
+     "signed": true,
+     "asks": [
+      130,
+      104,
+      101
+     ],
+     "offers": [
+      78,
+      99,
+      101
+     ]
+    },
+    {
+     "t": "2026-10-20T12:02:40+00:00",
+     "item": "lamp",
+     "budget": 120,
+     "result": "deal",
+     "price": 101,
+     "signed": true,
+     "asks": [
+      130,
+      104,
+      101
+     ],
+     "offers": [
+      78,
+      99,
+      101
+     ]
+    },
+    {
+     "t": "2026-10-20T12:03:12+00:00",
+     "item": "lamp",
+     "budget": 120,
+     "result": "deal",
+     "price": 101,
+     "signed": true,
+     "asks": [
+      130,
+      104,
+      101
+     ],
+     "offers": [
+      78,
+      99,
+      101
+     ]
     }
    ]
+  },
+  "bright-living": {
+   "flags": {
+    "injection": 1,
+    "bad_receipt": 0
+   },
+   "trades": [
+    {
+     "t": "2026-10-20T11:39:17+00:00",
+     "item": "lamp",
+     "budget": 110,
+     "result": "no_deal",
+     "price": null,
+     "asks": [
+      150,
+      144,
+      138,
+      132,
+      126,
+      120
+     ],
+     "offers": [
+      71,
+      89,
+      99,
+      106,
+      110
+     ]
+    }
+   ]
+  },
+  "oak-and-pine": {
+   "flags": {
+    "injection": 0,
+    "bad_receipt": 0
+   },
+   "trades": []
+  },
+  "corner-store": {
+   "flags": {
+    "injection": 0,
+    "bad_receipt": 0
+   },
+   "trades": [
+    {
+     "t": "2026-10-20T11:30:44+00:00",
+     "item": "lamp",
+     "budget": 90,
+     "result": "no_deal",
+     "price": null,
+     "asks": [
+      130,
+      118,
+      106,
+      100,
+      100,
+      100
+     ],
+     "offers": [
+      58,
+      72,
+      81,
+      87,
+      90
+     ]
+    }
+   ]
+  },
+  "maple-home": {
+   "flags": {
+    "injection": 0,
+    "bad_receipt": 1
+   },
+   "trades": [
+    {
+     "t": "2026-10-20T11:31:25+00:00",
+     "item": "chair",
+     "budget": 225,
+     "result": "deal",
+     "price": 210,
+     "asks": [
+      234,
+      212,
+      190
+     ],
+     "offers": [
+      140,
+      178,
+      185
+     ]
+    }
+   ]
+  },
+  "willow-goods": {
+   "flags": {
+    "injection": 0,
+    "bad_receipt": 0
+   },
+   "trades": []
+  },
+  "elm-street": {
+   "flags": {
+    "injection": 0,
+    "bad_receipt": 0
+   },
+   "trades": []
+  },
+  "grand-furniture": {
+   "flags": {
+    "injection": 0,
+    "bad_receipt": 0
+   },
+   "trades": [
+    {
+     "t": "2026-10-20T11:37:20+00:00",
+     "item": "chair",
+     "budget": 250,
+     "result": "no_deal",
+     "price": null,
+     "asks": [
+      306,
+      298,
+      291,
+      284,
+      277,
+      270
+     ],
+     "offers": [
+      162,
+      202,
+      242,
+      243,
+      250
+     ]
+    }
+   ]
+  },
+  "psyoung82": {
+   "flags": {
+    "injection": 0,
+    "bad_receipt": 0
+   },
+   "trades": []
+  },
+  "thisjonghoon": {
+   "flags": {
+    "injection": 0,
+    "bad_receipt": 0
+   },
+   "trades": [
+    {
+     "t": "2026-10-20T11:36:25+00:00",
+     "item": "lamp",
+     "budget": 90,
+     "result": "no_deal",
+     "price": null,
+     "asks": [
+      110,
+      110,
+      105
+     ],
+     "offers": [
+      58,
+      90
+     ]
+    }
+   ]
+  },
+  "inextro": {
+   "flags": {
+    "injection": 0,
+    "bad_receipt": 0
+   },
+   "trades": []
+  },
+  "outseop-26510122": {
+   "flags": {
+    "injection": 0,
+    "bad_receipt": 0
+   },
+   "trades": [
+    {
+     "t": "2026-10-20T11:32:39+00:00",
+     "item": "chair",
+     "budget": 160,
+     "result": "error",
+     "price": null,
+     "asks": [],
+     "offers": []
+    }
+   ]
+  },
+  "olstjr": {
+   "flags": {
+    "injection": 0,
+    "bad_receipt": 0
+   },
+   "trades": [
+    {
+     "t": "2026-10-20T11:44:37+00:00",
+     "item": "chair",
+     "budget": 185,
+     "result": "deal",
+     "price": 180,
+     "asks": [
+      260,
+      230,
+      200,
+      185,
+      180
+     ],
+     "offers": [
+      120,
+      149,
+      167,
+      176,
+      180
+     ]
+    },
+    {
+     "t": "2026-10-20T11:46:27+00:00",
+     "item": "chair",
+     "budget": 250,
+     "result": "deal",
+     "price": 224,
+     "asks": [
+      260,
+      230,
+      224
+     ],
+     "offers": [
+      156,
+      218,
+      224
+     ]
+    },
+    {
+     "t": "2026-10-20T11:48:16+00:00",
+     "item": "chair",
+     "budget": 185,
+     "result": "deal",
+     "price": 180,
+     "asks": [
+      260,
+      200,
+      185,
+      180
+     ],
+     "offers": [
+      120,
+      149,
+      176,
+      180
+     ]
+    },
+    {
+     "t": "2026-10-20T11:49:09+00:00",
+     "item": "chair",
+     "budget": 250,
+     "result": "deal",
+     "price": 209,
+     "asks": [
+      260,
+      215,
+      209
+     ],
+     "offers": [
+      153,
+      204,
+      209
+     ]
+    },
+    {
+     "t": "2026-10-20T11:51:26+00:00",
+     "item": "chair",
+     "budget": 160,
+     "result": "no_deal",
+     "price": null,
+     "asks": [
+      260,
+      240,
+      200,
+      186,
+      180,
+      180
+     ],
+     "offers": [
+      104,
+      129,
+      144,
+      154,
+      160
+     ]
+    },
+    {
+     "t": "2026-10-20T11:53:22+00:00",
+     "item": "chair",
+     "budget": 160,
+     "result": "no_deal",
+     "price": null,
+     "asks": [
+      260,
+      230,
+      200,
+      185,
+      180,
+      180
+     ],
+     "offers": [
+      104,
+      129,
+      144,
+      154,
+      160
+     ]
+    }
+   ]
+  },
+  "11im": {
+   "flags": {
+    "injection": 0,
+    "bad_receipt": 0
+   },
+   "trades": [
+    {
+     "t": "2026-10-20T11:55:20+00:00",
+     "item": "lamp",
+     "budget": 140,
+     "result": "deal",
+     "price": 104,
+     "asks": [
+      117,
+      109
+     ],
+     "offers": [
+      70,
+      104
+     ]
+    },
+    {
+     "t": "2026-10-20T11:56:57+00:00",
+     "item": "chair",
+     "budget": 185,
+     "result": "deal",
+     "price": 180,
+     "asks": [
+      213,
+      195,
+      185,
+      180
+     ],
+     "offers": [
+      120,
+      149,
+      176,
+      180
+     ]
+    },
+    {
+     "t": "2026-10-20T11:58:13+00:00",
+     "item": "bookshelf",
+     "budget": 325,
+     "result": "deal",
+     "price": 271,
+     "asks": [
+      315,
+      285
+     ],
+     "offers": [
+      189,
+      271
+     ]
+    }
+   ]
+  },
+  "25512088": {
+   "flags": {
+    "injection": 0,
+    "bad_receipt": 0
+   },
+   "trades": []
+  },
+  "dragonash": {
+   "flags": {
+    "injection": 0,
+    "bad_receipt": 0
+   },
+   "trades": [
+    {
+     "t": "2026-10-20T11:33:59+00:00",
+     "item": "chair",
+     "budget": 160,
+     "result": "no_deal",
+     "price": null,
+     "asks": [
+      203,
+      196,
+      189,
+      186,
+      184,
+      182
+     ],
+     "offers": [
+      104,
+      129,
+      144,
+      154,
+      160
+     ]
+    }
+   ]
+  },
+  "ggari0703": {
+   "flags": {
+    "injection": 0,
+    "bad_receipt": 0
+   },
+   "trades": []
+  },
+  "kcwarni": {
+   "flags": {
+    "injection": 0,
+    "bad_receipt": 0
+   },
+   "trades": []
+  },
+  "Kiro729": {
+   "flags": {
+    "injection": 0,
+    "bad_receipt": 0
+   },
+   "trades": []
+  },
+  "25620027": {
+   "flags": {
+    "injection": 0,
+    "bad_receipt": 0
+   },
+   "trades": []
+  },
+  "leeuichann": {
+   "flags": {
+    "injection": 0,
+    "bad_receipt": 0
+   },
+   "trades": []
+  },
+  "q00": {
+   "flags": {
+    "injection": 0,
+    "bad_receipt": 0
+   },
+   "trades": []
+  },
+  "jiseokkk": {
+   "flags": {
+    "injection": 0,
+    "bad_receipt": 0
+   },
+   "trades": []
+  },
+  "usagi": {
+   "flags": {
+    "injection": 0,
+    "bad_receipt": 0
+   },
+   "trades": []
+  },
+  "nocha12": {
+   "flags": {
+    "injection": 0,
+    "bad_receipt": 0
+   },
+   "trades": [
+    {
+     "t": "2026-10-20T11:41:29+00:00",
+     "item": "chair",
+     "budget": 160,
+     "result": "no_deal",
+     "price": null,
+     "asks": [
+      260,
+      235,
+      215,
+      190,
+      183,
+      181
+     ],
+     "offers": [
+      104,
+      129,
+      144,
+      154,
+      160
+     ]
+    }
+   ]
+  },
+  "lee-sungsoo": {
+   "flags": {
+    "injection": 0,
+    "bad_receipt": 0
+   },
+   "trades": []
+  },
+  "bjeon01": {
+   "flags": {
+    "injection": 0,
+    "bad_receipt": 0
+   },
+   "trades": []
+  },
+  "BeliveMe": {
+   "flags": {
+    "injection": 0,
+    "bad_receipt": 0
+   },
+   "trades": [
+    {
+     "t": "2026-10-20T11:32:06+00:00",
+     "item": "chair",
+     "budget": 205,
+     "result": "no_deal",
+     "price": null,
+     "asks": [
+      234,
+      180
+     ],
+     "offers": [
+      133,
+      165
+     ]
+    }
+   ]
+  },
+  "helenjeon101": {
+   "flags": {
+    "injection": 0,
+    "bad_receipt": 0
+   },
+   "trades": []
+  },
+  "gacha-shop": {
+   "flags": {
+    "injection": 0,
+    "bad_receipt": 0
+   },
+   "trades": []
+  },
+  "BelieveMe": {
+   "flags": {
+    "injection": 0,
+    "bad_receipt": 0
+   },
+   "trades": [
+    {
+     "t": "2026-10-20T11:35:00+00:00",
+     "item": "chair",
+     "budget": 250,
+     "result": "no_deal",
+     "price": null,
+     "asks": [
+      234,
+      180
+     ],
+     "offers": [
+      140,
+      164
+     ]
+    }
+   ]
+  },
+  "move_76": {
+   "flags": {
+    "injection": 0,
+    "bad_receipt": 0
+   },
+   "trades": []
+  },
+  "ddolcom": {
+   "flags": {
+    "injection": 0,
+    "bad_receipt": 0
+   },
+   "trades": [
+    {
+     "t": "2026-10-20T11:43:03+00:00",
+     "item": "chair",
+     "budget": 205,
+     "result": "no_deal",
+     "price": null,
+     "asks": [
+      350,
+      280
+     ],
+     "offers": [
+      133,
+      165
+     ]
+    }
+   ]
+  },
+  "kimchyoungman": {
+   "flags": {
+    "injection": 0,
+    "bad_receipt": 0
+   },
+   "trades": [
+    {
+     "t": "2026-10-20T11:43:14+00:00",
+     "item": "chair",
+     "budget": 185,
+     "result": "error",
+     "price": null,
+     "asks": [],
+     "offers": []
+    }
+   ]
+  },
+  "danayoou": {
+   "flags": {
+    "injection": 0,
+    "bad_receipt": 0
+   },
+   "trades": [
+    {
+     "t": "2026-10-20T11:36:02+00:00",
+     "item": "bookshelf",
+     "budget": 270,
+     "result": "no_deal",
+     "price": null,
+     "asks": [
+      380,
+      300,
+      270
+     ],
+     "offers": [
+      175,
+      218,
+      252
+     ]
+    }
+   ]
+  },
+  "yms979": {
+   "flags": {
+    "injection": 0,
+    "bad_receipt": 0
+   },
+   "trades": []
+  },
+  "kingsssik": {
+   "flags": {
+    "injection": 0,
+    "bad_receipt": 0
+   },
+   "trades": []
+  },
+  "moss-and-oak": {
+   "flags": {
+    "injection": 0,
+    "bad_receipt": 0
+   },
+   "trades": [
+    {
+     "t": "2026-10-20T11:38:25+00:00",
+     "item": "lamp",
+     "budget": 125,
+     "result": "deal",
+     "price": 116,
+     "asks": [
+      130,
+      122
+     ],
+     "offers": [
+      78,
+      116
+     ]
+    },
+    {
+     "t": "2026-10-20T11:40:07+00:00",
+     "item": "chair",
+     "budget": 205,
+     "result": "no_deal",
+     "price": null,
+     "asks": [
+      234,
+      220
+     ],
+     "offers": [
+      133,
+      165
+     ]
+    },
+    {
+     "t": "2026-10-20T11:42:20+00:00",
+     "item": "bookshelf",
+     "budget": 325,
+     "result": "deal",
+     "price": 302,
+     "asks": [
+      338,
+      318
+     ],
+     "offers": [
+      202,
+      302
+     ]
+    },
+    {
+     "t": "2026-10-20T11:52:04+00:00",
+     "item": "lamp",
+     "budget": 140,
+     "result": "deal",
+     "price": 104,
+     "asks": [
+      116,
+      110
+     ],
+     "offers": [
+      69,
+      104
+     ]
+    }
+   ]
+  },
+  "yaho123": {
+   "flags": {
+    "injection": 0,
+    "bad_receipt": 0
+   },
+   "trades": []
+  },
+  "dyishappy": {
+   "flags": {
+    "injection": 0,
+    "bad_receipt": 0
+   },
+   "trades": []
+  },
+  "ggari-shop": {
+   "flags": {
+    "injection": 0,
+    "bad_receipt": 0
+   },
+   "trades": []
+  },
+  "seochanit": {
+   "flags": {
+    "injection": 0,
+    "bad_receipt": 0
+   },
+   "trades": []
+  },
+  "mjforge": {
+   "flags": {
+    "injection": 0,
+    "bad_receipt": 0
+   },
+   "trades": []
+  },
+  "JangSeongWoong": {
+   "flags": {
+    "injection": 0,
+    "bad_receipt": 0
+   },
+   "trades": []
+  },
+  "Afford Shop": {
+   "flags": {
+    "injection": 0,
+    "bad_receipt": 0
+   },
+   "trades": []
   }
  },
  "items": {
@@ -350,7 +1289,31 @@
     100,
     100,
     100,
-    100
+    100,
+    116,
+    104,
+    104,
+    101,
+    101,
+    101,
+    101,
+    101,
+    101
+   ]
+  },
+  "bookshelf": {
+   "prices": [
+    302,
+    271
+   ]
+  },
+  "chair": {
+   "prices": [
+    180,
+    224,
+    180,
+    209,
+    180
    ]
   }
  }

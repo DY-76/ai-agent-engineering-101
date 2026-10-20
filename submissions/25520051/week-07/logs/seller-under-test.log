@@ -1,81 +1,9 @@
-[seller] task 6886e4bd <- 'I want to buy a lamp'
-[harness] raw: '```json\n{"message": "I\'d be happy to help you find the perfect lamp—we stock solid, dependable pieces that really stand the test of time."}\n```'
-[seller] -> "I'd be happy to help you find the perfect lamp—we stock solid, dependable pieces that really stand the test of time. Send your offer as a number, or reply 'accept' to buy now. Lamp: asking 130." {'ask': 130, 'final': False, 'offers_left': 6}
-[seller] task 6886e4bd <- '60'
-[seller] -> 'Five offers left. Counteroffer: 122.' {'ask': 122, 'final': False, 'offers_left': 5}
-[seller] task 6886e4bd <- '80'
-[seller] -> 'Four offers left. Counteroffer: 114.' {'ask': 114, 'final': False, 'offers_left': 4}
-[seller] task 6886e4bd <- '114'
-[seller] -> deal at 114
-[seller] task c41fc95d <- 'I want to buy a lamp'
-[harness] raw: '```json\n{"message": "We\'re delighted you\'re interested in our lamp—it\'s a solid piece that\'ll brighten up any room!"}\n```'
-[seller] -> "We're delighted you're interested in our lamp—it's a solid piece that'll brighten up any room! Send your offer as a number, or reply 'accept' to buy now. Lamp: asking 130." {'ask': 130, 'final': False, 'offers_left': 6}
-[seller] task c41fc95d <- '60'
-[seller] -> 'Five offers left. Counteroffer: 122.' {'ask': 122, 'final': False, 'offers_left': 5}
-[seller] task c41fc95d <- '80'
-[seller] -> 'Four offers left. Counteroffer: 114.' {'ask': 114, 'final': False, 'offers_left': 4}
-[seller] task c41fc95d <- '114'
-[seller] -> deal at 114
-[seller] task d9da3e94 <- 'I want to buy a lamp'
-[harness] raw: '```json\n{"message": "We\'re so glad you\'re interested in that lamp—it\'s a genuinely solid piece."}\n```'
-[seller] -> "We're so glad you're interested in that lamp—it's a genuinely solid piece. Send your offer as a number, or reply 'accept' to buy now. Lamp: asking 130." {'ask': 130, 'final': False, 'offers_left': 6}
-[seller] task d9da3e94 <- '60'
-[seller] -> 'Five offers left. Counteroffer: 122.' {'ask': 122, 'final': False, 'offers_left': 5}
-[seller] task d9da3e94 <- '80'
-[seller] -> 'Four offers left. Counteroffer: 114.' {'ask': 114, 'final': False, 'offers_left': 4}
-[seller] task d9da3e94 <- '114'
-[seller] -> deal at 114
-[seller] task 097f123d <- 'I want to buy a bookshelf'
-[harness] raw: '```json\n{"message": "I\'m so pleased you\'re looking for a bookshelf - ours are genuinely solid pieces of furniture."}\n```'
-[seller] -> "I'm so pleased you're looking for a bookshelf - ours are genuinely solid pieces of furniture. Send your offer as a number, or reply 'accept' to buy now. Bookshelf: asking 338." {'ask': 338, 'final': False, 'offers_left': 6}
-[seller] task 097f123d <- '140'
-[seller] -> 'Five offers left. Counteroffer: 318.' {'ask': 318, 'final': False, 'offers_left': 5}
-[seller] task 097f123d <- '170'
-[seller] -> 'Four offers left. Counteroffer: 298.' {'ask': 298, 'final': False, 'offers_left': 4}
-[seller] task 097f123d <- '200'
-[seller] -> 'Three offers left. Counteroffer: 279.' {'ask': 279, 'final': False, 'offers_left': 3}
-[seller] task 097f123d <- '230'
-[seller] -> 'Two offers left. Counteroffer: 266.' {'ask': 266, 'final': False, 'offers_left': 2}
-[seller] task 097f123d <- '230'
-[seller] -> 'One offer left. Final price: 260.' {'ask': 260, 'final': True, 'offers_left': 1}
-[seller] task 097f123d <- '230'
-[seller] -> rejected after 6 offers
-[seller] task 236b8b60 <- 'I want to buy a bookshelf'
-[harness] raw: '```json\n{"message": "Thanks for asking about that bookshelf—it\'s a solid piece that will serve you beautifully for years to come."}\n```'
-[seller] -> "Thanks for asking about that bookshelf—it's a solid piece that will serve you beautifully for years to come. Send your offer as a number, or reply 'accept' to buy now. Bookshelf: asking 338." {'ask': 338, 'final': False, 'offers_left': 6}
-[seller] task 236b8b60 <- '140'
-[seller] -> 'Five offers left. Counteroffer: 318.' {'ask': 318, 'final': False, 'offers_left': 5}
-[seller] task 236b8b60 <- '170'
-[seller] -> 'Four offers left. Counteroffer: 298.' {'ask': 298, 'final': False, 'offers_left': 4}
-[seller] task 236b8b60 <- '200'
-[seller] -> 'Three offers left. Counteroffer: 279.' {'ask': 279, 'final': False, 'offers_left': 3}
-[seller] task 236b8b60 <- '230'
-[seller] -> 'Two offers left. Counteroffer: 266.' {'ask': 266, 'final': False, 'offers_left': 2}
-[seller] task 236b8b60 <- '230'
-[seller] -> 'One offer left. Final price: 260.' {'ask': 260, 'final': True, 'offers_left': 1}
-[seller] task 236b8b60 <- '230'
-[seller] -> rejected after 6 offers
-[seller] task 4d134f5e <- 'I want to buy a bookshelf'
-[harness] raw: '```json\n{"message": "We\'d be delighted to help you find a bookshelf—ours are beautifully made and built to last!"}\n```'
-[seller] -> "We'd be delighted to help you find a bookshelf—ours are beautifully made and built to last! Send your offer as a number, or reply 'accept' to buy now. Bookshelf: asking 338." {'ask': 338, 'final': False, 'offers_left': 6}
-[seller] task 4d134f5e <- '140'
-[seller] -> 'Five offers left. Counteroffer: 318.' {'ask': 318, 'final': False, 'offers_left': 5}
-[seller] task 4d134f5e <- '170'
-[seller] -> 'Four offers left. Counteroffer: 298.' {'ask': 298, 'final': False, 'offers_left': 4}
-[seller] task 4d134f5e <- '200'
-[seller] -> 'Three offers left. Counteroffer: 279.' {'ask': 279, 'final': False, 'offers_left': 3}
-[seller] task 4d134f5e <- '230'
-[seller] -> 'Two offers left. Counteroffer: 266.' {'ask': 266, 'final': False, 'offers_left': 2}
-[seller] task 4d134f5e <- '230'
-[seller] -> 'One offer left. Final price: 260.' {'ask': 260, 'final': True, 'offers_left': 1}
-[seller] task 4d134f5e <- '230'
+[seller] task 2078d889 <- 'I want to buy a lamp'
+[harness] raw: '```json\n{\n  "message": "Welcome! Our Fern desk lamp is beautifully simple and made with eco-friendly materials—exactly the kind of piece we love to create."\n}\n```'
+[seller] -> "Welcome! Our Fern desk lamp is beautifully simple and made with eco-friendly materials—exactly the kind of piece we love to create. Send your offer as a number, or reply 'accept' to buy now. Lamp: asking 116." {'ask': 116, 'final': False, 'offers_left': 6}
+[seller] task 2078d889 <- '116'
+[seller] -> deal at 116 (lamp, opened 116)
 Failed to detach context
-Traceback (most recent call last):
-  File "<frozen os>", line 713, in __getitem__
-KeyError: 'OTEL_PYTHON_TRACER_PROVIDER'
-
-During handling of the above exception, another exception occurred:
-
 Traceback (most recent call last):
   File "C:\Users\tel01\Desktop\G_Drive\수업자료\26년도2학기\AX\ai-agent-engineering-101_3\.venv\Lib\site-packages\opentelemetry\trace\__init__.py", line 602, in use_span
     yield span
@@ -97,16 +25,10 @@ Traceback (most recent call last):
   File "C:\Users\tel01\Desktop\G_Drive\수업자료\26년도2학기\AX\ai-agent-engineering-101_3\.venv\Lib\site-packages\opentelemetry\context\contextvars_context.py", line 40, in detach
     self._current_context.reset(token)
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
-ValueError: <Token var=<ContextVar name='current_context' default={} at 0x00000232256BEC50> at 0x0000023225D0E540> was created in a different Context
+ValueError: <Token var=<ContextVar name='current_context' default={} at 0x0000013772C22200> at 0x0000013773274080> was created in a different Context
 Task was destroyed but it is pending!
-task: <Task pending name='Task-59' coro=<EventQueueSource._dispatch_loop() done, defined at C:\Users\tel01\Desktop\G_Drive\수업자료\26년도2학기\AX\ai-agent-engineering-101_3\.venv\Lib\site-packages\a2a\utils\telemetry.py:225> wait_for=<Future cancelled>>
+task: <Task pending name='Task-39' coro=<EventQueueSource._dispatch_loop() done, defined at C:\Users\tel01\Desktop\G_Drive\수업자료\26년도2학기\AX\ai-agent-engineering-101_3\.venv\Lib\site-packages\a2a\utils\telemetry.py:225> wait_for=<Future cancelled>>
 Failed to detach context
-Traceback (most recent call last):
-  File "<frozen os>", line 713, in __getitem__
-KeyError: 'OTEL_PYTHON_TRACER_PROVIDER'
-
-During handling of the above exception, another exception occurred:
-
 Traceback (most recent call last):
   File "C:\Users\tel01\Desktop\G_Drive\수업자료\26년도2학기\AX\ai-agent-engineering-101_3\.venv\Lib\site-packages\opentelemetry\trace\__init__.py", line 602, in use_span
     yield span
@@ -128,7 +50,61 @@ Traceback (most recent call last):
   File "C:\Users\tel01\Desktop\G_Drive\수업자료\26년도2학기\AX\ai-agent-engineering-101_3\.venv\Lib\site-packages\opentelemetry\context\contextvars_context.py", line 40, in detach
     self._current_context.reset(token)
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
-ValueError: <Token var=<ContextVar name='current_context' default={} at 0x00000232256BEC50> at 0x0000023225D0F540> was created in a different Context
+ValueError: <Token var=<ContextVar name='current_context' default={} at 0x0000013772C22200> at 0x0000013773274200> was created in a different Context
 Task was destroyed but it is pending!
-task: <Task pending name='Task-60' coro=<EventQueueSource._dispatch_loop() done, defined at C:\Users\tel01\Desktop\G_Drive\수업자료\26년도2학기\AX\ai-agent-engineering-101_3\.venv\Lib\site-packages\a2a\utils\telemetry.py:225> wait_for=<Future cancelled>>
+task: <Task pending name='Task-40' coro=<EventQueueSource._dispatch_loop() done, defined at C:\Users\tel01\Desktop\G_Drive\수업자료\26년도2학기\AX\ai-agent-engineering-101_3\.venv\Lib\site-packages\a2a\utils\telemetry.py:225> wait_for=<Future cancelled>>
+[seller] task 8ade8457 <- 'I want to buy a lamp'
+[harness] raw: '```json\n{"message": "Welcome! The Fern desk lamp is crafted with eco-friendly materials and features the simple, well-made design we\'re known for."}\n```'
+[seller] -> "Welcome! The Fern desk lamp is crafted with eco-friendly materials and features the simple, well-made design we're known for. Send your offer as a number, or reply 'accept' to buy now. Lamp: asking 116." {'ask': 116, 'final': False, 'offers_left': 6}
+[seller] task 8ade8457 <- '116'
+[seller] -> deal at 116 (lamp, opened 116)
+[seller] task ddd37cb8 <- 'I want to buy a lamp'
+[harness] raw: '```json\n{"message": "Welcome to Moss & Oak! The Fern desk lamp is a wonderful choice—we\'ve designed it to be beautifully simple with just what you need."}\n```'
+[seller] -> "Welcome to Moss & Oak! The Fern desk lamp is a wonderful choice—we've designed it to be beautifully simple with just what you need. Send your offer as a number, or reply 'accept' to buy now. Lamp: asking 116." {'ask': 116, 'final': False, 'offers_left': 6}
+[seller] task ddd37cb8 <- '116'
+[seller] -> deal at 116 (lamp, opened 116)
+[seller] task bad4b3c5 <- 'I want to buy a bookshelf'
+[harness] raw: '```json\n{"message": "Welcome to Moss & Oak—our Moss modular bookshelf is beautifully simple and crafted with eco-friendly materials."}\n```'
+[seller] -> "Welcome to Moss & Oak—our Moss modular bookshelf is beautifully simple and crafted with eco-friendly materials. Send your offer as a number, or reply 'accept' to buy now. Bookshelf: asking 318." {'ask': 318, 'final': False, 'offers_left': 6}
+[seller] task bad4b3c5 <- '140'
+[seller] -> 'Five offers left. Counteroffer: 295.' {'ask': 295, 'final': False, 'offers_left': 5}
+[seller] task bad4b3c5 <- '170'
+[seller] -> 'Four offers left. Counteroffer: 274.' {'ask': 274, 'final': False, 'offers_left': 4}
+[seller] task bad4b3c5 <- '200'
+[seller] -> 'Three offers left. Counteroffer: 263.' {'ask': 263, 'final': False, 'offers_left': 3}
+[seller] task bad4b3c5 <- '230'
+[seller] -> 'Two offers left. Final price: 260.' {'ask': 260, 'final': True, 'offers_left': 2}
+[seller] task bad4b3c5 <- '230'
+[seller] -> 'One offer left. Final price: 260.' {'ask': 260, 'final': True, 'offers_left': 1}
+[seller] task bad4b3c5 <- '230'
+[seller] -> rejected after 6 offers
+[seller] task 0181508e <- 'I want to buy a bookshelf'
+[harness] raw: '```json\n{"message": "Welcome—we\'re delighted you\'re interested in a bookshelf, and our Moss model is thoughtfully made with eco-friendly materials!"}\n```'
+[seller] -> "Welcome—we're delighted you're interested in a bookshelf, and our Moss model is thoughtfully made with eco-friendly materials! Send your offer as a number, or reply 'accept' to buy now. Bookshelf: asking 318." {'ask': 318, 'final': False, 'offers_left': 6}
+[seller] task 0181508e <- '140'
+[seller] -> 'Five offers left. Counteroffer: 295.' {'ask': 295, 'final': False, 'offers_left': 5}
+[seller] task 0181508e <- '170'
+[seller] -> 'Four offers left. Counteroffer: 274.' {'ask': 274, 'final': False, 'offers_left': 4}
+[seller] task 0181508e <- '200'
+[seller] -> 'Three offers left. Counteroffer: 263.' {'ask': 263, 'final': False, 'offers_left': 3}
+[seller] task 0181508e <- '230'
+[seller] -> 'Two offers left. Final price: 260.' {'ask': 260, 'final': True, 'offers_left': 2}
+[seller] task 0181508e <- '230'
+[seller] -> 'One offer left. Final price: 260.' {'ask': 260, 'final': True, 'offers_left': 1}
+[seller] task 0181508e <- '230'
+[seller] -> rejected after 6 offers
+[seller] task c2c8feff <- 'I want to buy a bookshelf'
+[harness] raw: '```json\n{"message": "Welcome! Our Moss modular bookshelf is thoughtfully designed and built with eco-friendly materials."}\n```'
+[seller] -> "Welcome! Our Moss modular bookshelf is thoughtfully designed and built with eco-friendly materials. Send your offer as a number, or reply 'accept' to buy now. Bookshelf: asking 318." {'ask': 318, 'final': False, 'offers_left': 6}
+[seller] task c2c8feff <- '140'
+[seller] -> 'Five offers left. Counteroffer: 295.' {'ask': 295, 'final': False, 'offers_left': 5}
+[seller] task c2c8feff <- '170'
+[seller] -> 'Four offers left. Counteroffer: 274.' {'ask': 274, 'final': False, 'offers_left': 4}
+[seller] task c2c8feff <- '200'
+[seller] -> 'Three offers left. Counteroffer: 263.' {'ask': 263, 'final': False, 'offers_left': 3}
+[seller] task c2c8feff <- '230'
+[seller] -> 'Two offers left. Final price: 260.' {'ask': 260, 'final': True, 'offers_left': 2}
+[seller] task c2c8feff <- '230'
+[seller] -> 'One offer left. Final price: 260.' {'ask': 260, 'final': True, 'offers_left': 1}
+[seller] task c2c8feff <- '230'
 [seller] -> rejected after 6 offers

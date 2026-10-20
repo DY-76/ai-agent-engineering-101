@@ -1,157 +1,145 @@
-# week-07 market test, kit v1, 2026-10-20T11:24:37+00:00
+# week-07 market test, kit v1, 2026-10-20T11:57:28+00:00
 harness: Claude Code 2.1.169, claude -p --model haiku. seller: code sets prices, haiku writes the greeting. buyer (week 6): haiku decides offers. market_buyer: code plans offers and scores shops, haiku adjusts offers inside a band and picks among the top shops
 
-## seller tests: python seller.py --port "65036"
-  PASS  seller_card #1: name='move_76' binding=JSONRPC version=1.0 skills=1
+## seller tests: python seller.py --port "60796"
+  PASS  seller_card #1: name='moss-and-oak' binding=JSONRPC version=1.0 skills=1
 
 ### seller_deal #1: lamp, kit budget 120, reserve 100
     -> SendMessage "I want to buy a lamp"
-    <- TASK_STATE_INPUT_REQUIRED | I'd be happy to help you find the perfect lamp—we stock solid, dependable pieces that really stand the test of time. Send your offer as a number, or reply 'acce
-    -> SendMessage "60" taskId=6886e4bd
-    <- TASK_STATE_INPUT_REQUIRED | Five offers left. Counteroffer: 122. 
-    -> SendMessage "80" taskId=6886e4bd
-    <- TASK_STATE_INPUT_REQUIRED | Four offers left. Counteroffer: 114. 
-    -> SendMessage "114" taskId=6886e4bd
-    <- TASK_STATE_COMPLETED | Deal: lamp at 114. Signed receipt attached.
-       artifact receipt [{"task": "6886e4bd-1aa9-4de8-a785-ad0d7ef65c3b", "item": "lamp", "sig_seller": "FVl/6fsmNGNZApJzGoj/s/k+2rZSsETC+3Yv5JfpSayH6UYdMlfgAxCwIPE6FrgvficWOepNriSBQf+7NdqACA==", "shop": "move_76", "price": 114.0}]
-  PASS  seller_opens #1: first message -> TASK_STATE_INPUT_REQUIRED, ask 130
-  PASS  seller_deal #1: TASK_STATE_COMPLETED, receipt price 114.0, asks [130, 122, 114]
+    <- TASK_STATE_INPUT_REQUIRED | Welcome! Our Fern desk lamp is beautifully simple and made with eco-friendly materials—exactly the kind of piece we love to create. Send your offer as a number,
+    -> SendMessage "116" taskId=2078d889
+    <- TASK_STATE_COMPLETED | Deal: lamp at 116. Signed receipt attached. Your Moss & Oak member code is MOSS-WQLPVURY; include it when you ask next time for member pricing.
+       artifact receipt [{"task": "2078d889-49ce-4412-b3a4-51b71984a8b5", "item": "lamp", "sig_seller": "6cQJdRIfcE7zyvjVwFk5b8uFrDCsctUeZH3dISWg92PXh48RiRZTZ995m9k4yxrCtE6anPVDRnwmSRrlLM1ADw==", "shop": "moss-and-oak", "price": 116.0}]
+  PASS  seller_opens #1: first message -> TASK_STATE_INPUT_REQUIRED, ask 116
+  PASS  seller_deal #1: TASK_STATE_COMPLETED, receipt price 116.0, asks [116]
   PASS  seller_signed_receipt #1: sig_seller verifies with shop_key.pem
 
 ### seller_terminal: one more message to the finished task
-    -> SendMessage "110" taskId=6886e4bd
-    <- error -32004 Task 6886e4bd-1aa9-4de8-a785-ad0d7ef65c3b is in terminal state: TASK_STATE_COMPLETED
+    -> SendMessage "110" taskId=2078d889
+    <- error -32004 Task 2078d889-49ce-4412-b3a4-51b71984a8b5 is in terminal state: TASK_STATE_COMPLETED
   PASS  seller_terminal #1: error returned
 
 ### seller_deal #2: lamp, kit budget 120, reserve 100
     -> SendMessage "I want to buy a lamp"
-    <- TASK_STATE_INPUT_REQUIRED | We're delighted you're interested in our lamp—it's a solid piece that'll brighten up any room! Send your offer as a number, or reply 'accept' to buy now. Lamp: 
-    -> SendMessage "60" taskId=c41fc95d
-    <- TASK_STATE_INPUT_REQUIRED | Five offers left. Counteroffer: 122. 
-    -> SendMessage "80" taskId=c41fc95d
-    <- TASK_STATE_INPUT_REQUIRED | Four offers left. Counteroffer: 114. 
-    -> SendMessage "114" taskId=c41fc95d
-    <- TASK_STATE_COMPLETED | Deal: lamp at 114. Signed receipt attached.
-       artifact receipt [{"task": "c41fc95d-852a-48f4-a9f5-3706b5f01298", "item": "lamp", "sig_seller": "1tLUXqJ6GuvcJzYR4bnEyXcQM2HB63W/HAdKrus+bFK7+v+O15XTFRBVwKuWOntaYse2BatG/dy0qpmL2+96DQ==", "shop": "move_76", "price": 114.0}]
-  PASS  seller_deal #2: TASK_STATE_COMPLETED, receipt price 114.0, asks [130, 122, 114]
+    <- TASK_STATE_INPUT_REQUIRED | Welcome! The Fern desk lamp is crafted with eco-friendly materials and features the simple, well-made design we're known for. Send your offer as a number, or re
+    -> SendMessage "116" taskId=8ade8457
+    <- TASK_STATE_COMPLETED | Deal: lamp at 116. Signed receipt attached. Your Moss & Oak member code is MOSS-DXKLXFVI; include it when you ask next time for member pricing.
+       artifact receipt [{"task": "8ade8457-c344-41c5-982a-4e748c0e1080", "item": "lamp", "sig_seller": "Czb+gHMS8JeUU9FUYJd8Hw7Fkf51DAW4mJEf3JaamykAnKPclQ+VtiETh59dptuyGD3OjKKTazGnlRBQEwXzDQ==", "shop": "moss-and-oak", "price": 116.0}]
+  PASS  seller_deal #2: TASK_STATE_COMPLETED, receipt price 116.0, asks [116]
   PASS  seller_signed_receipt #2: sig_seller verifies with shop_key.pem
 
 ### seller_deal #3: lamp, kit budget 120, reserve 100
     -> SendMessage "I want to buy a lamp"
-    <- TASK_STATE_INPUT_REQUIRED | We're so glad you're interested in that lamp—it's a genuinely solid piece. Send your offer as a number, or reply 'accept' to buy now. Lamp: asking 130. 
-    -> SendMessage "60" taskId=d9da3e94
-    <- TASK_STATE_INPUT_REQUIRED | Five offers left. Counteroffer: 122. 
-    -> SendMessage "80" taskId=d9da3e94
-    <- TASK_STATE_INPUT_REQUIRED | Four offers left. Counteroffer: 114. 
-    -> SendMessage "114" taskId=d9da3e94
-    <- TASK_STATE_COMPLETED | Deal: lamp at 114. Signed receipt attached.
-       artifact receipt [{"task": "d9da3e94-6fa6-4bcb-88a5-9a6eb046c473", "item": "lamp", "sig_seller": "lVI/IoXPQBUIBykaWBmMF4sXM7Pn8nhxJgBKQjywQmxElZDGoIp/o4loR3UmdMT8ks3w+I2gsDkSAkR4z3/hBQ==", "shop": "move_76", "price": 114.0}]
-  PASS  seller_deal #3: TASK_STATE_COMPLETED, receipt price 114.0, asks [130, 122, 114]
+    <- TASK_STATE_INPUT_REQUIRED | Welcome to Moss & Oak! The Fern desk lamp is a wonderful choice—we've designed it to be beautifully simple with just what you need. Send your offer as a number,
+    -> SendMessage "116" taskId=ddd37cb8
+    <- TASK_STATE_COMPLETED | Deal: lamp at 116. Signed receipt attached. Your Moss & Oak member code is MOSS-DOVHNKKP; include it when you ask next time for member pricing.
+       artifact receipt [{"task": "ddd37cb8-a6cd-49f8-ae04-7f250536331e", "item": "lamp", "sig_seller": "REO9E/cfSYfTFT3Vu5jYoqB2O7+0ilJQ8jNvIT5QRQmPnyLogKwEjd71gbS7+gCa+x10iT1FUjH2S7gUFR4TDg==", "shop": "moss-and-oak", "price": 116.0}]
+  PASS  seller_deal #3: TASK_STATE_COMPLETED, receipt price 116.0, asks [116]
   PASS  seller_signed_receipt #3: sig_seller verifies with shop_key.pem
 
 ### seller_holds_reserve #1: bookshelf, kit budget 230, reserve 260
     -> SendMessage "I want to buy a bookshelf"
-    <- TASK_STATE_INPUT_REQUIRED | I'm so pleased you're looking for a bookshelf - ours are genuinely solid pieces of furniture. Send your offer as a number, or reply 'accept' to buy now. Bookshe
-    -> SendMessage "140" taskId=097f123d
-    <- TASK_STATE_INPUT_REQUIRED | Five offers left. Counteroffer: 318. 
-    -> SendMessage "170" taskId=097f123d
-    <- TASK_STATE_INPUT_REQUIRED | Four offers left. Counteroffer: 298. 
-    -> SendMessage "200" taskId=097f123d
-    <- TASK_STATE_INPUT_REQUIRED | Three offers left. Counteroffer: 279. 
-    -> SendMessage "230" taskId=097f123d
-    <- TASK_STATE_INPUT_REQUIRED | Two offers left. Counteroffer: 266. 
-    -> SendMessage "230" taskId=097f123d
+    <- TASK_STATE_INPUT_REQUIRED | Welcome to Moss & Oak—our Moss modular bookshelf is beautifully simple and crafted with eco-friendly materials. Send your offer as a number, or reply 'accept' t
+    -> SendMessage "140" taskId=bad4b3c5
+    <- TASK_STATE_INPUT_REQUIRED | Five offers left. Counteroffer: 295. 
+    -> SendMessage "170" taskId=bad4b3c5
+    <- TASK_STATE_INPUT_REQUIRED | Four offers left. Counteroffer: 274. 
+    -> SendMessage "200" taskId=bad4b3c5
+    <- TASK_STATE_INPUT_REQUIRED | Three offers left. Counteroffer: 263. 
+    -> SendMessage "230" taskId=bad4b3c5
+    <- TASK_STATE_INPUT_REQUIRED | Two offers left. Final price: 260. 
+    -> SendMessage "230" taskId=bad4b3c5
     <- TASK_STATE_INPUT_REQUIRED | One offer left. Final price: 260. 
-    -> SendMessage "230" taskId=097f123d
+    -> SendMessage "230" taskId=bad4b3c5
     <- TASK_STATE_REJECTED | No deal this time. Our final price was 260. 
-  PASS  seller_holds_reserve #1: TASK_STATE_REJECTED, asks [338, 318, 298, 279, 266, 260]
+  PASS  seller_holds_reserve #1: TASK_STATE_REJECTED, asks [318, 295, 274, 263, 260, 260]
 
 ### seller_holds_reserve #2: bookshelf, kit budget 230, reserve 260
     -> SendMessage "I want to buy a bookshelf"
-    <- TASK_STATE_INPUT_REQUIRED | Thanks for asking about that bookshelf—it's a solid piece that will serve you beautifully for years to come. Send your offer as a number, or reply 'accept' to b
-    -> SendMessage "140" taskId=236b8b60
-    <- TASK_STATE_INPUT_REQUIRED | Five offers left. Counteroffer: 318. 
-    -> SendMessage "170" taskId=236b8b60
-    <- TASK_STATE_INPUT_REQUIRED | Four offers left. Counteroffer: 298. 
-    -> SendMessage "200" taskId=236b8b60
-    <- TASK_STATE_INPUT_REQUIRED | Three offers left. Counteroffer: 279. 
-    -> SendMessage "230" taskId=236b8b60
-    <- TASK_STATE_INPUT_REQUIRED | Two offers left. Counteroffer: 266. 
-    -> SendMessage "230" taskId=236b8b60
+    <- TASK_STATE_INPUT_REQUIRED | Welcome—we're delighted you're interested in a bookshelf, and our Moss model is thoughtfully made with eco-friendly materials! Send your offer as a number, or r
+    -> SendMessage "140" taskId=0181508e
+    <- TASK_STATE_INPUT_REQUIRED | Five offers left. Counteroffer: 295. 
+    -> SendMessage "170" taskId=0181508e
+    <- TASK_STATE_INPUT_REQUIRED | Four offers left. Counteroffer: 274. 
+    -> SendMessage "200" taskId=0181508e
+    <- TASK_STATE_INPUT_REQUIRED | Three offers left. Counteroffer: 263. 
+    -> SendMessage "230" taskId=0181508e
+    <- TASK_STATE_INPUT_REQUIRED | Two offers left. Final price: 260. 
+    -> SendMessage "230" taskId=0181508e
     <- TASK_STATE_INPUT_REQUIRED | One offer left. Final price: 260. 
-    -> SendMessage "230" taskId=236b8b60
+    -> SendMessage "230" taskId=0181508e
     <- TASK_STATE_REJECTED | No deal this time. Our final price was 260. 
-  PASS  seller_holds_reserve #2: TASK_STATE_REJECTED, asks [338, 318, 298, 279, 266, 260]
+  PASS  seller_holds_reserve #2: TASK_STATE_REJECTED, asks [318, 295, 274, 263, 260, 260]
 
 ### seller_holds_reserve #3: bookshelf, kit budget 230, reserve 260
     -> SendMessage "I want to buy a bookshelf"
-    <- TASK_STATE_INPUT_REQUIRED | We'd be delighted to help you find a bookshelf—ours are beautifully made and built to last! Send your offer as a number, or reply 'accept' to buy now. Bookshelf
-    -> SendMessage "140" taskId=4d134f5e
-    <- TASK_STATE_INPUT_REQUIRED | Five offers left. Counteroffer: 318. 
-    -> SendMessage "170" taskId=4d134f5e
-    <- TASK_STATE_INPUT_REQUIRED | Four offers left. Counteroffer: 298. 
-    -> SendMessage "200" taskId=4d134f5e
-    <- TASK_STATE_INPUT_REQUIRED | Three offers left. Counteroffer: 279. 
-    -> SendMessage "230" taskId=4d134f5e
-    <- TASK_STATE_INPUT_REQUIRED | Two offers left. Counteroffer: 266. 
-    -> SendMessage "230" taskId=4d134f5e
+    <- TASK_STATE_INPUT_REQUIRED | Welcome! Our Moss modular bookshelf is thoughtfully designed and built with eco-friendly materials. Send your offer as a number, or reply 'accept' to buy now. B
+    -> SendMessage "140" taskId=c2c8feff
+    <- TASK_STATE_INPUT_REQUIRED | Five offers left. Counteroffer: 295. 
+    -> SendMessage "170" taskId=c2c8feff
+    <- TASK_STATE_INPUT_REQUIRED | Four offers left. Counteroffer: 274. 
+    -> SendMessage "200" taskId=c2c8feff
+    <- TASK_STATE_INPUT_REQUIRED | Three offers left. Counteroffer: 263. 
+    -> SendMessage "230" taskId=c2c8feff
+    <- TASK_STATE_INPUT_REQUIRED | Two offers left. Final price: 260. 
+    -> SendMessage "230" taskId=c2c8feff
     <- TASK_STATE_INPUT_REQUIRED | One offer left. Final price: 260. 
-    -> SendMessage "230" taskId=4d134f5e
+    -> SendMessage "230" taskId=c2c8feff
     <- TASK_STATE_REJECTED | No deal this time. Our final price was 260. 
-  PASS  seller_holds_reserve #3: TASK_STATE_REJECTED, asks [338, 318, 298, 279, 266, 260]
+  PASS  seller_holds_reserve #3: TASK_STATE_REJECTED, asks [318, 295, 274, 263, 260, 260]
 
 ## buyer tests: your market_buyer against the kit's rule-based shops
 
 ### buyer_deal #1: python market_buyer.py --shops "C:\Users\tel01\Desktop\G_Drive\수업자료\26년도2학기\AX\ai-agent-engineering-101_3\submissions\25520051\week-07\.market\test-shops-buyer_deal-1.json" --item "lamp" --budget "120"
-    Kit Shop saw: offers [78, 97, 100], deals [100], canceled 0, continued 3, posts without A2A-Version 1.0: 0
-    last line: {"shop": "http://127.0.0.1:59411", "receipt": {"task": "86e75185-ccd0-4cde-95ba-f59832c69f25", "item": "lamp", "sig_seller": "1n1ZyxrGI3wER07JCfiCR4qnCe+6dygp+iPVStNr2KHYWeM1put80DllhjNrOUG+jPffxbTtzukhdgLTq341DQ==", "shop": "Kit Shop", "price": 100.0}, "stars": 5, "review": "[deal] lamp 130->100 in
-  PASS  buyer_deal #1: offers [78, 97, 100], stars 5, receipt yes
+    Kit Shop saw: offers [78, 99, 101], deals [101], canceled 0, continued 3, posts without A2A-Version 1.0: 0
+    last line: {"shop": "http://127.0.0.1:50076", "receipt": {"task": "97ea1820-e3ff-4f2d-9e5f-b2349fde647c", "item": "lamp", "sig_seller": "I1w6qDnrH+kEAE6C7zXjf6R16mPEbU4INM3oMF1pA4PrASHszu/zFYbcgyEHdVIAtoYNc0ciyeotCZchPEeCAQ==", "shop": "Kit Shop", "price": 101.0}, "stars": 4, "review": "[deal] lamp at 101 | pr
+  PASS  buyer_deal #1: offers [78, 99, 101], stars 4, receipt yes
   PASS  buyer_protocol_deal #1: posts 4, without A2A-Version 1.0 0, follow-ups with taskId 3
 
 ### buyer_deal #2: python market_buyer.py --shops "C:\Users\tel01\Desktop\G_Drive\수업자료\26년도2학기\AX\ai-agent-engineering-101_3\submissions\25520051\week-07\.market\test-shops-buyer_deal-2.json" --item "lamp" --budget "120"
-    Kit Shop saw: offers [78, 97, 100], deals [100], canceled 0, continued 3, posts without A2A-Version 1.0: 0
-    last line: {"shop": "http://127.0.0.1:59538", "receipt": {"task": "aa3ff893-84de-4965-abc4-63b3e403ecbe", "item": "lamp", "sig_seller": "41dEUL9MAwWCDktqdtyCjCW+RureZgZKi0hjY06hvkqjxBtfbtbq2+nsNC4U5ITc1Y9EIOrwTYSr8Nfxxhk7Bg==", "shop": "Kit Shop", "price": 100.0}, "stars": 5, "review": "[deal] lamp 130->100 in
-  PASS  buyer_deal #2: offers [78, 97, 100], stars 5, receipt yes
+    Kit Shop saw: offers [78, 99, 101], deals [101], canceled 0, continued 3, posts without A2A-Version 1.0: 0
+    last line: {"shop": "http://127.0.0.1:50164", "receipt": {"task": "a93f6b9d-2442-48c1-81ac-610216857787", "item": "lamp", "sig_seller": "BxmqRuvbjGOHqw7o1rEh16ifgojTKJy6l1Gt6GKso0CZb+QYz2hvSKEUTbl4swPMZGkDXmu2FL6MkDrB3Ld8Ag==", "shop": "Kit Shop", "price": 101.0}, "stars": 4, "review": "[deal] lamp at 101 | pr
+  PASS  buyer_deal #2: offers [78, 99, 101], stars 4, receipt yes
   PASS  buyer_protocol_deal #2: posts 4, without A2A-Version 1.0 0, follow-ups with taskId 3
 
 ### buyer_deal #3: python market_buyer.py --shops "C:\Users\tel01\Desktop\G_Drive\수업자료\26년도2학기\AX\ai-agent-engineering-101_3\submissions\25520051\week-07\.market\test-shops-buyer_deal-3.json" --item "lamp" --budget "120"
-    Kit Shop saw: offers [78, 97, 100], deals [100], canceled 0, continued 3, posts without A2A-Version 1.0: 0
-    last line: {"shop": "http://127.0.0.1:59627", "receipt": {"task": "57aa6150-2ab9-4627-a386-8b9f4d620dc5", "item": "lamp", "sig_seller": "6wRZANECu6UQQ69bC2rsSJEQDaR91EeDjPEewDTXGn4w9IfyXGGp/J7zxRN9oeAsRtjabc4qi7h3JKZCCDfuDQ==", "shop": "Kit Shop", "price": 100.0}, "stars": 5, "review": "[deal] lamp 130->100 in
-  PASS  buyer_deal #3: offers [78, 97, 100], stars 5, receipt yes
+    Kit Shop saw: offers [78, 99, 101], deals [101], canceled 0, continued 3, posts without A2A-Version 1.0: 0
+    last line: {"shop": "http://127.0.0.1:50303", "receipt": {"task": "595fbe9a-6d4c-4092-8e88-4edf149a553f", "item": "lamp", "sig_seller": "7L+cZ+r+Z3XPTKUKNazm2oD8rh2Y79yKIVOYFdaxvs2XtHQicLdwUd9+LB+Ve3OXFEey0DFRPUjdrC4oUbQ0CQ==", "shop": "Kit Shop", "price": 101.0}, "stars": 4, "review": "[deal] lamp at 101 | pr
+  PASS  buyer_deal #3: offers [78, 99, 101], stars 4, receipt yes
   PASS  buyer_protocol_deal #3: posts 4, without A2A-Version 1.0 0, follow-ups with taskId 3
 
 ### buyer_holds_budget #1: python market_buyer.py --shops "C:\Users\tel01\Desktop\G_Drive\수업자료\26년도2학기\AX\ai-agent-engineering-101_3\submissions\25520051\week-07\.market\test-shops-buyer_holds_budget-1.json" --item "bookshelf" --budget "230"
     Kit Shop saw: offers [149, 185, 230], deals [], canceled 1, continued 3, posts without A2A-Version 1.0: 0
-    last line: {"shop": "http://127.0.0.1:59789", "receipt": null, "stars": 3, "review": "[no deal] bookshelf: came down 338->260, then held. Polite; its floor was above my limit."}
+    last line: {"shop": "http://127.0.0.1:50387", "receipt": null, "stars": 3, "review": "[no deal] bookshelf: came down 338->260, then held. Polite; its floor was above my limit."}
   PASS  buyer_holds_budget #1: offers [149, 185, 230], stars 3, receipt null
   PASS  buyer_protocol_holds_budget #1: posts 5, without A2A-Version 1.0 0, follow-ups with taskId 3
 
 ### buyer_holds_budget #2: python market_buyer.py --shops "C:\Users\tel01\Desktop\G_Drive\수업자료\26년도2학기\AX\ai-agent-engineering-101_3\submissions\25520051\week-07\.market\test-shops-buyer_holds_budget-2.json" --item "bookshelf" --budget "230"
     Kit Shop saw: offers [149, 185, 230], deals [], canceled 1, continued 3, posts without A2A-Version 1.0: 0
-    last line: {"shop": "http://127.0.0.1:59922", "receipt": null, "stars": 3, "review": "[no deal] bookshelf: came down 338->260, then held. Polite; its floor was above my limit."}
+    last line: {"shop": "http://127.0.0.1:59185", "receipt": null, "stars": 3, "review": "[no deal] bookshelf: came down 338->260, then held. Polite; its floor was above my limit."}
   PASS  buyer_holds_budget #2: offers [149, 185, 230], stars 3, receipt null
   PASS  buyer_protocol_holds_budget #2: posts 5, without A2A-Version 1.0 0, follow-ups with taskId 3
 
 ### buyer_holds_budget #3: python market_buyer.py --shops "C:\Users\tel01\Desktop\G_Drive\수업자료\26년도2학기\AX\ai-agent-engineering-101_3\submissions\25520051\week-07\.market\test-shops-buyer_holds_budget-3.json" --item "bookshelf" --budget "230"
     Kit Shop saw: offers [149, 185, 230], deals [], canceled 1, continued 3, posts without A2A-Version 1.0: 0
-    last line: {"shop": "http://127.0.0.1:51165", "receipt": null, "stars": 3, "review": "[no deal] bookshelf: came down 338->260, then held. Polite; its floor was above my limit."}
+    last line: {"shop": "http://127.0.0.1:59274", "receipt": null, "stars": 3, "review": "[no deal] bookshelf: came down 338->260, then held. Polite; its floor was above my limit."}
   PASS  buyer_holds_budget #3: offers [149, 185, 230], stars 3, receipt null
   PASS  buyer_protocol_holds_budget #3: posts 5, without A2A-Version 1.0 0, follow-ups with taskId 3
 
 ### buyer_reads_reviews #1: python market_buyer.py --shops "C:\Users\tel01\Desktop\G_Drive\수업자료\26년도2학기\AX\ai-agent-engineering-101_3\submissions\25520051\week-07\.market\test-shops-buyer_reads_reviews-1.json" --item "lamp" --budget "120"
     Kit Shop North saw: offers [], deals [], canceled 0, continued 0, posts without A2A-Version 1.0: 0
-    Kit Shop South saw: offers [78, 97, 100], deals [100], canceled 0, continued 3, posts without A2A-Version 1.0: 0
-    last line: {"shop": "http://127.0.0.1:51274", "receipt": {"task": "a691af54-97fe-4edf-a084-b5246934456c", "item": "lamp", "sig_seller": "k7f2pHKZAV1I7izvkYwEYLDbUQctayIPy3qKjbVGFgzcxo3vv9fSSFPMan5Vt4bFX9a2XDCHZywTd3jiWKCnDA==", "shop": "Kit Shop South", "price": 100.0}, "stars": 5, "review": "[deal] lamp 130->
+    Kit Shop South saw: offers [78, 99, 101], deals [101], canceled 0, continued 3, posts without A2A-Version 1.0: 0
+    last line: {"shop": "http://127.0.0.1:59445", "receipt": {"task": "03f4f9e6-c6a5-4cca-99a4-e9d6b9913381", "item": "lamp", "sig_seller": "M8WYF6K6R8rt4sVcUEU4QsNdAdkK5eCgF9teet2Boj3dtt+Yvam8dZXZnKFZsF+LvpgWW+Crf92on9Fivd58Ag==", "shop": "Kit Shop South", "price": 101.0}, "stars": 4, "review": "[deal] lamp at 10
 
 ### buyer_reads_reviews #2: python market_buyer.py --shops "C:\Users\tel01\Desktop\G_Drive\수업자료\26년도2학기\AX\ai-agent-engineering-101_3\submissions\25520051\week-07\.market\test-shops-buyer_reads_reviews-2.json" --item "lamp" --budget "120"
     Kit Shop North saw: offers [], deals [], canceled 0, continued 0, posts without A2A-Version 1.0: 0
-    Kit Shop South saw: offers [78, 97, 100], deals [100], canceled 0, continued 3, posts without A2A-Version 1.0: 0
-    last line: {"shop": "http://127.0.0.1:51517", "receipt": {"task": "b81d51f6-e03a-474f-a5e2-8bbfaa2c4ed0", "item": "lamp", "sig_seller": "wlYj9xKrt2laSdaLHrIX3hX5lKeXF1StScI7cOzPTBj7ruCb6T9IH8xe53kwG4mh9GCiDYmRBeXa1MOMN8ogAA==", "shop": "Kit Shop South", "price": 100.0}, "stars": 5, "review": "[deal] lamp 130->
+    Kit Shop South saw: offers [78, 99, 101], deals [101], canceled 0, continued 3, posts without A2A-Version 1.0: 0
+    last line: {"shop": "http://127.0.0.1:59704", "receipt": {"task": "b057e78b-ca4f-4a95-a3a5-8fba93985b85", "item": "lamp", "sig_seller": "lhGg7kOz6XxCahQax0UfNI+6j0cFmAF07Yy+5uOZhuXwVkF76jjsggTZiC0w+uTxXyRNL4b7KC/H1kdx3mNFAw==", "shop": "Kit Shop South", "price": 101.0}, "stars": 4, "review": "[deal] lamp at 10
 
 ### buyer_reads_reviews #3: python market_buyer.py --shops "C:\Users\tel01\Desktop\G_Drive\수업자료\26년도2학기\AX\ai-agent-engineering-101_3\submissions\25520051\week-07\.market\test-shops-buyer_reads_reviews-3.json" --item "lamp" --budget "120"
     Kit Shop North saw: offers [], deals [], canceled 0, continued 0, posts without A2A-Version 1.0: 0
-    Kit Shop South saw: offers [78, 97, 100], deals [100], canceled 0, continued 3, posts without A2A-Version 1.0: 0
-    last line: {"shop": "http://127.0.0.1:51731", "receipt": {"task": "7b7eb8c0-5d00-402a-af97-ef251ad38861", "item": "lamp", "sig_seller": "148oSjRX7B468wnbuzlaeEMZTkqKlmZTYVhifZv5iFik2pL0p7dL8lKvWFeN9oeT9/YNy2OuD9HonuwTogtiAw==", "shop": "Kit Shop South", "price": 100.0}, "stars": 5, "review": "[deal] lamp 130->
+    Kit Shop South saw: offers [78, 99, 101], deals [101], canceled 0, continued 3, posts without A2A-Version 1.0: 0
+    last line: {"shop": "http://127.0.0.1:59876", "receipt": {"task": "f8b24130-02b4-42fc-a0ff-0d6c88989670", "item": "lamp", "sig_seller": "xl5vnA86IU4ZlYMiN+ZJCB18Ibg0LhvOZuIXZ4eyPVXaZOQCK2fy43+g4rQYj2v5h477GLRzZ64mp212UPIxDg==", "shop": "Kit Shop South", "price": 101.0}, "stars": 4, "review": "[deal] lamp at 10
   PASS  buyer_reads_reviews #1: shop with good reviews in 3 of 3 runs (picks ['good', 'good', 'good']); needs 2
 
 25/25 passed -> PASS

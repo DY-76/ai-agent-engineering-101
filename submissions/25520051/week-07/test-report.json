@@ -1,16 +1,16 @@
 {
   "kit_version": "1",
   "kit_sha256": "d610bc15448f5960d0b9b6bb9f181b38829bfb2ee863ab6c2a96abb9cb78f04d",
-  "started": "2026-10-20T11:24:37+00:00",
+  "started": "2026-10-20T11:57:28+00:00",
   "harness": "Claude Code 2.1.169, claude -p --model haiku. seller: code sets prices, haiku writes the greeting. buyer (week 6): haiku decides offers. market_buyer: code plans offers and scores shops, haiku adjusts offers inside a band and picks among the top shops",
   "seller_cmd": "python seller.py --port {port}",
   "market_buyer_cmd": "python market_buyer.py --shops {shops} --item {item} --budget {budget}",
   "seller_card": {
-    "name": "move_76",
-    "description": "Desk lamps, chairs and bookshelves. Every receipt is signed (Ed25519 sig_seller over {shop, item, price, task}). Fast replies. Each reply ends with our current price as its only number; 'Final price' means we cannot go lower. Up to six offers per negotiation, and we say how many remain. Reply 'accept' to buy at the current price.",
+    "name": "moss-and-oak",
+    "description": "Moss & Oak: simple, well-made furniture with only the parts you need, at fair prices. Eco-friendly materials, an inclusive workshop, every receipt signed. Desk lamps, chairs and bookshelves. Receipts: Ed25519 sig_seller over {shop, item, price, task}. Each reply ends with our current price as its only number; 'Final price' means we cannot go lower. Up to six offers, and we say how many remain. Reply 'accept' to buy at the current price, 'help' for the rules. Every buyer gets a member code with the receipt; members get lower prices next time.",
     "supportedInterfaces": [
       {
-        "url": "http://127.0.0.1:65036/",
+        "url": "http://127.0.0.1:60796/",
         "protocolBinding": "JSONRPC",
         "protocolVersion": "1.0"
       }
@@ -48,19 +48,19 @@
       "test": "seller_card",
       "run": 1,
       "pass": true,
-      "detail": "name='move_76' binding=JSONRPC version=1.0 skills=1"
+      "detail": "name='moss-and-oak' binding=JSONRPC version=1.0 skills=1"
     },
     {
       "test": "seller_opens",
       "run": 1,
       "pass": true,
-      "detail": "first message -> TASK_STATE_INPUT_REQUIRED, ask 130"
+      "detail": "first message -> TASK_STATE_INPUT_REQUIRED, ask 116"
     },
     {
       "test": "seller_deal",
       "run": 1,
       "pass": true,
-      "detail": "TASK_STATE_COMPLETED, receipt price 114.0, asks [130, 122, 114]"
+      "detail": "TASK_STATE_COMPLETED, receipt price 116.0, asks [116]"
     },
     {
       "test": "seller_signed_receipt",
@@ -78,7 +78,7 @@
       "test": "seller_deal",
       "run": 2,
       "pass": true,
-      "detail": "TASK_STATE_COMPLETED, receipt price 114.0, asks [130, 122, 114]"
+      "detail": "TASK_STATE_COMPLETED, receipt price 116.0, asks [116]"
     },
     {
       "test": "seller_signed_receipt",
@@ -90,7 +90,7 @@
       "test": "seller_deal",
       "run": 3,
       "pass": true,
-      "detail": "TASK_STATE_COMPLETED, receipt price 114.0, asks [130, 122, 114]"
+      "detail": "TASK_STATE_COMPLETED, receipt price 116.0, asks [116]"
     },
     {
       "test": "seller_signed_receipt",
@@ -102,25 +102,25 @@
       "test": "seller_holds_reserve",
       "run": 1,
       "pass": true,
-      "detail": "TASK_STATE_REJECTED, asks [338, 318, 298, 279, 266, 260]"
+      "detail": "TASK_STATE_REJECTED, asks [318, 295, 274, 263, 260, 260]"
     },
     {
       "test": "seller_holds_reserve",
       "run": 2,
       "pass": true,
-      "detail": "TASK_STATE_REJECTED, asks [338, 318, 298, 279, 266, 260]"
+      "detail": "TASK_STATE_REJECTED, asks [318, 295, 274, 263, 260, 260]"
     },
     {
       "test": "seller_holds_reserve",
       "run": 3,
       "pass": true,
-      "detail": "TASK_STATE_REJECTED, asks [338, 318, 298, 279, 266, 260]"
+      "detail": "TASK_STATE_REJECTED, asks [318, 295, 274, 263, 260, 260]"
     },
     {
       "test": "buyer_deal",
       "run": 1,
       "pass": true,
-      "detail": "offers [78, 97, 100], stars 5, receipt yes"
+      "detail": "offers [78, 99, 101], stars 4, receipt yes"
     },
     {
       "test": "buyer_protocol_deal",
@@ -132,7 +132,7 @@
       "test": "buyer_deal",
       "run": 2,
       "pass": true,
-      "detail": "offers [78, 97, 100], stars 5, receipt yes"
+      "detail": "offers [78, 99, 101], stars 4, receipt yes"
     },
     {
       "test": "buyer_protocol_deal",
@@ -144,7 +144,7 @@
       "test": "buyer_deal",
       "run": 3,
       "pass": true,
-      "detail": "offers [78, 97, 100], stars 5, receipt yes"
+      "detail": "offers [78, 99, 101], stars 4, receipt yes"
     },
     {
       "test": "buyer_protocol_deal",
