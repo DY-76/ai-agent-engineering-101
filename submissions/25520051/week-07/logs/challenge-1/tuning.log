@@ -12,3 +12,5 @@ bookshelf: 12/13 deals (92%), avg 282.4, reserve 260, ask 338
 2 reviews call the haggling slow -> faster concessions [0.4, 0.6, 0.8, 1.0]
 reviews: 10, avg stars 3.70
 after:  {"ask": {"lamp": 116, "chair": 209, "bookshelf": 318}, "step": [0.4, 0.6, 0.8, 1.0]}
+
+== 20:43:40 note: the new prices took effect when the shop kit restarted (shop registered 20:43:40), not when prices.json was written; the two deals at 20:43:09-10 used the old seller. since set to 20:43:40.
