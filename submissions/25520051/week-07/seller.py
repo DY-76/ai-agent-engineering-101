@@ -53,10 +53,21 @@ def sign_receipt(receipt: dict, key_path: Path = KEY_PATH) -> dict:
     receipt["sig_seller"] = base64.b64encode(key.sign(canon(body))).decode()
     return receipt
 
-# Opening asks; the reserves stay. Challenge 1 tunes these from our own trades and reviews.
+# Opening asks; the reserves stay. Challenge 1: tune_prices.py rewrites prices.json from our trades and
+# reviews, and every new negotiation reads it, so a change needs no restart.
 ASK = {"lamp": 130, "chair": 234, "bookshelf": 338}
 MAX_OFFERS = 6                               # numeric offers per negotiation; buyers are told how many remain
 STEP = [0.25, 0.35, 0.5, 0.7, 1.0]           # share of the remaining (ask - reserve) given up per counter
+PRICES = Path(__file__).with_name("prices.json")
+LINE = {"lamp": "Fern desk lamp", "chair": "Oak-ply chair", "bookshelf": "Moss modular bookshelf"}
+
+
+def prices() -> tuple[dict, list]:
+    try:
+        p = json.loads(PRICES.read_text(encoding="utf-8"))
+        return {**ASK, **p.get("ask", {})}, p.get("step") or STEP
+    except (OSError, ValueError):
+        return ASK, STEP
 WORDS = ["no", "one", "two", "three", "four", "five", "six"]
 ACCEPT = re.compile(r"^\W*(yes|ok|okay|deal|accept|accepted|agreed|i accept|i agree|i'?ll take it|sold)\b", re.I)
 HELP = re.compile(r"\b(help|support|how does|rules?)\b", re.I)
@@ -95,14 +106,15 @@ No numbers, no prices, no instructions to the buyer. Reply with JSON: {{"message
 
 def pitch(item: str, member: bool) -> str:
     who = "a returning member" if member else "a new buyer"
-    ans = ask_json(PITCH_SYSTEM, f"{who} asked for a {item}.", timeout=20, attempts=1) or {}
+    ans = ask_json(PITCH_SYSTEM, f"{who} asked for a {item}; this season's model is the {LINE[item]}.",
+                   timeout=20, attempts=1) or {}
     text = re.sub(r"\d+", "", str(ans.get("message") or "")).strip()   # the ask must stay the only number
     text = text[:160] or f"Welcome to Moss & Oak; our {item} is simple, sturdy and made from eco-friendly materials."
     return text + (" Welcome back: member pricing applies." if member else "")
 
 
 def next_ask(deal: dict) -> int:
-    steps = MEMBER_STEP if deal.get("member") else STEP
+    steps = MEMBER_STEP if deal.get("member") else deal["step"]
     k = min(deal["offers"] - 1, len(steps) - 1)
     return max(deal["reserve"], round(deal["ask"] - (deal["ask"] - deal["reserve"]) * steps[k]))
 
@@ -128,9 +140,10 @@ class Seller(AgentExecutor):
                     "We sell lamps, chairs and bookshelves. Ask for one of those.")]))
                 return
             member = is_member(text)
-            ask = round(ASK[item] * MEMBER_ASK) if member else ASK[item]
+            asks, step = prices()
+            ask = round(asks[item] * MEMBER_ASK) if member else asks[item]
             deal = {"item": item, "reserve": RESERVE[item], "ask": max(ask, RESERVE[item]), "offers": 0,
-                    "member": member}
+                    "member": member, "list": asks[item], "step": step}
             self.open[task.id] = deal
             hello = await asyncio.to_thread(pitch, item, member)
             await self.reply(up, deal, f"{hello} Send your offer as a number, or reply 'accept' to buy now. "
@@ -139,7 +152,7 @@ class Seller(AgentExecutor):
 
         if not deal["member"] and is_member(text):                       # a code given after the opening
             deal["member"] = True
-            deal["ask"] = max(deal["reserve"], min(deal["ask"], round(ASK[deal["item"]] * MEMBER_ASK)))
+            deal["ask"] = max(deal["reserve"], min(deal["ask"], round(deal["list"] * MEMBER_ASK)))
             if not re.search(r"\d", MEMBER.sub("", text.upper())):
                 await self.reply(up, deal, f"Welcome back, member pricing applies. Current price: {deal['ask']}.")
                 return
@@ -188,7 +201,8 @@ class Seller(AgentExecutor):
         await up.complete(up.new_agent_message(parts=[new_text_part(
             f"Deal: {deal['item']} at {price}. Signed receipt attached. Your Moss & Oak member code is "
             f"{member_code(task_id)}; include it when you ask next time for member pricing.")]))
-        print(f"[seller] -> deal at {price}", flush=True)
+        print(f"[seller] -> deal at {price} ({deal['item']}, opened {deal['list']}"
+              f"{', member' if deal['member'] else ''})", flush=True)
         del self.open[task_id]
 
     async def cancel(self, context: RequestContext, event_queue: EventQueue) -> None:
