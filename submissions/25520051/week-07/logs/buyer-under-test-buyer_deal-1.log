@@ -1,8 +1,19 @@
-[buyer] card: 'Kit Shop' at http://127.0.0.1:49680/
+[buyer] order: lamp, budget 120, 1 shops, reference price None
+[pick] +0.30  Kit Shop: never traded (curiosity bonus); no reviews
+[buyer] picked Kit Shop (http://127.0.0.1:62573): highest score (never traded (curiosity bonus); no reviews)
 [buyer] -> 'I want to buy a lamp'
 [buyer] <- TASK_STATE_INPUT_REQUIRED | lamp: asking 130. Send your offer as a number.
-[harness] raw: '```json\n{"action": "offer", "price": 110, "reason": "shop asking 130 is above my 120 budget; offering 110 to negotiate"}\n```'
-[buyer] harness -> {'action': 'offer', 'price': 110, 'reason': 'shop asking 130 is above my 120 budget; offering 110 to negotiate'}
-[buyer] -> '110' taskId=f6712a96
-[buyer] <- TASK_STATE_COMPLETED | Deal: lamp at 110.
-[buyer] bought: [{'item': 'lamp', 'price': 110.0, 'seller': 'Kit Shop'}]
+[harness] raw: '```json\n{"action": "offer", "price": 78, "reason": "anchor price; shop asked 130, my budget 120, opening offer at 78 establishes negotiation range"}\n```'
+[harness] {'action': 'offer', 'price': 78, 'reason': 'anchor price; shop asked 130, my budget 120, opening offer at 78 establishes negotiation range'}
+[buyer] offer 78: harness: anchor price; shop asked 130, my budget 120, opening offer at 78 establishes negotiation range
+[buyer] -> '78' taskId=43fbf162
+[buyer] <- TASK_STATE_INPUT_REQUIRED | 78 is too low. Counteroffer: 104.
+[harness] raw: '```json\n{"action": "offer", "price": 97, "reason": "Step 2/5 of planned concession strategy. Demonstrates good faith movement from 78 toward shop\'s 104 while remaining within allowed band and below hard budget of 120."}\n```'
+[harness] {'action': 'offer', 'price': 97, 'reason': "Step 2/5 of planned concession strategy. Demonstrates good faith movement from 78 toward shop's 104 while remaining within allowed band and below hard budget of 120."}
+[buyer] offer 97: harness: Step 2/5 of planned concession strategy. Demonstrates good faith movement from 78 toward shop's 104 while remaining with
+[buyer] -> '97' taskId=43fbf162
+[buyer] <- TASK_STATE_INPUT_REQUIRED | 97 is too low. Counteroffer: 100.
+[buyer] accept 100: ask 100 is within budget and close to our last 97
+[buyer] -> '100' taskId=43fbf162
+[buyer] <- TASK_STATE_COMPLETED | Deal: lamp at 100.
+{"shop": "http://127.0.0.1:62573", "receipt": {"task": "43fbf162-0dbd-42c7-8d3b-f052584527e0", "item": "lamp", "sig_seller": "aH+jXJC8+nySZPtS7Mfl3n0tEPDQSwEAXOSlhun8demGaq6BfuWAEpE0Fowcb9YOWOZY3semoZV055pP6c1/Ag==", "shop": "Kit Shop", "price": 100.0}, "stars": 5, "review": "Deal on lamp at 100 after 3 offers (opened at 130). Receipt matched the agreed price."}

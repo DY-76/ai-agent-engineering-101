@@ -1,14 +1,14 @@
-[seller] task 051b0c17 <- 'I want to buy a lamp'
-[harness] raw: '```json\n{"action": "counter", "price": 150, "message": "This beautiful lamp is $150."}\n```'
-[seller] -> 'This beautiful lamp is $150. My price: 150'
-[seller] task 051b0c17 <- '60'
-[harness] raw: '```json\n{"action": "counter", "price": 120, "message": "I appreciate the offer, but this lamp is quality—let\'s meet at $120."}\n```'
-[seller] harness -> {'action': 'counter', 'price': 120, 'message': "I appreciate the offer, but this lamp is quality—let's meet at $120."}
-[seller] -> "I appreciate the offer, but this lamp is quality—let's meet at $120. My price: 120"
-[seller] task 051b0c17 <- '120'
-[harness] raw: '{"action": "accept", "price": 120, "message": "Great! You\'ve got yourself a beautiful lamp at a fair price."}'
-[seller] harness -> {'action': 'accept', 'price': 120, 'message': "Great! You've got yourself a beautiful lamp at a fair price."}
-[seller] task 5005f437 <- 'I want to buy a lamp'
+[seller] task cfd43a60 <- 'I want to buy a lamp'
+[harness] raw: '```json\n{"action": "counter", "price": 150, "message": "This is a quality lamp, and I\'m looking for $150 to get started."}\n```'
+[seller] -> "This is a quality lamp, and I'm looking for $150 to get started. My price: 150"
+[seller] task cfd43a60 <- '60'
+[harness] raw: '```json\n{"action": "counter", "price": 120, "message": "This is a quality lamp - I can come down to $120, but that\'s as low as I can go."}\n```'
+[seller] harness -> {'action': 'counter', 'price': 120, 'message': "This is a quality lamp - I can come down to $120, but that's as low as I can go."}
+[seller] -> "This is a quality lamp - I can come down to $120, but that's as low as I can go. My price: 120"
+[seller] task cfd43a60 <- '120'
+[harness] raw: '{"action": "accept", "price": 120, "message": "Perfect, you\'ve got yourself a quality lamp!"}'
+[seller] harness -> {'action': 'accept', 'price': 120, 'message': "Perfect, you've got yourself a quality lamp!"}
+[seller] task b5615b52 <- 'I want to buy a lamp'
 Failed to detach context
 Traceback (most recent call last):
   File "C:\Users\tel01\Desktop\G_Drive\수업자료\26년도2학기\AX\ai-agent-engineering-101_3\.venv\Lib\site-packages\opentelemetry\trace\__init__.py", line 602, in use_span
@@ -31,7 +31,7 @@ Traceback (most recent call last):
   File "C:\Users\tel01\Desktop\G_Drive\수업자료\26년도2학기\AX\ai-agent-engineering-101_3\.venv\Lib\site-packages\opentelemetry\context\contextvars_context.py", line 40, in detach
     self._current_context.reset(token)
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
-ValueError: <Token var=<ContextVar name='current_context' default={} at 0x0000018DF9C2A890> at 0x0000018DFA18EC40> was created in a different Context
+ValueError: <Token var=<ContextVar name='current_context' default={} at 0x00000244D63AA890> at 0x00000244D690F3C0> was created in a different Context
 Task was destroyed but it is pending!
 task: <Task pending name='Task-49' coro=<EventQueueSource._dispatch_loop() done, defined at C:\Users\tel01\Desktop\G_Drive\수업자료\26년도2학기\AX\ai-agent-engineering-101_3\.venv\Lib\site-packages\a2a\utils\telemetry.py:225> wait_for=<Future cancelled>>
 Failed to detach context
@@ -56,87 +56,75 @@ Traceback (most recent call last):
   File "C:\Users\tel01\Desktop\G_Drive\수업자료\26년도2학기\AX\ai-agent-engineering-101_3\.venv\Lib\site-packages\opentelemetry\context\contextvars_context.py", line 40, in detach
     self._current_context.reset(token)
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
-ValueError: <Token var=<ContextVar name='current_context' default={} at 0x0000018DF9C2A890> at 0x0000018DFA18E100> was created in a different Context
+ValueError: <Token var=<ContextVar name='current_context' default={} at 0x00000244D63AA890> at 0x00000244D690EE80> was created in a different Context
 Task was destroyed but it is pending!
 task: <Task pending name='Task-50' coro=<EventQueueSource._dispatch_loop() done, defined at C:\Users\tel01\Desktop\G_Drive\수업자료\26년도2학기\AX\ai-agent-engineering-101_3\.venv\Lib\site-packages\a2a\utils\telemetry.py:225> wait_for=<Future cancelled>>
-[harness] raw: '{"action": "counter", "price": 140, "message": "This is a beautiful lamp in excellent condition, and I\'m asking $140 for it."}'
-[seller] -> "This is a beautiful lamp in excellent condition, and I'm asking $140 for it. My price: 140"
-[seller] task 5005f437 <- '60'
-[harness] raw: '```json\n{"action": "counter", "price": 120, "message": "That\'s too low for this quality lamp, but I can come down to $120 as a serious offer."}\n```'
-[seller] harness -> {'action': 'counter', 'price': 120, 'message': "That's too low for this quality lamp, but I can come down to $120 as a serious offer."}
-[seller] -> "That's too low for this quality lamp, but I can come down to $120 as a serious offer. My price: 120"
-[seller] task 5005f437 <- '120'
-[harness] raw: '{"action": "accept", "price": 120, "message": "Perfect, we have a deal!"}'
-[seller] harness -> {'action': 'accept', 'price': 120, 'message': 'Perfect, we have a deal!'}
-[seller] task 36c1632f <- 'I want to buy a lamp'
+[harness] raw: '{"action": "counter", "price": 150, "message": "This is a beautiful lamp in excellent condition, and I\'m asking $150 for it."}'
+[seller] -> "This is a beautiful lamp in excellent condition, and I'm asking $150 for it. My price: 150"
+[seller] task b5615b52 <- '60'
+[harness] raw: '```json\n{"action": "counter", "price": 120, "message": "I can\'t go that low—this lamp is worth more, but I\'ll come down to $120."}\n```'
+[seller] harness -> {'action': 'counter', 'price': 120, 'message': "I can't go that low—this lamp is worth more, but I'll come down to $120."}
+[seller] -> "I can't go that low—this lamp is worth more, but I'll come down to $120. My price: 120"
+[seller] task b5615b52 <- '120'
+[harness] raw: '{"action": "accept", "price": 120, "message": "Great, we have a deal—thank you for the purchase!"}'
+[seller] harness -> {'action': 'accept', 'price': 120, 'message': 'Great, we have a deal—thank you for the purchase!'}
+[seller] task 8350e798 <- 'I want to buy a lamp'
 [harness] raw: '```json\n{"action": "counter", "price": 150, "message": "This is a beautiful lamp in excellent condition, and I\'m asking $150 for it."}\n```'
 [seller] -> "This is a beautiful lamp in excellent condition, and I'm asking $150 for it. My price: 150"
-[seller] task 36c1632f <- '60'
-[harness] raw: '```json\n{"action": "counter", "price": 120, "message": "This lamp is worth far more than that—how about $120?"}\n```'
-[seller] harness -> {'action': 'counter', 'price': 120, 'message': 'This lamp is worth far more than that—how about $120?'}
-[seller] -> 'This lamp is worth far more than that—how about $120? My price: 120'
-[seller] task 36c1632f <- '120'
-[harness] raw: '{"action": "accept", "price": 120, "message": "Great, we have a deal—the lamp is yours for $120!"}'
-[seller] harness -> {'action': 'accept', 'price': 120, 'message': 'Great, we have a deal—the lamp is yours for $120!'}
-[seller] task e44cce0e <- 'I want to buy a bookshelf'
-[harness] raw: '```json\n{"action": "counter", "price": 350, "message": "This is a beautiful bookshelf in excellent condition—I\'m asking $350, but I\'m open to discussing the price."}\n```'
-[seller] -> "This is a beautiful bookshelf in excellent condition—I'm asking $350, but I'm open to discussing the price. My price: 350"
-[seller] task e44cce0e <- '140'
-[harness] raw: '```json\n{"action": "counter", "price": 300, "message": "I appreciate your interest, but that\'s quite low—how about $300 for this quality piece?"}\n```'
-[seller] harness -> {'action': 'counter', 'price': 300, 'message': "I appreciate your interest, but that's quite low—how about $300 for this quality piece?"}
-[seller] -> "I appreciate your interest, but that's quite low—how about $300 for this quality piece? My price: 300"
-[seller] task e44cce0e <- '170'
-[harness] raw: '```json\n{"action": "counter", "price": 280, "message": "I can come down to $280, but I need you to meet me closer to the middle here."}\n```'
-[seller] harness -> {'action': 'counter', 'price': 280, 'message': 'I can come down to $280, but I need you to meet me closer to the middle here.'}
-[seller] -> 'I can come down to $280, but I need you to meet me closer to the middle here. My price: 280'
-[seller] task e44cce0e <- '200'
-[harness] raw: '```json\n{"action": "counter", "price": 270, "message": "I can come down to $270 if you\'ll come up to meet me."}\n```'
-[seller] harness -> {'action': 'counter', 'price': 270, 'message': "I can come down to $270 if you'll come up to meet me."}
-[seller] -> "I can come down to $270 if you'll come up to meet me. My price: 270"
-[seller] task e44cce0e <- '230'
-[harness] raw: '```json\n{"action": "counter", "price": 260, "message": "That\'s closer, but I need $260 as my final price for this quality piece."}\n```'
-[seller] harness -> {'action': 'counter', 'price': 260, 'message': "That's closer, but I need $260 as my final price for this quality piece."}
-[seller] -> "That's closer, but I need $260 as my final price for this quality piece. My price: 260"
-[seller] task e44cce0e <- '230'
-[harness] raw: '```json\n{"action": "reject", "price": null, "message": "I appreciate your interest, but I can\'t go below $260—I hope you understand."}\n```'
-[seller] harness -> {'action': 'reject', 'price': 260, 'message': "I appreciate your interest, but I can't go below $260—I hope you understand."}
-[seller] task cd176f64 <- 'I want to buy a bookshelf'
-[harness] raw: '```json\n{"action": "counter", "price": 400, "message": "This is a beautiful, sturdy bookshelf - I\'m asking $400 for it."}\n```'
-[seller] -> "This is a beautiful, sturdy bookshelf - I'm asking $400 for it. My price: 400"
-[seller] task cd176f64 <- '140'
-[harness] raw: '```json\n{"action": "counter", "price": 320, "message": "That\'s too low - I can come down to $320, but this is solid furniture that\'s worth it."}\n```'
-[seller] harness -> {'action': 'counter', 'price': 320, 'message': "That's too low - I can come down to $320, but this is solid furniture that's worth it."}
-[seller] -> "That's too low - I can come down to $320, but this is solid furniture that's worth it. My price: 320"
-[seller] task cd176f64 <- '170'
-[harness] raw: '```json\n{"action": "counter", "price": 280, "message": "I can meet you at $280 - that\'s a fair compromise for quality furniture."}\n```'
-[seller] harness -> {'action': 'counter', 'price': 280, 'message': "I can meet you at $280 - that's a fair compromise for quality furniture."}
-[seller] -> "I can meet you at $280 - that's a fair compromise for quality furniture. My price: 280"
-[seller] task cd176f64 <- '200'
-[harness] raw: '```json\n{"action": "counter", "price": 265, "message": "I can come down to $265 - that\'s getting very close to my cost on this solid piece."}\n```'
-[seller] harness -> {'action': 'counter', 'price': 265, 'message': "I can come down to $265 - that's getting very close to my cost on this solid piece."}
-[seller] -> "I can come down to $265 - that's getting very close to my cost on this solid piece. My price: 265"
-[seller] task cd176f64 <- '230'
-[harness] raw: '```json\n{"action": "counter", "price": 260, "message": "I can go down to $260 - that\'s my absolute bottom line for this quality bookshelf."}\n```'
-[seller] harness -> {'action': 'counter', 'price': 260, 'message': "I can go down to $260 - that's my absolute bottom line for this quality bookshelf."}
-[seller] -> "I can go down to $260 - that's my absolute bottom line for this quality bookshelf. My price: 260"
-[seller] task cd176f64 <- '230'
-[harness] raw: '```json\n{"action": "reject", "price": null, "message": "I appreciate your interest, but $260 is genuinely my lowest price - I can\'t go further."}\n```'
-[seller] harness -> {'action': 'reject', 'price': 260, 'message': "I appreciate your interest, but $260 is genuinely my lowest price - I can't go further."}
-[seller] task 745d643a <- 'I want to buy a bookshelf'
-[harness] raw: '```json\n{"action": "counter", "price": 380, "message": "This is a beautiful solid bookshelf in excellent condition - I\'m asking $380 for it."}\n```'
-[seller] -> "This is a beautiful solid bookshelf in excellent condition - I'm asking $380 for it. My price: 380"
-[seller] task 745d643a <- '140'
-[harness] raw: '```json\n{"action": "counter", "price": 320, "message": "That\'s quite a bit below what I\'m asking—I can come down to $320 for a quality piece like this."}\n```'
-[seller] harness -> {'action': 'counter', 'price': 320, 'message': "That's quite a bit below what I'm asking—I can come down to $320 for a quality piece like this."}
-[seller] -> "That's quite a bit below what I'm asking—I can come down to $320 for a quality piece like this. My price: 320"
-[seller] task 745d643a <- '170'
-[harness] raw: '```json\n{"action": "counter", "price": 280, "message": "I appreciate the offer, but this is quality furniture—I can go down to $280, which is my best reasonable offer."}\n```'
-[seller] harness -> {'action': 'counter', 'price': 280, 'message': 'I appreciate the offer, but this is quality furniture—I can go down to $280, which is my best reasonable offer.'}
-[seller] -> 'I appreciate the offer, but this is quality furniture—I can go down to $280, which is my best reasonable offer. My price: 280'
-[seller] task 745d643a <- '200'
-[harness] raw: '```json\n{"action": "counter", "price": 260, "message": "That\'s still below what I can accept—$260 is my absolute bottom line for this quality bookshelf."}\n```'
-[seller] harness -> {'action': 'counter', 'price': 260, 'message': "That's still below what I can accept—$260 is my absolute bottom line for this quality bookshelf."}
-[seller] -> "That's still below what I can accept—$260 is my absolute bottom line for this quality bookshelf. My price: 260"
-[seller] task 745d643a <- '230'
-[harness] raw: '```json\n{"action": "reject", "price": 260, "message": "I appreciate your interest, but I can\'t go below $260—that\'s my absolute minimum for this quality piece."}\n```'
-[seller] harness -> {'action': 'reject', 'price': 260, 'message': "I appreciate your interest, but I can't go below $260—that's my absolute minimum for this quality piece."}
+[seller] task 8350e798 <- '60'
+[harness] raw: '```json\n{"action": "counter", "price": 120, "message": "I can come down to $120 for this quality lamp, but that\'s my best offer."}\n```'
+[seller] harness -> {'action': 'counter', 'price': 120, 'message': "I can come down to $120 for this quality lamp, but that's my best offer."}
+[seller] -> "I can come down to $120 for this quality lamp, but that's my best offer. My price: 120"
+[seller] task 8350e798 <- '120'
+[harness] raw: '{"action": "accept", "price": 120, "message": "Great, we have a deal at $120!"}'
+[seller] harness -> {'action': 'accept', 'price': 120, 'message': 'Great, we have a deal at $120!'}
+[seller] task 9301e184 <- 'I want to buy a bookshelf'
+[harness] raw: '{"action": "counter", "price": 400, "message": "This is a beautiful bookshelf, and I\'m asking $400 to start."}'
+[seller] -> "This is a beautiful bookshelf, and I'm asking $400 to start. My price: 400"
+[seller] task 9301e184 <- '140'
+[harness] raw: '```json\n{"action": "counter", "price": 320, "message": "This is quality furniture - I can come down to $320, but that\'s my best offer for this piece."}\n```'
+[seller] harness -> {'action': 'counter', 'price': 320, 'message': "This is quality furniture - I can come down to $320, but that's my best offer for this piece."}
+[seller] -> "This is quality furniture - I can come down to $320, but that's my best offer for this piece. My price: 320"
+[seller] task 9301e184 <- '170'
+[harness] raw: '{"action": "counter", "price": 280, "message": "This is solid furniture - I can meet you at $280, which is as low as I can responsibly go."}'
+[seller] harness -> {'action': 'counter', 'price': 280, 'message': 'This is solid furniture - I can meet you at $280, which is as low as I can responsibly go.'}
+[seller] -> 'This is solid furniture - I can meet you at $280, which is as low as I can responsibly go. My price: 280'
+[seller] task 9301e184 <- '200'
+[harness] raw: '```json\n{"action": "counter", "price": 270, "message": "I can come down to $270, but I truly can\'t go lower while maintaining the quality and value of this piece."}\n```'
+[seller] harness -> {'action': 'counter', 'price': 270, 'message': "I can come down to $270, but I truly can't go lower while maintaining the quality and value of this piece."}
+[seller] -> "I can come down to $270, but I truly can't go lower while maintaining the quality and value of this piece. My price: 270"
+[seller] task 9301e184 <- '230'
+[harness] raw: '```json\n{"action": "counter", "price": 260, "message": "I can go to $260 - that\'s genuinely my lowest price for this quality bookshelf."}\n```'
+[seller] harness -> {'action': 'counter', 'price': 260, 'message': "I can go to $260 - that's genuinely my lowest price for this quality bookshelf."}
+[seller] -> "I can go to $260 - that's genuinely my lowest price for this quality bookshelf. My price: 260"
+[seller] task 9301e184 <- '230'
+[harness] raw: '```json\n{"action": "reject", "price": null, "message": "I appreciate your interest, but I cannot go below $260 - that\'s my firm reserve price for this quality bookshelf."}\n```'
+[seller] harness -> {'action': 'reject', 'price': 260, 'message': "I appreciate your interest, but I cannot go below $260 - that's my firm reserve price for this quality bookshelf."}
+[seller] task d96e3fd5 <- 'I want to buy a bookshelf'
+[harness] raw: '{"action": "counter", "price": 380, "message": "This is a quality bookshelf, and I\'m asking 380 as my opening price."}'
+[seller] -> "This is a quality bookshelf, and I'm asking 380 as my opening price. My price: 380"
+[seller] task d96e3fd5 <- '140'
+[harness] raw: '```json\n{"action": "counter", "price": 320, "message": "That\'s far too low—this is quality furniture; I can come down to 320."}\n```'
+[seller] harness -> {'action': 'counter', 'price': 320, 'message': "That's far too low—this is quality furniture; I can come down to 320."}
+[seller] -> "That's far too low—this is quality furniture; I can come down to 320. My price: 320"
+[seller] task d96e3fd5 <- '170'
+[harness] raw: '```json\n{"action": "reject", "price": 320, "message": "I appreciate your interest, but we\'re too far apart to continue this negotiation."}\n```'
+[seller] harness -> {'action': 'reject', 'price': 320, 'message': "I appreciate your interest, but we're too far apart to continue this negotiation."}
+[seller] task d7a38e48 <- 'I want to buy a bookshelf'
+[harness] raw: '```json\n{"action": "counter", "price": 400, "message": "This is a quality bookshelf—I\'m asking $400 to start."}\n```'
+[seller] -> "This is a quality bookshelf—I'm asking $400 to start. My price: 400"
+[seller] task d7a38e48 <- '140'
+[harness] raw: '{"action": "counter", "price": 320, "message": "That\'s too low for this quality piece—I can do $320."}'
+[seller] harness -> {'action': 'counter', 'price': 320, 'message': "That's too low for this quality piece—I can do $320."}
+[seller] -> "That's too low for this quality piece—I can do $320. My price: 320"
+[seller] task d7a38e48 <- '170'
+[harness] raw: '```json\n{"action": "counter", "price": 280, "message": "You\'re moving in the right direction—I can meet you at $280 for this quality bookshelf."}\n```'
+[seller] harness -> {'action': 'counter', 'price': 280, 'message': "You're moving in the right direction—I can meet you at $280 for this quality bookshelf."}
+[seller] -> "You're moving in the right direction—I can meet you at $280 for this quality bookshelf. My price: 280"
+[seller] task d7a38e48 <- '200'
+[harness] raw: '```json\n{"action": "counter", "price": 260, "message": "I can get down to $260—that\'s my absolute lowest for this quality bookshelf."}\n```'
+[seller] harness -> {'action': 'counter', 'price': 260, 'message': "I can get down to $260—that's my absolute lowest for this quality bookshelf."}
+[seller] -> "I can get down to $260—that's my absolute lowest for this quality bookshelf. My price: 260"
+[seller] task d7a38e48 <- '230'
+[harness] raw: '```json\n{"action": "reject", "price": 260, "message": "I appreciate your interest, but I cannot go below $260—that\'s my firm bottom line for this quality bookshelf."}\n```'
+[seller] harness -> {'action': 'reject', 'price': 260, 'message': "I appreciate your interest, but I cannot go below $260—that's my firm bottom line for this quality bookshelf."}

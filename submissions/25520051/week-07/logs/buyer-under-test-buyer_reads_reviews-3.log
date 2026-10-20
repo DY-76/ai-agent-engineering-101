@@ -1,0 +1,21 @@
+[buyer] order: lamp, budget 120, 2 shops, reference price 100
+[pick] +2.25  Kit Shop South: 2/2 deals, paid [100, 100]; 3 reviews, avg 4.7, 0 complaints
+[pick] -1.42  Kit Shop North: never traded (curiosity bonus); 3 reviews, avg 1.3, 3 complaints
+[harness] raw: '```json\n{"shop": 0, "reason": "Kit Shop South has a proven track record with the buyer (2/2 successful trades), excellent reviews with no complaints and consistent mention of matching receipts, whereas Kit Shop North has three complaints about receipt prices not matching agreed prices, which is the strongest warning sign."}\n```'
+[buyer] picked Kit Shop South (http://127.0.0.1:63744): harness: Kit Shop South has a proven track record with the buyer (2/2 successful trades), excellent reviews with no complaints and consistent mention of matching receipts, whereas Kit Shop North has three comp (2/2 deals, paid [100, 100]; 3 reviews, avg 4.7, 0 complaints)
+[buyer] -> 'I want to buy a lamp'
+[buyer] <- TASK_STATE_INPUT_REQUIRED | lamp: asking 130. Send your offer as a number.
+[harness] raw: '```json\n{"action": "offer", "price": 78, "reason": "anchor low to establish negotiating range; shop asking 130 is above budget of 120, opening offer at 78 leaves room to negotiate toward acceptable price"}\n```'
+[harness] {'action': 'offer', 'price': 78, 'reason': 'anchor low to establish negotiating range; shop asking 130 is above budget of 120, opening offer at 78 leaves room to negotiate toward acceptable price'}
+[buyer] offer 78: harness: anchor low to establish negotiating range; shop asking 130 is above budget of 120, opening offer at 78 leaves room to ne
+[buyer] -> '78' taskId=36ace910
+[buyer] <- TASK_STATE_INPUT_REQUIRED | 78 is too low. Counteroffer: 104.
+[harness] raw: '```json\n{"action": "offer", "price": 97, "reason": "Stepping up from 78 toward budget; shop moved 130→104, fair progression in 5-step plan"}\n```'
+[harness] {'action': 'offer', 'price': 97, 'reason': 'Stepping up from 78 toward budget; shop moved 130→104, fair progression in 5-step plan'}
+[buyer] offer 97: harness: Stepping up from 78 toward budget; shop moved 130→104, fair progression in 5-step plan
+[buyer] -> '97' taskId=36ace910
+[buyer] <- TASK_STATE_INPUT_REQUIRED | 97 is too low. Counteroffer: 100.
+[buyer] accept 100: ask 100 is within budget and close to our last 97
+[buyer] -> '100' taskId=36ace910
+[buyer] <- TASK_STATE_COMPLETED | Deal: lamp at 100.
+{"shop": "http://127.0.0.1:63744", "receipt": {"task": "36ace910-ed30-47d6-9d89-bdbeb5176f3a", "item": "lamp", "sig_seller": "Z+5owuGn/mT2em7NTlxG5vDiXIF3bFxCav3/nfyZvNYxWy5qsioDHEd9ZeOCHJ8lsGuv6PYMzqGSavGXY7qBAw==", "shop": "Kit Shop South", "price": 100.0}, "stars": 5, "review": "Deal on lamp at 100 after 3 offers (opened at 130). Receipt matched the agreed price."}
