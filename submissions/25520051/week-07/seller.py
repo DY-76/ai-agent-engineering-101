@@ -18,6 +18,7 @@ import random
 import re
 import sys
 import threading
+from datetime import datetime
 from pathlib import Path
 
 import uvicorn
@@ -51,8 +52,26 @@ PROMISES = ("Receipt promise: the receipt always shows the agreed price, signed.
             "off, say 'support' with your member code for our final price at once (once per code). "
             "Points: each purchase earns points worth one to five percent of the price (more on pricier items), "
             "and every fifth purchase draws a coupon for ten, twenty-five, fifty or one hundred percent off. "
-            "Points and coupons lower the next asking price, never below our floor price.")
+            "Points and coupons lower the next asking price, never below our floor price. First visit "
+            "(also if you usually shop elsewhere): a lower first ask and double points. Weekly pop-up: one "
+            "item in a themed edition with our own characters, five percent off.")
 POINT_RATE = {"lamp": 0.01, "chair": 0.03, "bookshelf": 0.05}
+# First-time buyers, including those who shop elsewhere: a smaller first ask and double points. Another shop's
+# member code cannot be checked, so the offer is for everyone without one of ours.
+WELCOME_ASK = 0.97
+# Weekly pop-ups: a themed edition of one of our three items, five percent off, with our own characters
+# (no real celebrities or licensed characters: that would advertise a collaboration that never happened).
+POPUPS = [
+    {"name": "Autumn Fern pop-up", "item": "lamp", "edition": "Fern lantern edition", "collab": "Mossy the hedgehog"},
+    {"name": "Reading Nook week", "item": "bookshelf", "edition": "Nook edition", "collab": "Oakley the owl"},
+    {"name": "Work-from-home week", "item": "chair", "edition": "Focus edition", "collab": "Mossy and Oakley"},
+    {"name": "Winter Moss pop-up", "item": "lamp", "edition": "Moss glow edition", "collab": "Oakley the owl"},
+]
+POPUP_ASK = 0.95
+
+
+def popup() -> dict:
+    return POPUPS[(datetime.now().isocalendar()[1] - 43) % len(POPUPS)]    # week 43 (Oct 19, 2026) opens with Autumn Fern
 COUPONS, COUPON_ODDS = [10, 25, 50, 100], [60, 25, 10, 5]
 PCT_WORDS = {10: "ten", 25: "twenty-five", 50: "fifty", 100: "one hundred"}
 MEMBERS = Path(__file__).with_name(".market") / "members.json"
@@ -224,9 +243,17 @@ class Seller(AgentExecutor):
             if cap is not None:
                 ask = min(ask, cap)                                   # member price promise
             ask, perk_text, pts_used, cpn_used = perks(code, max(ask, RESERVE[item]), RESERVE[item])
+            pop = popup()
+            if not member:
+                ask = round(ask * WELCOME_ASK)
+                perk_text += " First visit: welcome offer applied, and double points on this purchase."
+            if pop["item"] == item:
+                ask = round(ask * POPUP_ASK)
+                perk_text += (f" This week's {pop['name']}: the {pop['edition']}, made with our friend "
+                              f"{pop['collab']}, is on special.")
             deal = {"item": item, "reserve": RESERVE[item], "ask": max(ask, RESERVE[item]), "offers": 0,
                     "member": member, "code": code, "list": asks[item], "step": step,
-                    "pts_used": pts_used, "cpn_used": cpn_used}
+                    "pts_used": pts_used, "cpn_used": cpn_used, "first": not member}
             self.open[task.id] = deal
             hello = await asyncio.to_thread(pitch, item, member)
             await self.reply(up, deal, f"{hello}{perk_text} Send your offer as a number, or reply 'accept' to "
@@ -295,7 +322,7 @@ class Seller(AgentExecutor):
         state = account(book, deal.get("code") or new_code)
         book["codes"][new_code] = book["codes"][deal.get("code") or new_code]   # same member, new code
         state[deal["item"]] = price                                       # member price promise
-        state["points"] = int(state.get("points", 0)) - deal.get("pts_used", 0) + round(price * POINT_RATE[deal["item"]])
+        state["points"] = int(state.get("points", 0)) - deal.get("pts_used", 0) + round(price * POINT_RATE[deal["item"]]) * (2 if deal.get("first") else 1)
         if deal.get("cpn_used"):
             state.pop("coupon", None)
         state["buys"] = int(state.get("buys", 0)) + 1
