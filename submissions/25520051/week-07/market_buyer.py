@@ -180,6 +180,11 @@ def plan_offer(budget: int, asks: list, offers: list, ref: float | None, known: 
     if ask is not None and ask <= budget:
         if ask <= last or len(offers) >= PLAN or sure or ask - last <= max(2, budget * 0.03):
             return "accept", ask, f"ask {ask} is within budget and close to our last {last}"
+        # A deal within budget is on the table: only nibble. Splitting the gap here lost a chair at 180
+        # with budget 250 (BelieveMe rejected an offer of 164 right after countering 180).
+        if offers:
+            nibble = max(last + 1, ask - max(2, round(ask * 0.05)))
+            return "offer", nibble, f"ask {ask} is within budget: nibble, do not risk the deal"
     if budget in offers and (ask is None or ask > budget):
         return "walk", 0, f"final offer {budget} was refused (ask {ask})"
     if sure and floor > budget:
@@ -256,7 +261,8 @@ def bargain(url: str, item: str, budget: int, ref, known: dict, start: float) ->
         plan = plan_offer(budget, out["asks"], out["offers"], ref, known)
         last = out["offers"][-1] if out["offers"] else 0
         spread = max(2, int(budget * 0.08))
-        band = (max(last + 1, plan[1] - spread), min(budget - 1, plan[1] + spread, ask if ask else budget))
+        low = plan[1] if (ask and ask <= budget and out["offers"]) else plan[1] - spread   # no lowballing a live deal
+        band = (max(last + 1, low), min(budget - 1, plan[1] + spread, ask if ask else budget))
         action, price, why = harness_adjust(item, budget, out["asks"], out["offers"], clean(text, 200), plan, band)
         price = min(int(price), budget)                                   # guard: never above the budget
         print(f"[buyer] {action} {price}: {why}", flush=True)
