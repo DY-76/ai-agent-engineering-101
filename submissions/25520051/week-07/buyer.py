@@ -13,7 +13,7 @@ import uuid
 
 import httpx
 
-from a2a_trade import clean, is_injection, parse_ask
+from a2a_trade import clean, is_injection, jsonrpc_url, parse_ask
 from harness import ask_json
 
 sys.stdout.reconfigure(encoding="utf-8")   # the trade test redirects stdout to a file (cp949 on Windows)
@@ -83,12 +83,10 @@ def main():
     args = ap.parse_args()
     start = time.time()
 
-    card = httpx.get(args.url.rstrip("/") + "/.well-known/agent-card.json", headers=HEADERS, timeout=30).json()
-    iface = next((i for i in card.get("supportedInterfaces", []) if i.get("protocolBinding") == "JSONRPC"), None)
-    if iface is None:
-        print("[buyer] seller has no JSON-RPC interface; giving up", flush=True)
+    url, card = jsonrpc_url(args.url)       # a shop that is down answers with HTML, not a card
+    if url is None:
+        print("[buyer] no readable card with a JSON-RPC interface; giving up", flush=True)
         return
-    url = iface["url"]
     print(f"[buyer] card: {card.get('name')!r} at {url}", flush=True)
 
     t = send(url, f"I want to buy a {args.item}")
