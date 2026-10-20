@@ -285,6 +285,12 @@ class Seller(AgentExecutor):
                     "pts_used": pts_used, "cpn_used": cpn_used, "first": not member}
             self.open[task.id] = deal
             hello = await asyncio.to_thread(pitch, item, member)
+            if deal["ask"] == deal["reserve"]:
+                # Opening at the floor read as "held firm on every offer" in two 3-star reviews (21:4x), so say
+                # plainly that this is already the lowest price and haggling cannot lower it.
+                await self.reply(up, deal, f"{hello}{perk_text} This is already our lowest price, so no haggling "
+                                           f"is needed: reply 'accept' to buy now. Final price: {deal['ask']}.")
+                return
             await self.reply(up, deal, f"{hello}{perk_text} Send your offer as a number, or reply 'accept' to "
                                        f"buy now. {item.capitalize()}: asking {deal['ask']}.")
             return
