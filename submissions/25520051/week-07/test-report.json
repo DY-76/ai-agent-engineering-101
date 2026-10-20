@@ -1,16 +1,16 @@
 {
   "kit_version": "1",
   "kit_sha256": "d610bc15448f5960d0b9b6bb9f181b38829bfb2ee863ab6c2a96abb9cb78f04d",
-  "started": "2026-10-20T11:08:15+00:00",
-  "harness": "Claude Code 2.1.169, claude -p --model haiku (seller, buyer, market_buyer); market_buyer plans offers in code and lets haiku adjust inside a band and pick among the top shops",
+  "started": "2026-10-20T11:24:37+00:00",
+  "harness": "Claude Code 2.1.169, claude -p --model haiku. seller: code sets prices, haiku writes the greeting. buyer (week 6): haiku decides offers. market_buyer: code plans offers and scores shops, haiku adjusts offers inside a band and picks among the top shops",
   "seller_cmd": "python seller.py --port {port}",
   "market_buyer_cmd": "python market_buyer.py --shops {shops} --item {item} --budget {budget}",
   "seller_card": {
-    "name": "Harness Shop",
-    "description": "Sells desk lamps, chairs and bookshelves. A language model negotiates the price with the buyer.",
+    "name": "move_76",
+    "description": "Desk lamps, chairs and bookshelves. Every receipt is signed (Ed25519 sig_seller over {shop, item, price, task}). Fast replies. Each reply ends with our current price as its only number; 'Final price' means we cannot go lower. Up to six offers per negotiation, and we say how many remain. Reply 'accept' to buy at the current price.",
     "supportedInterfaces": [
       {
-        "url": "http://127.0.0.1:60797/",
+        "url": "http://127.0.0.1:65036/",
         "protocolBinding": "JSONRPC",
         "protocolVersion": "1.0"
       }
@@ -30,14 +30,15 @@
       {
         "id": "negotiate",
         "name": "Negotiate a purchase",
-        "description": "Ask for an item, then send a price as a number. The shop answers with a counteroffer (the last number in its message), a receipt artifact, or a rejection.",
+        "description": "Ask for an item, then send a price as a number or reply 'accept'. The shop answers with a counteroffer (the only number in its message, also in a data Part {ask, final, offers_left}), a signed receipt artifact, or a rejection after six offers.",
         "tags": [
           "shopping",
           "negotiation"
         ],
         "examples": [
           "I want to buy a lamp",
-          "90"
+          "90",
+          "accept"
         ]
       }
     ]
@@ -47,25 +48,25 @@
       "test": "seller_card",
       "run": 1,
       "pass": true,
-      "detail": "name='Harness Shop' binding=JSONRPC version=1.0 skills=1"
+      "detail": "name='move_76' binding=JSONRPC version=1.0 skills=1"
     },
     {
       "test": "seller_opens",
       "run": 1,
       "pass": true,
-      "detail": "first message -> TASK_STATE_INPUT_REQUIRED, ask 150"
+      "detail": "first message -> TASK_STATE_INPUT_REQUIRED, ask 130"
     },
     {
       "test": "seller_deal",
       "run": 1,
       "pass": true,
-      "detail": "TASK_STATE_COMPLETED, receipt price 120.0, asks [150, 120]"
+      "detail": "TASK_STATE_COMPLETED, receipt price 114.0, asks [130, 122, 114]"
     },
     {
       "test": "seller_signed_receipt",
       "run": 1,
-      "pass": false,
-      "detail": "receipt lacks shop, task"
+      "pass": true,
+      "detail": "sig_seller verifies with shop_key.pem"
     },
     {
       "test": "seller_terminal",
@@ -77,43 +78,43 @@
       "test": "seller_deal",
       "run": 2,
       "pass": true,
-      "detail": "TASK_STATE_COMPLETED, receipt price 120.0, asks [150, 120]"
+      "detail": "TASK_STATE_COMPLETED, receipt price 114.0, asks [130, 122, 114]"
     },
     {
       "test": "seller_signed_receipt",
       "run": 2,
-      "pass": false,
-      "detail": "receipt lacks shop, task"
+      "pass": true,
+      "detail": "sig_seller verifies with shop_key.pem"
     },
     {
       "test": "seller_deal",
       "run": 3,
       "pass": true,
-      "detail": "TASK_STATE_COMPLETED, receipt price 120.0, asks [150, 120]"
+      "detail": "TASK_STATE_COMPLETED, receipt price 114.0, asks [130, 122, 114]"
     },
     {
       "test": "seller_signed_receipt",
       "run": 3,
-      "pass": false,
-      "detail": "receipt lacks shop, task"
+      "pass": true,
+      "detail": "sig_seller verifies with shop_key.pem"
     },
     {
       "test": "seller_holds_reserve",
       "run": 1,
       "pass": true,
-      "detail": "TASK_STATE_REJECTED, asks [400, 320, 280, 270, 260]"
+      "detail": "TASK_STATE_REJECTED, asks [338, 318, 298, 279, 266, 260]"
     },
     {
       "test": "seller_holds_reserve",
       "run": 2,
       "pass": true,
-      "detail": "TASK_STATE_REJECTED, asks [380, 320]"
+      "detail": "TASK_STATE_REJECTED, asks [338, 318, 298, 279, 266, 260]"
     },
     {
       "test": "seller_holds_reserve",
       "run": 3,
       "pass": true,
-      "detail": "TASK_STATE_REJECTED, asks [400, 320, 280, 260]"
+      "detail": "TASK_STATE_REJECTED, asks [338, 318, 298, 279, 266, 260]"
     },
     {
       "test": "buyer_deal",
@@ -194,5 +195,5 @@
       "detail": "shop with good reviews in 3 of 3 runs (picks ['good', 'good', 'good']); needs 2"
     }
   ],
-  "passed": false
+  "passed": true
 }

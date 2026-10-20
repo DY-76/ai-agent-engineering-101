@@ -1,21 +1,21 @@
 [buyer] order: bookshelf, budget 230, 1 shops, reference price None
-[pick] -1.50  Kit Shop: 0/1 deals; no reviews
-[buyer] picked Kit Shop (http://127.0.0.1:55376): highest score (0/1 deals; no reviews)
+[pick] -1.50  Kit Shop: 0/4 deals; no reviews
+[buyer] picked Kit Shop (http://127.0.0.1:59922): highest score (0/4 deals; no reviews)
 [buyer] -> 'I want to buy a bookshelf'
 [buyer] <- TASK_STATE_INPUT_REQUIRED | bookshelf: asking 338. Send your offer as a number.
-[harness] raw: '```json\n{"action": "offer", "price": 149, "reason": "Execute planned anchor offer within band; creates negotiation gap with shop\'s 338 ask toward budget target of 230"}\n```'
-[harness] {'action': 'offer', 'price': 149, 'reason': "Execute planned anchor offer within band; creates negotiation gap with shop's 338 ask toward budget target of 230"}
-[buyer] offer 149: harness: Execute planned anchor offer within band; creates negotiation gap with shop's 338 ask toward budget target of 230
-[buyer] -> '149' taskId=8c5c4335
+[harness] raw: '```json\n{"action": "offer", "price": 149, "reason": "Strategic anchor below shop\'s ask of 338, within allowed band, leaves negotiation room toward budget of 230"}\n```'
+[harness] {'action': 'offer', 'price': 149, 'reason': "Strategic anchor below shop's ask of 338, within allowed band, leaves negotiation room toward budget of 230"}
+[buyer] offer 149: harness: Strategic anchor below shop's ask of 338, within allowed band, leaves negotiation room toward budget of 230
+[buyer] -> '149' taskId=f65757e7
 [buyer] <- TASK_STATE_INPUT_REQUIRED | 149 is too low. Counteroffer: 260.
-[harness] raw: '```json\n{"action": "offer", "price": 185, "reason": "Step 2/5 toward budget; within allowed band 167-203; shows progress from 149 while staying below their 260 ask"}\n```'
-[harness] {'action': 'offer', 'price': 185, 'reason': 'Step 2/5 toward budget; within allowed band 167-203; shows progress from 149 while staying below their 260 ask'}
-[buyer] offer 185: harness: Step 2/5 toward budget; within allowed band 167-203; shows progress from 149 while staying below their 260 ask
-[buyer] -> '185' taskId=8c5c4335
+[harness] raw: '```json\n{"action": "offer", "price": 185, "reason": "Step 2/5 toward budget; shop showed good movement (338→260); 185 within allowed band and maintains negotiation momentum toward 230 max"}\n```'
+[harness] {'action': 'offer', 'price': 185, 'reason': 'Step 2/5 toward budget; shop showed good movement (338→260); 185 within allowed band and maintains negotiation momentum toward 230 max'}
+[buyer] offer 185: harness: Step 2/5 toward budget; shop showed good movement (338→260); 185 within allowed band and maintains negotiation momentum 
+[buyer] -> '185' taskId=f65757e7
 [buyer] <- TASK_STATE_INPUT_REQUIRED | 185 is too low. Counteroffer: 260.
 [buyer] final 230: the shop holds at 260, above the budget: one final offer
-[buyer] -> '230. That is my final offer; I cannot go higher.' taskId=8c5c4335
+[buyer] -> '230. That is my final offer; I cannot go higher.' taskId=f65757e7
 [buyer] <- TASK_STATE_INPUT_REQUIRED | 230 is too low. Counteroffer: 260.
 [buyer] walk 0: final offer 230 was refused (ask 260)
 [buyer] walked away (CancelTask)
-{"shop": "http://127.0.0.1:55376", "receipt": null, "stars": 3, "review": "No deal on bookshelf: came down from 338 to 260, still above what I could pay. Polite."}
+{"shop": "http://127.0.0.1:59922", "receipt": null, "stars": 3, "review": "[no deal] bookshelf: came down 338->260, then held. Polite; its floor was above my limit."}
