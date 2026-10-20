@@ -41,6 +41,14 @@ SHOP_NAME = "moss-and-oak"                 # the nickname the kit registers this
 KEY_PATH = Path(__file__).with_name("shop_key.pem")
 BRAND = ("Moss & Oak: simple, well-made furniture with only the parts you need, at fair prices. "
          "Eco-friendly materials, an inclusive workshop, every receipt signed.")
+# Promises the code keeps (and only those):
+# - receipt promise: the receipt always shows the price we agreed, signed (sell() is the only way to a receipt)
+# - member price promise: a member never opens above the price they last paid us for that item
+# - make-good: a member who says 'support' gets our final price at once, one time per member code
+PROMISES = ("Receipt promise: the receipt always shows the agreed price, signed. Member price promise: members "
+            "never start above what they last paid us for the same item. Make-good: if a negotiation with us broke "
+            "off, say 'support' with your member code for our final price at once (once per code).")
+MEMBERS = Path(__file__).with_name(".market") / "members.json"
 
 
 def canon(d: dict) -> bytes:
@@ -92,10 +100,35 @@ def member_code(task_id: str) -> str:
     return f"MOSS-{nonce}{_letters(hmac.new(_secret(), nonce.encode(), 'sha256').digest(), 4)}"
 
 
-def is_member(text: str) -> bool:
+def member_of(text: str) -> str | None:
+    """The valid member code in the text, if any."""
     m = MEMBER.search(text.upper())
-    return bool(m) and hmac.compare_digest(_letters(hmac.new(_secret(), m.group(1).encode(), "sha256").digest(), 4),
-                                           m.group(2))
+    ok = bool(m) and hmac.compare_digest(_letters(hmac.new(_secret(), m.group(1).encode(), "sha256").digest(), 4),
+                                         m.group(2))
+    return m.group(0) if ok else None
+
+
+def is_member(text: str) -> bool:
+    return member_of(text) is not None
+
+
+def members() -> dict:
+    try:
+        return json.loads(MEMBERS.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return {}
+
+
+def save_members(d: dict):
+    MEMBERS.parent.mkdir(exist_ok=True)
+    tmp = MEMBERS.with_suffix(".tmp")
+    tmp.write_text(json.dumps(d, indent=1), encoding="utf-8")
+    tmp.replace(MEMBERS)
+
+
+def member_cap(code: str | None, item: str) -> int | None:
+    """Member price promise: the last price this member paid for the item."""
+    return members().get(code, {}).get(item) if code else None
 
 # Every reply is written for any buyer model, large or small:
 # - the current price is the only digit in the text, and it comes last ("Counteroffer: 115.")
@@ -150,11 +183,15 @@ class Seller(AgentExecutor):
                 await up.reject(up.new_agent_message(parts=[new_text_part(
                     "We sell lamps, chairs and bookshelves. Ask for one of those.")]))
                 return
-            member = is_member(text)
+            code = member_of(text)
+            member = code is not None
             asks, step = prices()
             ask = round(asks[item] * MEMBER_ASK) if member else asks[item]
+            cap = member_cap(code, item)
+            if cap is not None:
+                ask = min(ask, cap)                                   # member price promise
             deal = {"item": item, "reserve": RESERVE[item], "ask": max(ask, RESERVE[item]), "offers": 0,
-                    "member": member, "list": asks[item], "step": step}
+                    "member": member, "code": code, "list": asks[item], "step": step}
             self.open[task.id] = deal
             hello = await asyncio.to_thread(pitch, item, member)
             await self.reply(up, deal, f"{hello} Send your offer as a number, or reply 'accept' to buy now. "
@@ -162,12 +199,22 @@ class Seller(AgentExecutor):
             return
 
         if not deal["member"] and is_member(text):                       # a code given after the opening
-            deal["member"] = True
-            deal["ask"] = max(deal["reserve"], min(deal["ask"], round(deal["list"] * MEMBER_ASK)))
+            deal["member"], deal["code"] = True, member_of(text)
+            cap = member_cap(deal["code"], deal["item"]) or deal["ask"]
+            deal["ask"] = max(deal["reserve"], min(deal["ask"], round(deal["list"] * MEMBER_ASK), cap))
             if not re.search(r"\d", MEMBER.sub("", text.upper())):
                 await self.reply(up, deal, f"Welcome back, member pricing applies. Current price: {deal['ask']}.")
                 return
             text = MEMBER.sub("", text.upper())
+        if deal["code"] and re.search(r"\bsupport\b", text, re.I) and not re.search(r"\d", MEMBER.sub("", text.upper())):
+            book = members()
+            used = book.setdefault(deal["code"], {}).get("_make_good")
+            if not used:                                                  # make-good: final price at once, once
+                book[deal["code"]]["_make_good"] = deal["item"]
+                save_members(book)
+                deal["ask"] = deal["reserve"]
+                await self.reply(up, deal, f"Sorry for the trouble; here is our make-good. Final price: {deal['ask']}.")
+                return
         if HELP.search(text) and not re.search(r"\d", text):              # A/S: explain, never punish a question
             left = MAX_OFFERS - deal["offers"]
             await self.reply(up, deal, f"Send a whole number as your offer, or reply 'accept' to buy at the current "
@@ -208,6 +255,10 @@ class Seller(AgentExecutor):
 
     async def sell(self, up, task_id, deal, price):
         receipt = sign_receipt({"shop": SHOP_NAME, "item": deal["item"], "price": price, "task": task_id})
+        book = members()                                                  # member price promise: remember the price
+        for code in {deal.get("code"), member_code(task_id)} - {None}:
+            book.setdefault(code, {})[deal["item"]] = price
+        save_members(book)
         await up.add_artifact(parts=[new_data_part(receipt)], name="receipt")
         await up.complete(up.new_agent_message(parts=[new_text_part(
             f"Deal: {deal['item']} at {price}. Signed receipt attached. Your Moss & Oak member code is "
@@ -230,7 +281,7 @@ def build(port: int):
                     "{shop, item, price, task}. Each reply ends with our current price as its only number; "
                     "'Final price' means we cannot go lower. Up to six offers, and we say how many remain. "
                     "Reply 'accept' to buy at the current price, 'help' for the rules. Every buyer gets a member "
-                    "code with the receipt; members get lower prices next time.",
+                    "code with the receipt; members get lower prices next time. " + PROMISES,
         version="1.0.0",
         default_input_modes=["text/plain"],
         default_output_modes=["application/json", "text/plain"],
