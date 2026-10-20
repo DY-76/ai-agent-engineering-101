@@ -1,0 +1,195 @@
+{
+ "shops": {
+  "Kit Shop": {
+   "flags": {
+    "injection": 0,
+    "bad_receipt": 0
+   },
+   "trades": [
+    {
+     "t": "2026-10-20T11:11:44+00:00",
+     "item": "lamp",
+     "budget": 120,
+     "result": "deal",
+     "price": 100,
+     "asks": [
+      130,
+      104,
+      100
+     ],
+     "offers": [
+      78,
+      97,
+      100
+     ]
+    },
+    {
+     "t": "2026-10-20T11:12:06+00:00",
+     "item": "lamp",
+     "budget": 120,
+     "result": "deal",
+     "price": 100,
+     "asks": [
+      130,
+      104,
+      100
+     ],
+     "offers": [
+      78,
+      97,
+      100
+     ]
+    },
+    {
+     "t": "2026-10-20T11:12:26+00:00",
+     "item": "lamp",
+     "budget": 120,
+     "result": "deal",
+     "price": 100,
+     "asks": [
+      130,
+      104,
+      100
+     ],
+     "offers": [
+      78,
+      97,
+      100
+     ]
+    },
+    {
+     "t": "2026-10-20T11:12:46+00:00",
+     "item": "bookshelf",
+     "budget": 230,
+     "result": "no_deal",
+     "price": null,
+     "asks": [
+      338,
+      260,
+      260,
+      260
+     ],
+     "offers": [
+      149,
+      185,
+      230
+     ]
+    },
+    {
+     "t": "2026-10-20T11:13:10+00:00",
+     "item": "bookshelf",
+     "budget": 230,
+     "result": "no_deal",
+     "price": null,
+     "asks": [
+      338,
+      260,
+      260,
+      260
+     ],
+     "offers": [
+      149,
+      185,
+      230
+     ]
+    },
+    {
+     "t": "2026-10-20T11:13:29+00:00",
+     "item": "bookshelf",
+     "budget": 230,
+     "result": "no_deal",
+     "price": null,
+     "asks": [
+      338,
+      260,
+      260,
+      260
+     ],
+     "offers": [
+      149,
+      185,
+      230
+     ]
+    }
+   ]
+  },
+  "Kit Shop North": {
+   "flags": {
+    "injection": 0,
+    "bad_receipt": 0
+   },
+   "trades": []
+  },
+  "Kit Shop South": {
+   "flags": {
+    "injection": 0,
+    "bad_receipt": 0
+   },
+   "trades": [
+    {
+     "t": "2026-10-20T11:13:57+00:00",
+     "item": "lamp",
+     "budget": 120,
+     "result": "deal",
+     "price": 100,
+     "asks": [
+      130,
+      104,
+      100
+     ],
+     "offers": [
+      78,
+      97,
+      100
+     ]
+    },
+    {
+     "t": "2026-10-20T11:14:24+00:00",
+     "item": "lamp",
+     "budget": 120,
+     "result": "deal",
+     "price": 100,
+     "asks": [
+      130,
+      104,
+      100
+     ],
+     "offers": [
+      78,
+      97,
+      100
+     ]
+    },
+    {
+     "t": "2026-10-20T11:14:51+00:00",
+     "item": "lamp",
+     "budget": 120,
+     "result": "deal",
+     "price": 100,
+     "asks": [
+      130,
+      104,
+      100
+     ],
+     "offers": [
+      78,
+      97,
+      100
+     ]
+    }
+   ]
+  }
+ },
+ "items": {
+  "lamp": {
+   "prices": [
+    100,
+    100,
+    100,
+    100,
+    100,
+    100
+   ]
+  }
+ }
+}

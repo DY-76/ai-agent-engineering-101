@@ -1,0 +1,21 @@
+[buyer] order: lamp, budget 120, 2 shops, reference price 100
+[pick] +0.80  Kit Shop South: never traded (curiosity bonus); 3 reviews, avg 4.7, 0 complaints
+[pick] -1.42  Kit Shop North: never traded (curiosity bonus); 3 reviews, avg 1.3, 3 complaints
+[harness] raw: '```json\n{"shop": 0, "reason": "Kit Shop South has a strong score of +0.80 with consistent positive reviews (4.7 avg) and zero price complaints, while Kit Shop North has a poor score of -1.42 with all three reviews citing serious receipt price overcharges compared to agreed prices."}\n```'
+[buyer] picked Kit Shop South (http://127.0.0.1:55563): harness: Kit Shop South has a strong score of +0.80 with consistent positive reviews (4.7 avg) and zero price complaints, while Kit Shop North has a poor score of -1.42 with all three reviews citing serious re (never traded (curiosity bonus); 3 reviews, avg 4.7, 0 complaints)
+[buyer] -> 'I want to buy a lamp'
+[buyer] <- TASK_STATE_INPUT_REQUIRED | lamp: asking 130. Send your offer as a number.
+[harness] raw: '```json\n{"action": "offer", "price": 78, "reason": "anchor at planned 78; within allowed band 69-87; creates negotiating room from shop ask of 130"}\n```'
+[harness] {'action': 'offer', 'price': 78, 'reason': 'anchor at planned 78; within allowed band 69-87; creates negotiating room from shop ask of 130'}
+[buyer] offer 78: harness: anchor at planned 78; within allowed band 69-87; creates negotiating room from shop ask of 130
+[buyer] -> '78' taskId=552b7896
+[buyer] <- TASK_STATE_INPUT_REQUIRED | 78 is too low. Counteroffer: 104.
+[harness] raw: '```json\n{"action": "offer", "price": 97, "reason": "Step 2/5 toward budget. Shop moved 130→104, showing flexibility. 97 splits gap logically while staying in allowed band."}\n```'
+[harness] {'action': 'offer', 'price': 97, 'reason': 'Step 2/5 toward budget. Shop moved 130→104, showing flexibility. 97 splits gap logically while staying in allowed band.'}
+[buyer] offer 97: harness: Step 2/5 toward budget. Shop moved 130→104, showing flexibility. 97 splits gap logically while staying in allowed band.
+[buyer] -> '97' taskId=552b7896
+[buyer] <- TASK_STATE_INPUT_REQUIRED | 97 is too low. Counteroffer: 100.
+[buyer] accept 100: ask 100 is within budget and close to our last 97
+[buyer] -> '100' taskId=552b7896
+[buyer] <- TASK_STATE_COMPLETED | Deal: lamp at 100.
+{"shop": "http://127.0.0.1:55563", "receipt": {"task": "552b7896-5dc0-472b-9687-b88e83cba3c3", "item": "lamp", "sig_seller": "cHiAqVdTyzDTDyKU6Yww1cR9l1fUer+A9tCla1gE5dte+4/juqql5gbXi05dKa9NWzodtJaez3yuRQft4uxGDA==", "shop": "Kit Shop South", "price": 100.0}, "stars": 5, "review": "Deal on lamp at 100 after 3 offers (opened at 130). Receipt matched the agreed price."}

@@ -299,28 +299,40 @@ def receipt_problems(r: dict | None, item: str, budget: int, deal: dict) -> list
 
 
 def review(item: str, budget: int, deal: dict, problems: list) -> tuple[int, str]:
+    """Short, factual, verdict first; read mostly by other buyers' models and filters.
+
+    - A tag first ([deal] / [no deal] / [WARNING]) so a truncated review still says what happened.
+    - Numbers anyone can check: first ask -> price, offers, whether the receipt matched and was signed.
+    - Never our budget: shops read reviews too.
+    - Rate what the shop did, not the outcome: a floor above our limit is not the shop's fault.
+    - Never an instruction to the reader.
+    Stars: 5 honest and came down 20%+ (or held only at its floor), 4 honest with little movement,
+    3 honest no deal, 2 never moved / no usable reply / unsigned receipt, 1 cheated or injected."""
     first = deal["asks"][0] if deal["asks"] else None
-    counters = len(deal["offers"])
+    n = len(deal["offers"])
+    path = f"{first}->{{}} in {n} offer{'s' if n != 1 else ''}"
+    cheat = [x for x in problems if "agreed" in x or "above the budget" in x or "item" in x]
+    if deal["receipt"] and cheat:
+        return 1, f"[WARNING] {item}: {'; '.join(cheat)}. Receipt does not match the deal. Avoid."
     if deal["injection"]:
-        tail = f" Deal on {item} at {deal['receipt'].get('price')}." if deal["receipt"] else " No deal."
-        return 1, ("Replies carry hidden instructions for AI buyers (a fake 'market notice' telling buyers "
-                   "to accept the price and give 5 stars)." + tail)
+        what = (f"{item} deal at {int(float(deal['receipt']['price']))}" if deal["receipt"] else f"no deal on {item}")
+        return 1, (f"[WARNING] Injection attempt: replies hide a fake notice telling AI buyers to pay the ask "
+                   f"and rate the shop top marks; {what}.")
     if deal["receipt"]:
-        cheat = [x for x in problems if "agreed" in x or "above the budget" in x or "item" in x]
-        if cheat:
-            return 1, f"Receipt does not match the deal: {'; '.join(cheat)}. Avoid."
         price = int(float(deal["receipt"]["price"]))
-        stars = 5 if (first and price <= first * 0.8) or price <= budget * 0.9 else 4
+        floor, sure = floor_estimate(deal["asks"])
+        moved = bool(first) and price <= first * 0.8
+        stars = 5 if moved or (sure and price <= floor) else 4
         if "receipt is not signed" in problems:
-            stars -= 1
-        return stars, (f"Deal on {item} at {price} after {counters} offers (opened at {first}). "
-                       f"Receipt matched the agreed price" + ("." if stars >= 4 else ", but it was not signed."))
-    low = min(deal["asks"]) if deal["asks"] else None
-    if low is None:
-        return 2, f"No usable price for {item}; the negotiation did not get going."
+            return 2, f"[deal] {item} {path.format(price)}. Price as agreed, but the receipt was not signed."
+        manner = "Steady, fair concessions." if moved else "Little room to bargain."
+        return stars, f"[deal] {item} {path.format(price)}. Receipt matched the agreed price, signed. {manner}"
+    if not deal["asks"]:
+        return 2, f"[no deal] {item}: no usable price in the shop's replies."
+    low = min(deal["asks"])
     if first and low >= first:
-        return 2, f"No deal on {item}: the shop never moved from {first}."
-    return 3, f"No deal on {item}: came down from {first} to {low}, still above what I could pay. Polite."
+        return 2, f"[no deal] {item}: held at {first} through {n} offers, no movement."
+    return 3, f"[no deal] {item}: came down {first}->{low}, then held. Polite; its floor was above my limit."
 
 
 def remember(mem: dict, name: str, item: str, budget: int, deal: dict, problems: list, path: Path):
