@@ -8,6 +8,7 @@ as the ask. So: the ask is read only from known phrasings, injected instructions
 cut out before anything reaches the harness, and the fact that a shop tried it is kept.
 """
 import re
+import time
 import uuid
 
 import httpx
@@ -53,11 +54,17 @@ def parse_ask(text: str) -> int | None:
 
 def rpc(url: str, method: str, params: dict, tag: str = "[buyer]") -> dict:
     body = {"jsonrpc": "2.0", "id": str(uuid.uuid4())[:8], "method": method, "params": params}
-    try:
-        r = httpx.post(url, json=body, headers=HEADERS, timeout=120).json()
-    except (httpx.HTTPError, ValueError) as e:
-        print(f"{tag} <- transport error {e!r}", flush=True)
-        return {}
+    for attempt in (1, 2):
+        try:
+            r = httpx.post(url, json=body, headers=HEADERS, timeout=120).json()
+            break
+        except (httpx.HTTPError, ValueError) as e:
+            # A quick tunnel under load sometimes answers with an HTML error page before the shop sees the
+            # request (our '165' to moss-and-oak never reached its seller), so one retry is safe and useful.
+            print(f"{tag} <- transport error {e!r}" + (", retrying" if attempt == 1 else ""), flush=True)
+            if attempt == 2:
+                return {}
+            time.sleep(2)
     if "error" in r:
         print(f"{tag} <- error {r['error']}", flush=True)
         return {}
