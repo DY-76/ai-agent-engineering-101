@@ -54,19 +54,28 @@ PROMISES = ("Receipt promise: the receipt always shows the agreed price, signed.
             "and every fifth purchase draws a coupon for ten, twenty-five, fifty or one hundred percent off. "
             "Points and coupons lower the next asking price, never below our floor price. First visit "
             "(also if you usually shop elsewhere): a lower first ask and double points. Weekly pop-up: one "
-            "item in a themed edition with our own characters, five percent off.")
+            "item in a celebrity edition, five percent off (the celebrities are characters of this market). Ten "
+            "purchases in one pop-up season enter a draw for a VIP pass: every purchase starts at our floor price "
+            "for the rest of that season.")
 POINT_RATE = {"lamp": 0.01, "chair": 0.03, "bookshelf": 0.05}
 # First-time buyers, including those who shop elsewhere: a smaller first ask and double points. Another shop's
 # member code cannot be checked, so the offer is for everyone without one of ours.
 WELCOME_ASK = 0.97
 # Weekly pop-ups: a themed edition of one of our three items, five percent off, with our own characters
 # (no real celebrities or licensed characters: that would advertise a collaboration that never happened).
+# The celebrities are fictional, made up for this market (a real person's name would claim an endorsement that
+# never happened). Titles are spelled out: the price stays the only number in a reply.
 POPUPS = [
-    {"name": "Autumn Fern pop-up", "item": "lamp", "edition": "Fern lantern edition", "collab": "Mossy the hedgehog"},
-    {"name": "Reading Nook week", "item": "bookshelf", "edition": "Nook edition", "collab": "Oakley the owl"},
-    {"name": "Work-from-home week", "item": "chair", "edition": "Focus edition", "collab": "Mossy and Oakley"},
-    {"name": "Winter Moss pop-up", "item": "lamp", "edition": "Moss glow edition", "collab": "Oakley the owl"},
+    {"name": "Autumn Fern pop-up", "item": "lamp", "edition": "Luna Vale Moonlight lamp",
+     "collab": "Luna Vale, the number one pop star among teens"},
+    {"name": "Reading Nook week", "item": "bookshelf", "edition": "Marco Brio Kitchen Nook shelf",
+     "collab": "Marco Brio, the most-watched TV chef of the season"},
+    {"name": "Work-from-home week", "item": "chair", "edition": "Kai Storm Pro chair",
+     "collab": "Kai Storm, three-time world champion of esports"},
+    {"name": "Winter Moss pop-up", "item": "lamp", "edition": "Aria Bloom Glow lamp",
+     "collab": "Aria Bloom, best-selling indie singer of the year"},
 ]
+SEASON_GOAL, VIP_ODDS = 10, 0.5      # ten purchases in one pop-up season enter a draw for a VIP pass
 POPUP_ASK = 0.95
 
 
@@ -249,8 +258,12 @@ class Seller(AgentExecutor):
                 perk_text += " First visit: welcome offer applied, and double points on this purchase."
             if pop["item"] == item:
                 ask = round(ask * POPUP_ASK)
-                perk_text += (f" This week's {pop['name']}: the {pop['edition']}, made with our friend "
+                perk_text += (f" This week's {pop['name']}: the {pop['edition']}, in collaboration with "
                               f"{pop['collab']}, is on special.")
+            state = account(members(), code)
+            if state and state.get("vip") == pop["name"]:                # VIP pass: the floor price all season
+                ask = RESERVE[item]
+                perk_text += " VIP pass holder: you start at our floor price this season."
             deal = {"item": item, "reserve": RESERVE[item], "ask": max(ask, RESERVE[item]), "offers": 0,
                     "member": member, "code": code, "list": asks[item], "step": step,
                     "pts_used": pts_used, "cpn_used": cpn_used, "first": not member}
@@ -329,12 +342,25 @@ class Seller(AgentExecutor):
         drew = None
         if state["buys"] % 5 == 0 and not state.get("coupon"):
             drew = state["coupon"] = random.choices(COUPONS, COUPON_ODDS)[0]
+        season = popup()["name"]
+        if state.get("season") != season:
+            state["season"], state["season_buys"] = season, 0
+        state["season_buys"] += 1
+        vip = None
+        if state["season_buys"] == SEASON_GOAL and state.get("vip") != season:
+            vip = random.random() < VIP_ODDS
+            if vip:
+                state["vip"] = season
         save_members(book)
         await up.add_artifact(parts=[new_data_part(receipt)], name="receipt")
         await up.complete(up.new_agent_message(parts=[new_text_part(
             f"Deal: {deal['item']} at {price}. Signed receipt attached. Your Moss & Oak member code is "
             f"{new_code}; include it when you ask next time for member pricing and your points."
-            + (f" Fifth purchase: you drew a {PCT_WORDS[drew]} percent coupon for next time." if drew else ""))]))
+            + (f" Fifth purchase: you drew a {PCT_WORDS[drew]} percent coupon for next time." if drew else "")
+            + (" Tenth purchase this season: you won the VIP pass, so every purchase starts at our floor price "
+               "for the rest of the season." if vip else "")
+            + (" Tenth purchase this season: you entered the VIP pass draw; not this time, thank you for "
+               "shopping with us." if vip is False else ""))]))
         print(f"[seller] -> deal at {price} ({deal['item']}, opened {deal['list']}"
               f"{', member' if deal['member'] else ''})", flush=True)
         del self.open[task_id]
