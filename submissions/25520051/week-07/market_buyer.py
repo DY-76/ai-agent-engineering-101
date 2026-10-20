@@ -336,6 +336,8 @@ def review(item: str, budget: int, deal: dict, problems: list) -> tuple[int, str
     if not deal["asks"]:
         return 2, f"[no deal] {item}: no usable price in the shop's replies."
     low = min(deal["asks"])
+    if not deal.get("state"):          # the shop answered with an error (e.g. "task not found") mid-negotiation
+        return 2, f"[no deal] {item}: came down {first}->{low}, then the shop lost the negotiation (error reply)."
     if first and low >= first:
         return 2, f"[no deal] {item}: held at {first} through {n} offers, no movement."
     return 3, f"[no deal] {item}: came down {first}->{low}, then held. Polite; its floor was above my limit."
