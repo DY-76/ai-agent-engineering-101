@@ -9,16 +9,13 @@ speaks A2A and guards the budget: it never sends an offer above it.
 import argparse
 import sys
 import time
-import uuid
 
-import httpx
 
-from a2a_trade import clean, is_injection, jsonrpc_url, parse_ask
+from a2a_trade import clean, is_injection, jsonrpc_url, parse_ask, rpc, send, state, status_text
 from harness import ask_json
 
 sys.stdout.reconfigure(encoding="utf-8")   # the trade test redirects stdout to a file (cp949 on Windows)
 
-HEADERS = {"A2A-Version": "1.0"}
 MAX_ROUNDS = 10
 DEADLINE = 240          # seconds; the trade test kills the buyer at 300
 
@@ -31,33 +28,6 @@ Reply with one line of JSON and nothing else:
 - offer: you propose "price" to the shop.
 - accept: you agree to the shop's current asking price; "price" is that ask.
 - walk: you stop negotiating."""
-
-
-def rpc(url: str, method: str, params: dict) -> dict:
-    body = {"jsonrpc": "2.0", "id": str(uuid.uuid4())[:8], "method": method, "params": params}
-    r = httpx.post(url, json=body, headers=HEADERS, timeout=200).json()
-    if "error" in r:
-        print(f"[buyer] <- error {r['error']}", flush=True)
-        return {}
-    return r["result"].get("task", r["result"])
-
-
-def send(url: str, text: str, task_id: str | None = None) -> dict:
-    msg = {"role": "ROLE_USER", "messageId": str(uuid.uuid4()), "parts": [{"text": text}]}
-    if task_id:
-        msg["taskId"] = task_id
-    print(f"[buyer] -> {text!r}" + (f" taskId={task_id[:8]}" if task_id else ""), flush=True)
-    t = rpc(url, "SendMessage", {"message": msg})
-    print(f"[buyer] <- {state(t)} | {status_text(t)}", flush=True)
-    return t
-
-
-def state(t: dict) -> str:
-    return t.get("status", {}).get("state", "")
-
-
-def status_text(t: dict) -> str:
-    return " ".join(p.get("text", "") for p in t.get("status", {}).get("message", {}).get("parts", []))
 
 
 def shop_says(t: dict) -> str:
