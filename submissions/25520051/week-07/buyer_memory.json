@@ -215,117 +215,6 @@
       185,
       230
      ]
-    },
-    {
-     "t": "2026-10-20T11:59:34+00:00",
-     "item": "lamp",
-     "budget": 120,
-     "result": "deal",
-     "price": 101,
-     "signed": true,
-     "asks": [
-      130,
-      104,
-      101
-     ],
-     "offers": [
-      78,
-      99,
-      101
-     ]
-    },
-    {
-     "t": "2026-10-20T11:59:53+00:00",
-     "item": "lamp",
-     "budget": 120,
-     "result": "deal",
-     "price": 101,
-     "signed": true,
-     "asks": [
-      130,
-      104,
-      101
-     ],
-     "offers": [
-      78,
-      99,
-      101
-     ]
-    },
-    {
-     "t": "2026-10-20T12:00:13+00:00",
-     "item": "lamp",
-     "budget": 120,
-     "result": "deal",
-     "price": 101,
-     "signed": true,
-     "asks": [
-      130,
-      104,
-      101
-     ],
-     "offers": [
-      78,
-      99,
-      101
-     ]
-    },
-    {
-     "t": "2026-10-20T12:00:38+00:00",
-     "item": "bookshelf",
-     "budget": 230,
-     "result": "no_deal",
-     "price": null,
-     "signed": null,
-     "asks": [
-      338,
-      260,
-      260,
-      260
-     ],
-     "offers": [
-      149,
-      185,
-      230
-     ]
-    },
-    {
-     "t": "2026-10-20T12:01:09+00:00",
-     "item": "bookshelf",
-     "budget": 230,
-     "result": "no_deal",
-     "price": null,
-     "signed": null,
-     "asks": [
-      338,
-      260,
-      260,
-      260
-     ],
-     "offers": [
-      149,
-      185,
-      230
-     ]
-    },
-    {
-     "t": "2026-10-20T12:01:35+00:00",
-     "item": "bookshelf",
-     "budget": 230,
-     "result": "no_deal",
-     "price": null,
-     "signed": null,
-     "asks": [
-      338,
-      260,
-      260,
-      260
-     ],
-     "offers": [
-      149,
-      185,
-      230
-     ]
     }
    ]
   },
@@ -445,7 +334,7 @@
      ]
     },
     {
-     "t": "2026-10-20T12:02:11+00:00",
+     "t": "2026-10-20T12:26:36+00:00",
      "item": "lamp",
      "budget": 120,
      "result": "deal",
@@ -463,25 +352,7 @@
      ]
     },
     {
-     "t": "2026-10-20T12:02:40+00:00",
-     "item": "lamp",
-     "budget": 120,
-     "result": "deal",
-     "price": 101,
-     "signed": true,
-     "asks": [
-      130,
-      104,
-      101
-     ],
-     "offers": [
-      78,
-      99,
-      101
-     ]
-    },
-    {
-     "t": "2026-10-20T12:03:12+00:00",
+     "t": "2026-10-20T12:27:10+00:00",
      "item": "lamp",
      "budget": 120,
      "result": "deal",
@@ -871,6 +742,230 @@
       189,
       271
      ]
+    },
+    {
+     "t": "2026-10-20T12:00:21+00:00",
+     "item": "chair",
+     "budget": 250,
+     "result": "deal",
+     "price": 186,
+     "signed": true,
+     "asks": [
+      213,
+      196
+     ],
+     "offers": [
+      127,
+      186
+     ]
+    },
+    {
+     "t": "2026-10-20T12:01:54+00:00",
+     "item": "chair",
+     "budget": 185,
+     "result": "deal",
+     "price": 180,
+     "signed": true,
+     "asks": [
+      213,
+      195,
+      185,
+      180
+     ],
+     "offers": [
+      120,
+      149,
+      176,
+      180
+     ]
+    },
+    {
+     "t": "2026-10-20T12:04:51+00:00",
+     "item": "chair",
+     "budget": 160,
+     "result": "no_deal",
+     "price": null,
+     "signed": null,
+     "asks": [
+      213,
+      196,
+      188,
+      183,
+      181,
+      180
+     ],
+     "offers": [
+      104,
+      129,
+      144,
+      154,
+      160
+     ]
+    },
+    {
+     "t": "2026-10-20T12:06:16+00:00",
+     "item": "bookshelf",
+     "budget": 295,
+     "result": "deal",
+     "price": 271,
+     "signed": true,
+     "asks": [
+      315,
+      285
+     ],
+     "offers": [
+      189,
+      271
+     ]
+    },
+    {
+     "t": "2026-10-20T12:08:03+00:00",
+     "item": "bookshelf",
+     "budget": 360,
+     "result": "deal",
+     "price": 271,
+     "signed": true,
+     "asks": [
+      315,
+      285
+     ],
+     "offers": [
+      189,
+      271
+     ]
+    },
+    {
+     "t": "2026-10-20T12:09:39+00:00",
+     "item": "lamp",
+     "budget": 125,
+     "result": "deal",
+     "price": 103,
+     "signed": true,
+     "asks": [
+      117,
+      108
+     ],
+     "offers": [
+      70,
+      103
+     ]
+    },
+    {
+     "t": "2026-10-20T12:10:42+00:00",
+     "item": "lamp",
+     "budget": 140,
+     "result": "deal",
+     "price": 104,
+     "signed": true,
+     "asks": [
+      117,
+      110
+     ],
+     "offers": [
+      70,
+      104
+     ]
+    },
+    {
+     "t": "2026-10-20T12:13:07+00:00",
+     "item": "chair",
+     "budget": 160,
+     "result": "no_deal",
+     "price": null,
+     "signed": null,
+     "asks": [
+      213,
+      192,
+      185,
+      182,
+      180,
+      180
+     ],
+     "offers": [
+      104,
+      129,
+      144,
+      154,
+      160
+     ]
+    },
+    {
+     "t": "2026-10-20T12:14:02+00:00",
+     "item": "lamp",
+     "budget": 125,
+     "result": "deal",
+     "price": 103,
+     "signed": true,
+     "asks": [
+      117,
+      108
+     ],
+     "offers": [
+      70,
+      103
+     ]
+    },
+    {
+     "t": "2026-10-20T12:16:32+00:00",
+     "item": "lamp",
+     "budget": 110,
+     "result": "deal",
+     "price": 104,
+     "signed": true,
+     "asks": [
+      117,
+      110
+     ],
+     "offers": [
+      70,
+      104
+     ]
+    },
+    {
+     "t": "2026-10-20T12:19:19+00:00",
+     "item": "lamp",
+     "budget": 90,
+     "result": "no_deal",
+     "price": null,
+     "signed": null,
+     "asks": [
+      117,
+      108,
+      104,
+      102,
+      100,
+      100
+     ],
+     "offers": [
+      58,
+      72,
+      81,
+      87,
+      90
+     ]
+    },
+    {
+     "t": "2026-10-20T12:22:30+00:00",
+     "item": "lamp",
+     "budget": 90,
+     "result": "no_deal",
+     "price": null,
+     "signed": null,
+     "asks": [
+      117,
+      108,
+      104,
+      100,
+      100,
+      100
+     ],
+     "offers": [
+      58,
+      72,
+      81,
+      87,
+      90
+     ]
     }
    ]
   },
@@ -1222,6 +1317,29 @@
       69,
       104
      ]
+    },
+    {
+     "t": "2026-10-20T12:25:28+00:00",
+     "item": "lamp",
+     "budget": 90,
+     "result": "no_deal",
+     "price": null,
+     "signed": null,
+     "asks": [
+      107,
+      104,
+      102,
+      100,
+      100,
+      100
+     ],
+     "offers": [
+      58,
+      72,
+      81,
+      87,
+      90
+     ]
     }
    ]
   },
@@ -1273,6 +1391,150 @@
     "bad_receipt": 0
    },
    "trades": []
+  },
+  "kimauve": {
+   "flags": {
+    "injection": 0,
+    "bad_receipt": 0
+   },
+   "trades": [
+    {
+     "t": "2026-10-20T12:15:07+00:00",
+     "item": "chair",
+     "budget": 250,
+     "result": "deal",
+     "price": 180,
+     "signed": true,
+     "asks": [
+      189,
+      180,
+      180
+     ],
+     "offers": [
+      113,
+      171,
+      180
+     ]
+    },
+    {
+     "t": "2026-10-20T12:19:55+00:00",
+     "item": "lamp",
+     "budget": 125,
+     "result": "deal",
+     "price": 100,
+     "signed": true,
+     "asks": [
+      105,
+      100,
+      100
+     ],
+     "offers": [
+      63,
+      95,
+      100
+     ]
+    },
+    {
+     "t": "2026-10-20T12:23:05+00:00",
+     "item": "bookshelf",
+     "budget": 360,
+     "result": "deal",
+     "price": 260,
+     "signed": true,
+     "asks": [
+      273,
+      260,
+      260
+     ],
+     "offers": [
+      163,
+      247,
+      260
+     ]
+    },
+    {
+     "t": "2026-10-20T12:23:53+00:00",
+     "item": "lamp",
+     "budget": 105,
+     "result": "deal",
+     "price": 100,
+     "signed": true,
+     "asks": [
+      105,
+      100,
+      100
+     ],
+     "offers": [
+      63,
+      95,
+      100
+     ]
+    },
+    {
+     "t": "2026-10-20T12:24:29+00:00",
+     "item": "chair",
+     "budget": 250,
+     "result": "deal",
+     "price": 180,
+     "signed": true,
+     "asks": [
+      189,
+      180,
+      180
+     ],
+     "offers": [
+      113,
+      171,
+      180
+     ]
+    },
+    {
+     "t": "2026-10-20T12:26:03+00:00",
+     "item": "lamp",
+     "budget": 125,
+     "result": "deal",
+     "price": 100,
+     "signed": true,
+     "asks": [
+      105,
+      100,
+      100
+     ],
+     "offers": [
+      63,
+      95,
+      100
+     ]
+    }
+   ]
+  },
+  "26512076": {
+   "flags": {
+    "injection": 0,
+    "bad_receipt": 0
+   },
+   "trades": []
+  },
+  "fair-furniture": {
+   "flags": {
+    "injection": 0,
+    "bad_receipt": 0
+   },
+   "trades": []
+  },
+  "myeonggi": {
+   "flags": {
+    "injection": 0,
+    "bad_receipt": 0
+   },
+   "trades": []
+  },
+  "chaewoonee": {
+   "flags": {
+    "injection": 0,
+    "bad_receipt": 0
+   },
+   "trades": []
   }
  },
  "items": {
@@ -1293,10 +1555,13 @@
     116,
     104,
     104,
-    101,
-    101,
-    101,
-    101,
+    103,
+    104,
+    103,
+    104,
+    100,
+    100,
+    100,
     101,
     101
    ]
@@ -1304,7 +1569,10 @@
   "bookshelf": {
    "prices": [
     302,
-    271
+    271,
+    271,
+    271,
+    260
    ]
   },
   "chair": {
@@ -1313,6 +1581,10 @@
     224,
     180,
     209,
+    180,
+    186,
+    180,
+    180,
     180
    ]
   }
