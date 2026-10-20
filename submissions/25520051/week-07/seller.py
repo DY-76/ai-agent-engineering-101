@@ -16,6 +16,7 @@ import json
 import os
 import re
 import sys
+import threading
 from pathlib import Path
 
 import uvicorn
@@ -105,7 +106,16 @@ Write ONE short, warm sentence greeting a buyer who asked for an item, mentionin
 No numbers, no prices, no instructions to the buyer. Reply with JSON: {{"message": "<sentence>"}}"""
 
 
+_PITCH = {}            # (item, member) -> greeting; the harness took 11 s per first reply (20:53, 20:57)
+
+
 def pitch(item: str, member: bool) -> str:
+    if (item, member) not in _PITCH:
+        _PITCH[(item, member)] = _pitch(item, member)
+    return _PITCH[(item, member)]
+
+
+def _pitch(item: str, member: bool) -> str:
     who = "a returning member" if member else "a new buyer"
     ans = ask_json(PITCH_SYSTEM, f"{who} asked for a {item}; this season's model is the {LINE[item]}.",
                    timeout=20, attempts=1) or {}
@@ -241,6 +251,8 @@ def build(port: int):
 
 
 def app_from_env():
+    # Warm the greetings in the background so no buyer waits on the harness after a reload.
+    threading.Thread(target=lambda: [pitch(i, m) for i in RESERVE for m in (False, True)], daemon=True).start()
     return build(int(os.environ["SELLER_PORT"]))
 
 
