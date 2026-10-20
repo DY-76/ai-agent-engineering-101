@@ -7,13 +7,13 @@ taskId. The harness decides every offer and when to walk away. The code only
 speaks A2A and guards the budget: it never sends an offer above it.
 """
 import argparse
-import re
 import sys
 import time
 import uuid
 
 import httpx
 
+from a2a_trade import clean, is_injection, parse_ask
 from harness import ask_json
 
 sys.stdout.reconfigure(encoding="utf-8")   # the trade test redirects stdout to a file (cp949 on Windows)
@@ -60,9 +60,12 @@ def status_text(t: dict) -> str:
     return " ".join(p.get("text", "") for p in t.get("status", {}).get("message", {}).get("parts", []))
 
 
-def last_number(text: str) -> int | None:
-    nums = re.findall(r"\d+(?:\.\d+)?", text)
-    return int(float(nums[-1])) if nums else None
+def shop_says(t: dict) -> str:
+    """The shop's text with injected instructions cut out (see a2a_trade.py)."""
+    text = status_text(t)
+    if is_injection(text):
+        print("[buyer] shop message carries instructions for AI agents; ignored", flush=True)
+    return clean(text)
 
 
 def decide(item: str, budget: int, history: list, ask: int | None) -> dict:
@@ -90,7 +93,7 @@ def main():
 
     t = send(url, f"I want to buy a {args.item}")
     task_id = t.get("id")
-    history = [("you", f"I want to buy a {args.item}"), ("shop", status_text(t))]
+    history = [("you", f"I want to buy a {args.item}"), ("shop", shop_says(t))]
 
     for _ in range(MAX_ROUNDS):
         if state(t) != "TASK_STATE_INPUT_REQUIRED":
@@ -99,7 +102,7 @@ def main():
             print("[buyer] out of time; walking away", flush=True)
             rpc(url, "CancelTask", {"id": task_id})
             return
-        ask = last_number(status_text(t))
+        ask = parse_ask(status_text(t))
         d = decide(args.item, args.budget, history, ask)
         action = d.get("action")
         print(f"[buyer] harness -> {d}", flush=True)
@@ -123,7 +126,7 @@ def main():
         if ask is not None and price > ask:                           # no reason to pay more than asked
             price = ask
         t = send(url, str(price), task_id)
-        history += [("you", str(price)), ("shop", status_text(t))]
+        history += [("you", str(price)), ("shop", shop_says(t))]
 
     if state(t) == "TASK_STATE_COMPLETED":
         receipt = [p.get("data") for a in t.get("artifacts", []) for p in a.get("parts", []) if p.get("data")]
