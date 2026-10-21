@@ -27,13 +27,18 @@ EMPTY_DIR = tempfile.mkdtemp(prefix="harness-")
 
 
 def _load_env(path: Path = Path(__file__).with_name(".env")):
-    """KEY=VALUE lines; the environment wins over the file."""
+    """KEY=VALUE lines; a non-empty environment value wins over the file.
+
+    An empty value does not: the PC's seller worker kept calling claude (not installed there) after the
+    key went into .env, because its environment already held the name with no value."""
     try:
-        for line in path.read_text(encoding="utf-8").splitlines():
+        for line in path.read_text(encoding="utf-8-sig").splitlines():
             if "=" in line and not line.lstrip().startswith("#"):
-                k, v = line.split("=", 1)
-                os.environ.setdefault(k.strip(), v.strip().strip('"').strip("'"))
-    except OSError:
+                k, v = (x.strip() for x in line.split("=", 1))
+                v = v.strip('"').strip("'")
+                if v and not os.environ.get(k):
+                    os.environ[k] = v
+    except (OSError, UnicodeDecodeError):
         pass
 
 
@@ -50,6 +55,8 @@ def ask_json(system: str, prompt: str, timeout: int = 60, attempts: int = 2) -> 
     One timed-out call once made the buyer walk away from a deal it could have made
     (logs/buyer-under-test-buyer_deal-3.log, first trade test run), hence the retry.
     """
+    if not os.environ.get("OPENAI_API_KEY"):
+        _load_env()                      # a key added to .env later takes effect without a restart
     for i in range(attempts):
         raw = _openai(system, prompt, timeout) if os.environ.get("OPENAI_API_KEY") else _claude(system, prompt, timeout)
         ans = _parse(raw)
