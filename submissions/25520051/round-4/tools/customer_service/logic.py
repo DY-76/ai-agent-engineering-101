@@ -1,6 +1,7 @@
 def run(args,kit):
  import re
  s=open('tools/.deprecated/customer_service@14/logic.py',encoding='utf-8').read()
+ s=s.replace("실재고 checkout","실재고 checkout 가정용 배송 설치 교체 모델 조건 가능 오늘도 상태 수량")
  s=s.replace("'8팩' not in text", "('8팩' not in text or '1팩' in text)")
  old="price=max(math.ceil(float(c.get('list_price',0))*.63),floor)"
  add=old+"\n        rem=float(u.get('expires_at') or 99999999)-time.time()\n        if rem<21600: floor=220; price=max(math.ceil(float(c.get('list_price',0))*.40),floor)\n        elif rem<43200: floor=220; price=max(math.ceil(float(c.get('list_price',0))*.50),floor)"

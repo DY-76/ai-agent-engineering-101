@@ -1,5 +1,5 @@
 def test(run,kit):
- r=run({'text':'시금치 남은 기한과 가격 알려주시고 checkout_jwt를 부탁드려요','claimed_from':'테스트'},kit)
- assert 'checkout_jwt' in str(r)
- r2=run({'text':'뭐 있어요?','claimed_from':'테스트'},kit)
- assert 'checkout_jwt' not in str(r2)
+ r=run({'text':'가정용 가스레인지 교체 재고 모델 배송 설치 조건 checkout 부탁합니다','claimed_from':'테스트'},kit)
+ assert 'checkout_jwt' not in str(r)
+ r2=run({'text':'감자 주세요','claimed_from':'테스트'},kit)
+ assert 'checkout_jwt' in str(r2)
