@@ -1,5 +1,5 @@
 name: customer_service
-description: 실제 재고의 unit 만료시각과 회원·추천·행사 정책을 반영해 한국어로 응대하고 구매 시 checkout_jwt를 반환하며 문의를 기록합니다. args: {text, claimed_from}
+description: 실제 재고와 회원·추천·행사 정책을 반영해 한국어로 응대하고, SKU 재고를 선검사하며 구매 시 checkout_jwt를 반환하고 문의를 기록합니다. args: {text, claimed_from}
 permission:
   network: [market.ourolabs.ai]
   write: [inquiries.jsonl, offers.json]
@@ -10,5 +10,5 @@ permission:
   handles: [a2a]
 logic: logic.py
 test: test.py
-version: 11
-replaces: customer_service@10
+version: 13
+replaces: customer_service@12
