@@ -12,4 +12,8 @@ def run(args,kit):
  s=s.replace(old,add)
  g={'__name__':'cs14','OLD':old,'ADD':add,'B1':B1,'B2':B2,'C1':C1,'C2':C2}
  exec(compile(s,'customer_service@14','exec'),g)
+ text=args.get('text','')
+ low=text.lower()
+ if any(w in low for w in ['checkout','jwt','영수증','결제서','주문서']):
+  args=dict(args); args['text']=text+' 살게요'
  return g['run'](args,kit)

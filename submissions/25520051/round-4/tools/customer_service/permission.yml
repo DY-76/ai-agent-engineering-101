@@ -1,5 +1,5 @@
 name: customer_service
-description: 실제 재고·회원 등급·기한·할인 규칙을 반영해 한국어 문의에 답하고, 구매 의사일 때 청산소 checkout_jwt를 발급합니다. args: text, claimed_from
+description: 실제 재고·회원 등급·기한·할인 규칙을 반영해 한국어 문의에 답하고, 구매 의사 또는 checkout_jwt 요청 시 청산소 checkout_jwt를 발급합니다. args: text, claimed_from
 permission:
   network: [market.ourolabs.ai]
   write: [inquiries.jsonl, offers.json]
@@ -10,5 +10,5 @@ permission:
   handles: [a2a]
 logic: logic.py
 test: test.py
-version: 19
-replaces: customer_service@18
+version: 20
+replaces: customer_service@19
