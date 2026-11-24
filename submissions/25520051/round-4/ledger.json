@@ -50,6 +50,46 @@
       "sku": "G0069861f",
       "text": "안녕하세요. 샐러드 채소와 귀리 있나요? 가격을 알려주시고, 샐러드 채소를 살게요.",
       "time": 1795526829
+    },
+    {
+      "type": "supply",
+      "sku": "G0011e806",
+      "qty": 1,
+      "quote": "q-7ab0fb9df44724e3",
+      "tx_hash": "0x534778e88f0e38d1b0a2279d2b2379e7e6dfbc3d349ed1f880bfb562cb7b46fa",
+      "time": 1795529026
+    },
+    {
+      "type": "supply",
+      "sku": "G004a8500",
+      "qty": 1,
+      "quote": "q-b5c2d519d8d68c77",
+      "tx_hash": "0xd27b0e98383d1c01055621f2bf583dbf65017217bbff578920df63e797fc1439",
+      "time": 1795529055
+    },
+    {
+      "type": "supply",
+      "sku": "G0069861f",
+      "qty": 1,
+      "quote": "q-34a6804e31b45aa5",
+      "tx_hash": "0x3671a99d59a2b1f91b886aa9fec29ea93d2fe5428dc634171b90f252080f1e14",
+      "time": 1795529077
+    },
+    {
+      "type": "supply",
+      "sku": "G005a5efb",
+      "qty": 1,
+      "quote": "q-ecbbc48ac82bb413",
+      "tx_hash": "0x99062532872bdf722f1e1215a1bfe3d6fafdbbbb827aa228ca275d777c63ff25",
+      "time": 1795529092
+    },
+    {
+      "type": "supply",
+      "sku": "G006670f7",
+      "qty": 1,
+      "quote": "q-ff21a89aa6fcc63e",
+      "tx_hash": "0xed0489c81aa77e5f8f82f81cafef912c0d9555f1f14898b949591f5e4dbec1c2",
+      "time": 1795529108
     }
   ],
   "pending_supply": []
