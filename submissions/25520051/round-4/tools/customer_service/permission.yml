@@ -1,5 +1,5 @@
 name: customer_service
-description: 실제 카탈로그와 재고를 조회해 상품·가격·재고를 한국어로 안내하고 회원 문의를 장부에 기록하며 구매 요청 시 checkout_jwt를 반환합니다. args: {text,data,claimed_from,task_id,context_id,history}
+description: 실제 카탈로그·재고를 조회하고 회원 장부를 갱신하며, 상품 문의에는 재고·가격을 안내하고 구매 요청에는 청산소 형식의 가게 서명 checkout_jwt를 data로 반환합니다. args: {text,data,claimed_from,task_id,context_id,history}
 permission:
   network: [market.ourolabs.ai, sic-extending-applying-game.trycloudflare.com]
   write: [ledger.json]
@@ -10,5 +10,5 @@ permission:
   handles: [a2a]
 logic: logic.py
 test: test.py
-version: 2
-replaces: customer_service@1
+version: 3
+replaces: customer_service@2

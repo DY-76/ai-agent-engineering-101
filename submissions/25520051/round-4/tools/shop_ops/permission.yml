@@ -1,13 +1,13 @@
 name: shop_ops
-description: 시장 운영, 공급 견적·결제·수령, 재고 및 회원 장부를 처리합니다.
+description: 재고·카탈로그 조회, 공급 견적과 200,000크레딧 이하 단일 매입의 정확한 송금·수령 확인, 실제 정산 원장 조회 및 회원 장부를 처리합니다. args: {op,sku,qty,quote,to,wei,data,member,record}
 permission:
   network: [market.ourolabs.ai]
   write: [ledger.json]
   identity: [shop]
   wallet: [pay]
-  pay_limit: 10000000
-  timeout: 180
+  pay_limit: 200000
+  timeout: 120
 logic: logic.py
 test: test.py
-version: 2
-replaces: shop_ops@1
+version: 3
+replaces: shop_ops@2

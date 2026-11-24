@@ -1,11 +1,11 @@
 {
  "tool": "shop_ops",
- "version": 2,
- "forged_at": 1795522137,
+ "version": 3,
+ "forged_at": 1795522471,
  "kit": "v5.1",
  "sha256": {
-  "permission.yml": "28f13c15b8662a9aaad28361a2bbf6bb96134a96baa5c09c1304a7c7583c5df3",
-  "logic.py": "03ac56b1f4ae264bf5039ada3622f1640ce3358c1ef9c24b0ca24c7ecc4f711c",
-  "test.py": "140a47a0808280dc9148fd4219a9aa0190f5046c2949b6d6fda439b6de79a522"
+  "permission.yml": "50b42be9e090ece84e112073f4cd8ef74ab4f71cb57b3d4a218639757043e019",
+  "logic.py": "81dc3c2f82d764481b0f3294b07af2b0d8972ca2a3722702e2bb822e2405282a",
+  "test.py": "f7e2ebb8103eea1d86d20a3ae1485bf742ea651571e8849ec541fef14344d2f9"
  }
 }
