@@ -1,8 +1,56 @@
 {
   "members": {
-    "테스트": {
-      "purchases": []
+    "테스트": {},
+    "테스트회원": {
+      "name": "테스트회원",
+      "purchases": [],
+      "referrals": 0,
+      "discount_pending": 0,
+      "grade": 1,
+      "tickets": 0
+    },
+    "테스트 고객": {
+      "name": "테스트 고객",
+      "purchases": [],
+      "referrals": 0,
+      "discount_pending": 0,
+      "grade": 1,
+      "tickets": 0
     }
   },
-  "transactions": []
+  "transactions": [
+    {
+      "type": "inquiry",
+      "member": "테스트회원",
+      "referrer": null,
+      "sku": "G006670f7",
+      "text": "귀리 재고와 가격 알려주세요",
+      "time": 1795524688
+    },
+    {
+      "type": "supply",
+      "sku": "x",
+      "qty": 1,
+      "quote": "test",
+      "tx_hash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+      "time": 1795526768
+    },
+    {
+      "type": "supply",
+      "sku": "G0069861f",
+      "qty": 1,
+      "quote": "q-2e8ada5d84097e2e",
+      "tx_hash": "0xe3e73686ad4dee1b107d793415b86e48cff1738c74b22ebddc56bcd0b7f7f581",
+      "time": 1795526791
+    },
+    {
+      "type": "inquiry",
+      "member": "테스트 고객",
+      "referrer": null,
+      "sku": "G0069861f",
+      "text": "안녕하세요. 샐러드 채소와 귀리 있나요? 가격을 알려주시고, 샐러드 채소를 살게요.",
+      "time": 1795526829
+    }
+  ],
+  "pending_supply": []
 }

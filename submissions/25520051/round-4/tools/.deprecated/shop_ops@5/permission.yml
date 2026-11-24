@@ -1,0 +1,13 @@
+name: shop_ops
+description: 시장 재고·카탈로그·원장 조회, 장부 기록, 여러 SKU의 공급 견적·결제·수령을 한 호출로 처리합니다. args: {op,sku,qty,items,member,record}
+permission:
+  network: [market.ourolabs.ai]
+  write: [ledger.json]
+  identity: [shop]
+  wallet: [pay]
+  pay_limit: 200000
+  timeout: 180
+logic: logic.py
+test: test.py
+version: 5
+replaces: shop_ops@4

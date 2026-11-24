@@ -1,0 +1,12 @@
+name: supply_claim
+description: 이미 발급된 도매 견적에 대해 지정된 수취인·wei·data로 shop 결제 후 /api/supply 수령을 완료하고 결과를 저장합니다. args: {quote, to, wei, data, sku, qty}
+permission:
+  network: [market.ourolabs.ai]
+  write: [ledger.json]
+  identity: [shop]
+  wallet: [pay]
+  pay_limit: 200000
+  timeout: 120
+logic: logic.py
+test: test.py
+version: 1

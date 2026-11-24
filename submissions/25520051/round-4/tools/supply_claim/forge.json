@@ -1,0 +1,11 @@
+{
+ "tool": "supply_claim",
+ "version": 1,
+ "forged_at": 1795526768,
+ "kit": "v5.1",
+ "sha256": {
+  "permission.yml": "4c8084728ff5d9b531dd86987a5f0e2e8dce02ffa28d00531a8904fb4fa5f7e6",
+  "logic.py": "df7e6af69a901c21854b4b16f560721f6ceeeca80a11b2e4e7025a696820677c",
+  "test.py": "0024a5e289461333978f01952b46f3c6182464f2c7f5401dd12805f3b800cd72"
+ }
+}
