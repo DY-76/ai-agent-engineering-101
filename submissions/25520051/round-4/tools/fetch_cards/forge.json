@@ -1,0 +1,11 @@
+{
+ "tool": "fetch_cards",
+ "version": 1,
+ "forged_at": 1795519001,
+ "kit": "v5.1",
+ "sha256": {
+  "permission.yml": "68e5755c2a32f0bedbe874e35efc63b0758c3dfc6223efaf4b779a3d28ce98ca",
+  "logic.py": "5de25aad948e2c630e397e3d85afe4a686a11b0856dcfe75c9023fb90ee93eaf",
+  "test.py": "3b71822d4ee6987c92f808ea5506016b2013527e2ffa9624917589d60d365be3"
+ }
+}

@@ -1,0 +1,9 @@
+name: market_snapshot
+description: 카탈로그·수요·재입고 상태·공급가격·내 shop 재고를 조회합니다. args: sections (선택적 목록)
+permission:
+  network: [market.ourolabs.ai]
+  identity: [shop]
+  timeout: 30
+logic: logic.py
+test: test.py
+version: 1

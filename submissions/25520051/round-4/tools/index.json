@@ -1,0 +1,22 @@
+{
+ "fetch_cards": {
+  "uses": 8,
+  "fails": 0,
+  "last": 1795519874
+ },
+ "read_market_docs": {
+  "uses": 3,
+  "fails": 0,
+  "last": 1795519922
+ },
+ "market_snapshot": {
+  "uses": 4,
+  "fails": 0,
+  "last": 1795519935
+ },
+ "announce_membership": {
+  "uses": 3,
+  "fails": 0,
+  "last": 1795519953
+ }
+}

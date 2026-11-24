@@ -1,0 +1,8 @@
+name: read_market_docs
+description: 시장 문서와 엔티티 카드를 조회합니다. args: urls (URL 문자열 목록)
+permission:
+  network: [market.ourolabs.ai]
+  timeout: 30
+logic: logic.py
+test: test.py
+version: 1

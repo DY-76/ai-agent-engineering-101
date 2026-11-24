@@ -1,0 +1,8 @@
+name: fetch_cards
+description: 시장 엔티티의 Agent Card와 문서를 조회합니다. args: urls (문자열 URL 목록)
+permission:
+  network: [market.ourolabs.ai]
+  timeout: 30
+logic: logic.py
+test: test.py
+version: 1

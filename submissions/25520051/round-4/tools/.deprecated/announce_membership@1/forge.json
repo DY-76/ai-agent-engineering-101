@@ -1,0 +1,11 @@
+{
+ "tool": "announce_membership",
+ "version": 1,
+ "forged_at": 1795519539,
+ "kit": "v5.1",
+ "sha256": {
+  "permission.yml": "a7970b79d256e9562d2d84c832b9c35533ab44c10b7d9207ac7789615059b826",
+  "logic.py": "119fc5c3439c9fb0c59ef6ad3f5b275dd662ac40d9dce737d94c48f6d6fd6139",
+  "test.py": "e923af3f077bfd99cf12cc3b0ccbead1c8fe6eca7c899482e0d09cc3fd18e88c"
+ }
+}

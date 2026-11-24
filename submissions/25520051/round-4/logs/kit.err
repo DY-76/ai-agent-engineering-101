@@ -1,0 +1,34 @@
+agent_card passed to DefaultRequestHandlerV2: AgentCard is not spec-compliant - REQUIRED fields missing or empty: skills. This is allowed and does not raise, but it may not verify or interoperate across SDKs and could be rejected in a future major release. See https://a2a-protocol.org/latest/specification/#57-field-presence-and-optionality
+Exception in thread Thread-38 (_readerthread):
+Traceback (most recent call last):
+  File "C:\Users\HAILAB_DY\AppData\Roaming\uv\python\cpython-3.12.15-windows-x86_64-none\Lib\threading.py", line 1075, in _bootstrap_inner
+    self.run()
+  File "C:\Users\HAILAB_DY\AppData\Roaming\uv\python\cpython-3.12.15-windows-x86_64-none\Lib\threading.py", line 1012, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\HAILAB_DY\AppData\Roaming\uv\python\cpython-3.12.15-windows-x86_64-none\Lib\subprocess.py", line 1599, in _readerthread
+    buffer.append(fh.read())
+                  ^^^^^^^^^
+  File "<frozen codecs>", line 322, in decode
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0xc1 in position 109: invalid start byte
+Exception in thread Thread-43 (_readerthread):
+Traceback (most recent call last):
+  File "C:\Users\HAILAB_DY\AppData\Roaming\uv\python\cpython-3.12.15-windows-x86_64-none\Lib\threading.py", line 1075, in _bootstrap_inner
+    self.run()
+  File "C:\Users\HAILAB_DY\AppData\Roaming\uv\python\cpython-3.12.15-windows-x86_64-none\Lib\threading.py", line 1012, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\HAILAB_DY\AppData\Roaming\uv\python\cpython-3.12.15-windows-x86_64-none\Lib\subprocess.py", line 1599, in _readerthread
+    buffer.append(fh.read())
+                  ^^^^^^^^^
+  File "<frozen codecs>", line 322, in decode
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0xc1 in position 109: invalid start byte
+Exception in thread Thread-55 (_readerthread):
+Traceback (most recent call last):
+  File "C:\Users\HAILAB_DY\AppData\Roaming\uv\python\cpython-3.12.15-windows-x86_64-none\Lib\threading.py", line 1075, in _bootstrap_inner
+    self.run()
+  File "C:\Users\HAILAB_DY\AppData\Roaming\uv\python\cpython-3.12.15-windows-x86_64-none\Lib\threading.py", line 1012, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\HAILAB_DY\AppData\Roaming\uv\python\cpython-3.12.15-windows-x86_64-none\Lib\subprocess.py", line 1599, in _readerthread
+    buffer.append(fh.read())
+                  ^^^^^^^^^
+  File "<frozen codecs>", line 322, in decode
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0xc1 in position 109: invalid start byte

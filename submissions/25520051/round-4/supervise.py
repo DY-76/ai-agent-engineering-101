@@ -61,8 +61,18 @@ def kill(p):
     p.wait(timeout=20)
 
 
+def utf8_stdio():
+    """On Windows the kit starts tools with python -I, which ignores PYTHONIOENCODING, so Korean output leaves as cp949
+    and the kit cannot decode it. A .pth line in the venv sets UTF-8 for every process; the kit stays unchanged."""
+    if os.name == "nt":
+        (ROOT / ".venv" / "Lib" / "site-packages" / "zz_utf8_stdio.pth").write_text(
+            "import sys; [s.reconfigure(encoding='utf-8') for s in (sys.stdin, sys.stdout, sys.stderr) "
+            "if s is not None and hasattr(s, 'reconfigure')]" + chr(10), encoding="utf-8")
+
+
 def main():
     (ROOT / "logs").mkdir(exist_ok=True)
+    utf8_stdio()
     lock = socket.socket()
     try:
         lock.bind(("127.0.0.1", 8799))          # one supervisor at a time

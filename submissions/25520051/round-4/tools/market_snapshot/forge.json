@@ -1,0 +1,11 @@
+{
+ "tool": "market_snapshot",
+ "version": 1,
+ "forged_at": 1795519095,
+ "kit": "v5.1",
+ "sha256": {
+  "permission.yml": "ae56ef12366fa8a61d30803250cfb37fb281d2455e960c2a3318bd8875911103",
+  "logic.py": "ecc5148b37c5badc6b692420c2de5128b51ef9d55b3a519c085f09f897385aa2",
+  "test.py": "a8cb5c2ade04a72bb9f8933e56568adef474432c480d39101924b6a077bfaf13"
+ }
+}

@@ -1,0 +1,11 @@
+{
+ "tool": "read_market_docs",
+ "version": 1,
+ "forged_at": 1795519311,
+ "kit": "v5.1",
+ "sha256": {
+  "permission.yml": "8a32678d3a9d1b0dba0c75ed301b6c87e76102aa23dea17171beaaa7f44b8855",
+  "logic.py": "21505cc9e9b79c8897f4e408e1d837066670094e2258e98e6ecbfa17f9ce89b2",
+  "test.py": "3b85f8de0885f8b63552874f69f7ee26bb51a95acec5c1fd79a4fdc2794f2bf6"
+ }
+}
