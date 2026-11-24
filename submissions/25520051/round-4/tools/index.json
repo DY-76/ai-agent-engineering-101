@@ -10,14 +10,14 @@
   "last": 1795521288
  },
  "market_snapshot": {
-  "uses": 17,
+  "uses": 23,
   "fails": 0,
-  "last": 1795528938
+  "last": 1795531537
  },
  "announce_membership": {
-  "uses": 8,
+  "uses": 9,
   "fails": 0,
-  "last": 1795522489
+  "last": 1795531521
  },
  "shop_ops": {
   "uses": 17,
@@ -33,5 +33,10 @@
   "uses": 1,
   "fails": 0,
   "last": 1795526829
+ },
+ "buy_batch": {
+  "uses": 1,
+  "fails": 0,
+  "last": 1795531505
  }
 }

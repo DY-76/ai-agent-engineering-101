@@ -1,0 +1,11 @@
+{
+ "tool": "buy_batch",
+ "version": 1,
+ "forged_at": 1795530461,
+ "kit": "v5.1",
+ "sha256": {
+  "permission.yml": "7e64188cd33f4253782aeffa5d54bf828748fae32ab63f8a965cfa0defc4e557",
+  "logic.py": "c81b700ea71edd39a7c1ee3ca9c14b9feb13992a9e108469d7ce23fb1e797059",
+  "test.py": "60326efb12958a0d5c8c1b4d18155b4e447d0386cf51e20b0f5d2fcf459af567"
+ }
+}

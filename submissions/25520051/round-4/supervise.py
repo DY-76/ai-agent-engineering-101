@@ -1,6 +1,7 @@
 """Keeps the Round 4 kit running. Not agent code: the kit is started as shipped.
-Restarts the kit when it exits. Model: the market's model desk; after FAILS model errors in a row it tries the
-OpenAI key (week-08/.env, or the environment) and switches only if a test call works; every hour it goes back to the desk.
+Restarts the kit when it exits. Two models: the market's model desk, and the OpenAI key in week-08/.env. model.json says
+which one is preferred ({"prefer": "own" or "desk", "model": "gpt-4.1"}). After FAILS model errors in a row it switches to
+the other (own only if a test call works); an hour later it goes back to the preferred one.
 Secrets go to the kit through the environment, never to the command line or a log."""
 import json, os, re, socket, subprocess, sys, time, urllib.request
 from pathlib import Path
@@ -9,9 +10,9 @@ ROOT = Path(__file__).resolve().parent
 REPO = ROOT.parents[2]
 KIT = REPO / "scripts" / "round4" / "agent_kit.py"
 NAME = "로얄 서클(Royal Circle)"
-BACKUP = "gpt-4.1-mini"          # the kit sends max_tokens, which gpt-5 models refuse
+BACKUP = "gpt-4.1"               # default; the kit sends max_tokens, which gpt-5 models refuse
 BACKUP_BASE = "https://api.openai.com/v1"
-FAILS, BACK_TO_DESK = 8, 3600
+FAILS, BACK = 4, 3600
 
 
 def say(text):
@@ -28,8 +29,16 @@ def secrets():
     return out
 
 
+def config():
+    try:
+        c = json.loads((ROOT / "model.json").read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        c = {}
+    return ("backup" if c.get("prefer") == "own" else "desk"), c.get("model") or BACKUP
+
+
 def backup_works(key):
-    body = json.dumps({"model": BACKUP, "max_tokens": 5, "messages": [{"role": "user", "content": "ok"}]}).encode()
+    body = json.dumps({"model": config()[1], "max_tokens": 5, "messages": [{"role": "user", "content": "ok"}]}).encode()
     req = urllib.request.Request(BACKUP_BASE + "/chat/completions", data=body,
                                  headers={"authorization": "Bearer " + key, "content-type": "application/json"})
     try:
@@ -47,8 +56,8 @@ def start(mode, sec):
     if mode == "desk":
         env["AGENT_LLM_BASE"] = "market"
     else:
-        env.update(AGENT_LLM_BASE=BACKUP_BASE, AGENT_LLM_MODEL=BACKUP, AGENT_LLM_KEY=sec["OPENAI_API_KEY"])
-    say(f"start kit, model: {mode}")
+        env.update(AGENT_LLM_BASE=BACKUP_BASE, AGENT_LLM_MODEL=config()[1], AGENT_LLM_KEY=sec["OPENAI_API_KEY"])
+    say(f"start kit, model: {mode if mode == 'desk' else config()[1]}")
     with open(ROOT / "logs" / "kit.err", "a", encoding="utf-8") as err:
         return subprocess.Popen([sys.executable, str(KIT), "run", "--dir", str(ROOT), "--market",
                                  "https://market.ourolabs.ai", "--name", NAME, "--tunnel", "--app", "8800"],
@@ -78,7 +87,7 @@ def main():
         lock.bind(("127.0.0.1", 8799))          # one supervisor at a time
     except OSError:
         sys.exit("already running")
-    logf, mode, wait, next_probe = ROOT / "logs" / "agent-kit.log", "desk", 15, 0
+    logf, mode, wait, next_probe = ROOT / "logs" / "agent-kit.log", config()[0], 15, 0
     while True:
         sec = secrets()
         pos = logf.stat().st_size if logf.exists() else 0
@@ -103,9 +112,10 @@ def main():
                     mode = "desk" if mode == "backup" else "backup"
                     say(f"{fails} model errors in a row, switching to {mode}")
                     kill(p)
-            elif mode == "backup" and time.time() - began > BACK_TO_DESK:
-                mode = "desk"
-                say("an hour on the backup, back to the desk")
+            elif mode != config()[0] and time.time() - began > BACK and (
+                    config()[0] == "desk" or backup_works(sec.get("OPENAI_API_KEY", ""))):
+                mode = config()[0]
+                say(f"an hour on the other model, back to {mode}")
                 kill(p)
         if time.time() - began > 600:
             wait = 15
