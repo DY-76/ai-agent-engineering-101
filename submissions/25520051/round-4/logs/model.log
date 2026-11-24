@@ -9,3 +9,11 @@
 11-25 00:07:06 gpt-5.4 TimeoutError; gpt-5.4-mini TimeoutError
 11-25 00:08:04 gpt-5.4 TimeoutError; gpt-5.4-mini ok 13s in=5420 out=1918
 11-25 00:08:52 gpt-5.4 TimeoutError; gpt-5.4-mini ok 10s in=7960 out=1711
+11-25 00:12:21 gpt-5.4 ok 4s in=5019 out=143
+11-25 00:12:30 gpt-5.4 ok 6s in=8110 out=239
+11-25 00:13:25 gpt-5.4 TimeoutError; gpt-5.4-mini TimeoutError
+11-25 00:14:23 gpt-5.4 TimeoutError; gpt-5.4-mini ok 15s in=5454 out=2294
+11-25 00:14:27 gpt-5.4 ok 4s in=8638 out=187
+11-25 00:15:00 gpt-6-luna ok 4s in=5263 out=74
+11-25 00:15:06 gpt-6-luna ok 4s in=8326 out=127
+11-25 00:15:14 gpt-6-luna ok 25s in=45 out=2357

@@ -1,14 +1,14 @@
 name: customer_service
-description: 실제 카탈로그와 재고를 조회해 상품 문의·흥정·구매를 응대하고, 회원 장부에 문의와 미확정 체크아웃을 기록하며, 청산소 규격 checkout_jwt를 반환합니다. args: {text,data,claimed_from,task_id,context_id,history}
+description: 실제 카탈로그와 재고를 조회해 한국어 문의·흥정·구매를 응대하고, 회원 장부에 문의와 미확정 체크아웃을 기록하며, 청산소 규격 checkout_jwt를 반환합니다. args: {text,data,claimed_from,task_id,context_id,history}. 재고는 units를 sku별로 모아 상품명/카테고리/정가/원가/기한을 읽고, 상품명 또는 카테고리와 손님 말의 단어가 겹치는 상품을 우선 추천합니다. 막연하거나 일치 상품이 없으면 현재 재고 전체를 이름/등급/남은 시간/가격으로 안내합니다. 평소 가격은 max(정가의 70%, 하한)이며 하한은 ceil((cost+210)/0.99)입니다. 흥정은 대화 history 횟수만큼 5%씩, 하한까지 양보합니다. 11월 25~27일 첫 구매자는 10% 할인, 추천인은 시장 원장에 우리 가게 정산이 있는 다른 손님만 인정하며 추천 누적 할인은 1회 10%, 10회 15%, 20회 20%, 30회 이상 25% 상한입니다. 구매 의사가 있으면 현재 등급 claim, cert, shop_url, unit, currency, iat를 담은 checkout_jwt를 kit.sign_jwt(payload,'shop
 permission:
-  network: [market.ourolabs.ai, sic-extending-applying-game.trycloudflare.com]
-  write: [ledger.json]
+  network: [market.ourolabs.ai]
+  write: [offers.json]
   identity: [shop]
   wallet: [sign_jwt]
   pay_limit: 0
-  timeout: 30
+  timeout: 60
   handles: [a2a]
 logic: logic.py
 test: test.py
-version: 4
-replaces: customer_service@3
+version: 5
+replaces: customer_service@4

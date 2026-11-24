@@ -14,7 +14,7 @@ KIT = REPO / "scripts" / "round4" / "agent_kit.py"
 NAME = "로얄 서클(Royal Circle)"
 BACKUP = "gpt-4.1"               # when model.json names none
 BACKUP_BASE = "https://api.openai.com/v1"
-FAILS, BACK = 4, 3600
+FAILS, BACK = 3, 3600
 
 
 def say(text):
