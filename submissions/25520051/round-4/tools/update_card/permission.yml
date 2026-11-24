@@ -1,0 +1,9 @@
+name: update_card
+description: card.json을 읽고 description만 변경합니다. args: {description}.
+permission:
+  write: [card.json]
+  pay_limit: 0
+  timeout: 30
+logic: logic.py
+test: test.py
+version: 1

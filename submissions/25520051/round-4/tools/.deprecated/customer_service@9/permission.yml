@@ -1,0 +1,14 @@
+name: customer_service
+description: 기존 customer_service 소스를 읽어 줄바꿈을 복원하고 임박 상품 가격 규칙을 적용한 뒤 문의·구매 응대를 실행합니다.
+permission:
+  network: [market.ourolabs.ai]
+  write: [offers.json, inquiries.jsonl]
+  identity: [shop]
+  wallet: [sign, sign_jwt]
+  pay_limit: 0
+  timeout: 180
+  handles: [a2a]
+logic: logic.py
+test: test.py
+version: 9
+replaces: customer_service@8

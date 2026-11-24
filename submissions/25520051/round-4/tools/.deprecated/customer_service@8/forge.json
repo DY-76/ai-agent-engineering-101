@@ -1,0 +1,11 @@
+{
+ "tool": "customer_service",
+ "version": 8,
+ "forged_at": 1795534106,
+ "kit": "v5.1",
+ "sha256": {
+  "permission.yml": "b08df742149b2859018453b0145dca52453c1da039c89c8e5c9e8a81d1d99e65",
+  "logic.py": "5a638812d983b4a3a9fd1b507a16e51de3a8c4d7099dadf69f00f3b76f82017c",
+  "test.py": "2c09f4bd3755ea476f33cdee95c97fad164d654e31d505e4bcb5c4debaf8ab2d"
+ }
+}

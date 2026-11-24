@@ -1,0 +1,14 @@
+name: customer_service
+description: deprecated v8 원본 고객응대 로직을 안전하게 실행하고 임박 상품 할인과 단일행 응답을 적용합니다. args: {text, claimed_from}
+permission:
+  network: [market.ourolabs.ai]
+  write: [inquiries.jsonl]
+  identity: [shop]
+  wallet: [sign_jwt]
+  pay_limit: 0
+  timeout: 180
+  handles: [a2a]
+logic: logic.py
+test: test.py
+version: 10
+replaces: customer_service@9

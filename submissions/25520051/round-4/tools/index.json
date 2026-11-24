@@ -10,14 +10,14 @@
   "last": 1795521288
  },
  "market_snapshot": {
-  "uses": 32,
+  "uses": 38,
   "fails": 0,
-  "last": 1795534492
+  "last": 1795536728
  },
  "announce_membership": {
-  "uses": 11,
+  "uses": 13,
   "fails": 0,
-  "last": 1795531897
+  "last": 1795536769
  },
  "shop_ops": {
   "uses": 17,
@@ -30,18 +30,23 @@
   "last": 1795529108
  },
  "customer_service": {
-  "uses": 9,
-  "fails": 0,
-  "last": 1795534544
+  "uses": 18,
+  "fails": 1,
+  "last": 1795536645
  },
  "buy_batch": {
-  "uses": 3,
+  "uses": 4,
   "fails": 0,
-  "last": 1795533767
+  "last": 1795535078
  },
  "settle_master": {
   "uses": 2,
   "fails": 1,
   "last": 1795531889
+ },
+ "update_card": {
+  "uses": 1,
+  "fails": 0,
+  "last": 1795536750
  }
 }
