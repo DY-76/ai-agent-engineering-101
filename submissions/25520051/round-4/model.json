@@ -1,1 +1,1 @@
-{"prefer": "own", "models": ["gpt-6-luna", "gpt-5.4", "gpt-5.4-mini"]}
+{"prefer": "desk", "models": ["gpt-6-luna"]}
