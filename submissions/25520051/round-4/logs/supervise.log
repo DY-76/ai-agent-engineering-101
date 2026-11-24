@@ -11,3 +11,4 @@
 11-24 23:05:23 kit ended (code 1); again in 15 s
 11-24 23:05:38 start kit, model: desk
 11-24 23:22:34 backup model not usable: HTTPError 429
+11-24 23:46:36 start kit, model: gpt-4.1

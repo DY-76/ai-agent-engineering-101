@@ -1,0 +1,11 @@
+name: settle_master
+description: 시장 원장의 settle(정산) 기록을 읽고, 회원별 구매·추천·추천받음 횟수/시점/등급/누적할인/반값티켓(개수,사용현황) 등 회원제 관련 지표를 집계해준다. args: {since (선택, unix 타임스탬프), until (선택), members (선택, 이름 목록)}, 결과: {members:{이름:{purchase_count, recommend_count, recommended_count, grade, discount_rate, half_price_tickets, half_price_tickets_used, last_purchase_at, last_recommend_at}}}
+permission:
+  network: [market.ourolabs.ai]
+  write: [settle_master.json]
+  identity: [shop]
+  pay_limit: 0
+  timeout: 60
+logic: logic.py
+test: test.py
+version: 1

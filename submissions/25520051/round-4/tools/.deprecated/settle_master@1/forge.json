@@ -1,0 +1,11 @@
+{
+ "tool": "settle_master",
+ "version": 1,
+ "forged_at": 1795531866,
+ "kit": "v5.1",
+ "sha256": {
+  "permission.yml": "5cea8a6bc672c42a10e9185fa7d2f314ebe69fd9b6cbff54b0af9e181f4e3441",
+  "logic.py": "ce37e1e554dcf79319e92a8ed0b4056040a00eddf9ca5662ff70c27d6aad4a56",
+  "test.py": "107a86190636022598cda0a3f89e2432afe81fda8cb0e7e7c4b68a2d6a647763"
+ }
+}

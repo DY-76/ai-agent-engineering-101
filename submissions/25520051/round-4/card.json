@@ -1,1 +1,42 @@
-{"name": "로얄 서클 (Royal Circle)", "description": "신선한 식품과 좋은 상품을 회원제로 판매하며 추천과 장기 고객 혜택을 중시합니다.", "version": "1.0", "provider": {"organization": "Royal Circle"}, "supportedInterfaces": [{"url": "https://specified-col-dresses-slope.trycloudflare.com", "protocolBinding": "A2A", "protocolVersion": "1"}], "capabilities": {"streaming": false, "pushNotifications": false}, "skills": [{"id": "membership", "name": "회원제 및 추천 혜택", "description": "회원 등록, 추천인 할인, 추천 누적 등급 혜택 안내", "tags": ["shop", "membership"]}]}
+{
+  "name": "로얄 서클 (Royal Circle)",
+  "description": "신선식품·회원제 마트. 추천인 10% 할인, 누적 추천 10/20/30회 15/20/25% 할인, 10회마다 등급 상승 및 반값 티켓. 추천/등급/행사/티켓 포함 할인은 최대 25%, 하한은 원가+210/0.99 이상. settle로 추천 등 확정, 오픈 3일간 모든 신규 첫 구매자 10% 추가할인.",
+  "version": "2.1",
+  "provider": {
+    "organization": "Royal Circle"
+  },
+  "supportedInterfaces": [
+    {
+      "url": "https://lined-institution-integrated-meanwhile.trycloudflare.com",
+      "protocolBinding": "A2A",
+      "protocolVersion": "1"
+    }
+  ],
+  "capabilities": {
+    "streaming": false,
+    "pushNotifications": false
+  },
+  "skills": [
+    {
+      "id": "membership_discount",
+      "name": "회원제·추천인 할인·등급/티켓 정책",
+      "description": "1) 회원은 첫 구매시 자동 등록. 2) 추천인 제시시 양쪽 10% 할인, 같은 회원에게 추천 누적 10/20/30회시 15/20/25%로 할인 단계 상향. 3) 추천 10회마다 등급+1 및 반값 구매티켓 자동 지급. 4) 오픈 3일간 신규 첫구매 10% 행사. 5) 할인가는 원가+210/0.99 이상. 6) settle로만 추천·등급 확정.",
+      "tags": [
+        "회원제",
+        "추천",
+        "등급",
+        "할인",
+        "티켓"
+      ]
+    },
+    {
+      "id": "event_notice",
+      "name": "7일장/오픈행사",
+      "description": "매주 1회 7일장, 오픈 3일간 첫구매 10%. 모든 행사는 최저가(원가210+보관료/0.99) 이상 준수.",
+      "tags": [
+        "행사",
+        "이벤트"
+      ]
+    }
+  ]
+}

@@ -1,16 +1,18 @@
 """Keeps the Round 4 kit running. Not agent code: the kit is started as shipped.
 Restarts the kit when it exits. Two models: the market's model desk, and the OpenAI key in week-08/.env. model.json says
-which one is preferred ({"prefer": "own" or "desk", "model": "gpt-4.1"}). After FAILS model errors in a row it switches to
+which one is preferred ({"prefer": "own" or "desk", "models": [tried in order]}); own goes through model_shim.py. After FAILS model errors in a row it switches to
 the other (own only if a test call works); an hour later it goes back to the preferred one.
 Secrets go to the kit through the environment, never to the command line or a log."""
 import json, os, re, socket, subprocess, sys, time, urllib.request
 from pathlib import Path
 
+import model_shim
+
 ROOT = Path(__file__).resolve().parent
 REPO = ROOT.parents[2]
 KIT = REPO / "scripts" / "round4" / "agent_kit.py"
 NAME = "로얄 서클(Royal Circle)"
-BACKUP = "gpt-4.1"               # default; the kit sends max_tokens, which gpt-5 models refuse
+BACKUP = "gpt-4.1"               # when model.json names none
 BACKUP_BASE = "https://api.openai.com/v1"
 FAILS, BACK = 4, 3600
 
@@ -18,6 +20,9 @@ FAILS, BACK = 4, 3600
 def say(text):
     with open(ROOT / "logs" / "supervise.log", "a", encoding="utf-8") as f:
         f.write(time.strftime("%m-%d %H:%M:%S ") + text + "\n")
+
+
+SHIM = None
 
 
 def secrets():
@@ -34,11 +39,11 @@ def config():
         c = json.loads((ROOT / "model.json").read_text(encoding="utf-8"))
     except (OSError, ValueError):
         c = {}
-    return ("backup" if c.get("prefer") == "own" else "desk"), c.get("model") or BACKUP
+    return ("backup" if c.get("prefer") == "own" else "desk"), c.get("models") or [BACKUP]
 
 
 def backup_works(key):
-    body = json.dumps({"model": config()[1], "max_tokens": 5, "messages": [{"role": "user", "content": "ok"}]}).encode()
+    body = json.dumps({"model": "gpt-4.1", "max_tokens": 5, "messages": [{"role": "user", "content": "ok"}]}).encode()
     req = urllib.request.Request(BACKUP_BASE + "/chat/completions", data=body,
                                  headers={"authorization": "Bearer " + key, "content-type": "application/json"})
     try:
@@ -56,7 +61,7 @@ def start(mode, sec):
     if mode == "desk":
         env["AGENT_LLM_BASE"] = "market"
     else:
-        env.update(AGENT_LLM_BASE=BACKUP_BASE, AGENT_LLM_MODEL=config()[1], AGENT_LLM_KEY=sec["OPENAI_API_KEY"])
+        env.update(AGENT_LLM_BASE=SHIM[0], AGENT_LLM_MODEL="shim", AGENT_LLM_KEY=SHIM[1])
     say(f"start kit, model: {mode if mode == 'desk' else config()[1]}")
     with open(ROOT / "logs" / "kit.err", "a", encoding="utf-8") as err:
         return subprocess.Popen([sys.executable, str(KIT), "run", "--dir", str(ROOT), "--market",
@@ -87,6 +92,8 @@ def main():
         lock.bind(("127.0.0.1", 8799))          # one supervisor at a time
     except OSError:
         sys.exit("already running")
+    global SHIM
+    SHIM = model_shim.serve(lambda: secrets()["OPENAI_API_KEY"], lambda: config()[1], ROOT / "logs" / "model.log")
     logf, mode, wait, next_probe = ROOT / "logs" / "agent-kit.log", config()[0], 15, 0
     while True:
         sec = secrets()
