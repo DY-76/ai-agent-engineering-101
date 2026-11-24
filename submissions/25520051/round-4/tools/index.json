@@ -10,9 +10,9 @@
   "last": 1795521288
  },
  "market_snapshot": {
-  "uses": 23,
+  "uses": 26,
   "fails": 0,
-  "last": 1795531537
+  "last": 1795532473
  },
  "announce_membership": {
   "uses": 11,
@@ -35,9 +35,9 @@
   "last": 1795526829
  },
  "buy_batch": {
-  "uses": 1,
+  "uses": 2,
   "fails": 0,
-  "last": 1795531505
+  "last": 1795532526
  },
  "settle_master": {
   "uses": 2,

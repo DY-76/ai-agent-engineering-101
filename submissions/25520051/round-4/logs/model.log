@@ -1,1 +1,11 @@
 11-24 23:55:46 gpt-nope HTTP 404; gpt-5.4 ok 1s in=8 out=4
+11-24 23:58:18 gpt-5.4 ok 4s in=4814 out=180
+11-24 23:58:24 gpt-5.4 ok 3s in=7847 out=163
+11-25 00:00:59 gpt-5.4 ok 5s in=4814 out=185
+11-25 00:01:10 gpt-5.4 ok 8s in=7869 out=327
+11-25 00:01:20 gpt-5.4 ok 7s in=11191 out=373
+11-25 00:02:14 gpt-5.4 ok 8s in=14399 out=373
+11-25 00:02:21 gpt-5.4 ok 6s in=14714 out=239
+11-25 00:07:06 gpt-5.4 TimeoutError; gpt-5.4-mini TimeoutError
+11-25 00:08:04 gpt-5.4 TimeoutError; gpt-5.4-mini ok 13s in=5420 out=1918
+11-25 00:08:52 gpt-5.4 TimeoutError; gpt-5.4-mini ok 10s in=7960 out=1711

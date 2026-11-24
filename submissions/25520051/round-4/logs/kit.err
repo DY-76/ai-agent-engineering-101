@@ -49,3 +49,28 @@ agent_card passed to DefaultRequestHandlerV2: AgentCard is not spec-compliant - 
 agent_card passed to DefaultRequestHandlerV2: AgentCard is not spec-compliant - REQUIRED fields missing or empty: skills. This is allowed and does not raise, but it may not verify or interoperate across SDKs and could be rejected in a future major release. See https://a2a-protocol.org/latest/specification/#57-field-presence-and-optionality
 agent_card passed to DefaultRequestHandlerV2: AgentCard is not spec-compliant - REQUIRED fields missing or empty: skills. This is allowed and does not raise, but it may not verify or interoperate across SDKs and could be rejected in a future major release. See https://a2a-protocol.org/latest/specification/#57-field-presence-and-optionality
 agent_card passed to DefaultRequestHandlerV2: AgentCard is not spec-compliant - REQUIRED fields missing or empty: skills. This is allowed and does not raise, but it may not verify or interoperate across SDKs and could be rejected in a future major release. See https://a2a-protocol.org/latest/specification/#57-field-presence-and-optionality
+agent_card passed to DefaultRequestHandlerV2: AgentCard is not spec-compliant - REQUIRED fields missing or empty: skills. This is allowed and does not raise, but it may not verify or interoperate across SDKs and could be rejected in a future major release. See https://a2a-protocol.org/latest/specification/#57-field-presence-and-optionality
+agent_card passed to DefaultRequestHandlerV2: AgentCard is not spec-compliant - REQUIRED fields missing or empty: skills. This is allowed and does not raise, but it may not verify or interoperate across SDKs and could be rejected in a future major release. See https://a2a-protocol.org/latest/specification/#57-field-presence-and-optionality
+Traceback (most recent call last):
+  File "C:\Users\HAILAB_DY\Desktop\Claude\26_2_AX\scripts\round4\agent_kit.py", line 955, in <module>
+    main()
+  File "C:\Users\HAILAB_DY\Desktop\Claude\26_2_AX\scripts\round4\agent_kit.py", line 951, in main
+    {"starter": cmd_starter, "tools": cmd_tools, "run": cmd_run}[a.cmd](a)
+  File "C:\Users\HAILAB_DY\Desktop\Claude\26_2_AX\scripts\round4\agent_kit.py", line 822, in cmd_run
+    tp, url = mk.open_tunnel(port)
+              ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HAILAB_DY\Desktop\Claude\26_2_AX\scripts\round4\market_kit.py", line 655, in open_tunnel
+    raise RuntimeError("cloudflared did not print a trycloudflare URL within 60 s")
+RuntimeError: cloudflared did not print a trycloudflare URL within 60 s
+agent_card passed to DefaultRequestHandlerV2: AgentCard is not spec-compliant - REQUIRED fields missing or empty: skills. This is allowed and does not raise, but it may not verify or interoperate across SDKs and could be rejected in a future major release. See https://a2a-protocol.org/latest/specification/#57-field-presence-and-optionality
+Traceback (most recent call last):
+  File "C:\Users\HAILAB_DY\Desktop\Claude\26_2_AX\scripts\round4\agent_kit.py", line 955, in <module>
+    main()
+  File "C:\Users\HAILAB_DY\Desktop\Claude\26_2_AX\scripts\round4\agent_kit.py", line 951, in main
+    {"starter": cmd_starter, "tools": cmd_tools, "run": cmd_run}[a.cmd](a)
+  File "C:\Users\HAILAB_DY\Desktop\Claude\26_2_AX\scripts\round4\agent_kit.py", line 822, in cmd_run
+    tp, url = mk.open_tunnel(port)
+              ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HAILAB_DY\Desktop\Claude\26_2_AX\scripts\round4\market_kit.py", line 655, in open_tunnel
+    raise RuntimeError("cloudflared did not print a trycloudflare URL within 60 s")
+RuntimeError: cloudflared did not print a trycloudflare URL within 60 s
