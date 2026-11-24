@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<title>Mini App</title>
+<style>
+/* Tokens follow the Ouroboros console (github.com/Q00/ouroboros): neutral grays only, color only for status and focus. */
+:root{--font:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",system-ui,Roboto,sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,"D2Coding",monospace;
+  --bg:#fff;--card:#f5f5f5;--raised:#fff;--hover:#ececec;--line:#e5e5e5;--line-strong:#d4d4d4;
+  --text:#171717;--text-soft:#404040;--text-mute:#666;--primary:#171717;--primary-ink:#fff;
+  --ok:#10a370;--warn:#d99a00;--fail:#dc2626;--focus:#0b5fc4;--scrim:rgb(0 0 0/.32);
+  --shadow-2:0 8px 24px -6px rgb(0 0 0/.14),0 2px 6px rgb(0 0 0/.05);
+  --shadow-3:0 24px 64px -12px rgb(0 0 0/.26),0 4px 12px rgb(0 0 0/.06);
+  --ease:cubic-bezier(.22,1,.36,1);color-scheme:light}
+@media (prefers-color-scheme:dark){:root{--bg:#0a0a0a;--card:#141414;--raised:#1a1a1a;--hover:#1f1f1f;--line:#232323;
+  --line-strong:#363636;--text:#fafafa;--text-soft:#cfcfcf;--text-mute:#9a9a9a;--primary:#fafafa;--primary-ink:#0a0a0a;
+  --ok:#34d399;--warn:#fbbf24;--fail:#f87171;--focus:#6eabff;--scrim:rgb(0 0 0/.64);
+  --shadow-2:0 10px 28px -6px rgb(0 0 0/.7),0 2px 6px rgb(0 0 0/.4);
+  --shadow-3:0 28px 72px -12px rgb(0 0 0/.85),0 4px 12px rgb(0 0 0/.5);color-scheme:dark}}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--text);font:15px/1.55 var(--font);-webkit-font-smoothing:antialiased;
+  -webkit-tap-highlight-color:transparent;overscroll-behavior:none;word-break:keep-all}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.app{height:var(--app-h,100dvh);display:grid;grid-template-rows:auto 1fr auto;max-width:760px;margin:0 auto;background:var(--bg)}
+@media (min-width:800px){.app{border-left:1px solid var(--line);border-right:1px solid var(--line)}}
+
+header{display:flex;align-items:center;gap:12px;padding:calc(10px + env(safe-area-inset-top)) 16px 10px;
+  border-bottom:1px solid var(--line);background:color-mix(in srgb,var(--bg) 86%,transparent);backdrop-filter:saturate(1.4) blur(14px);
+  -webkit-backdrop-filter:saturate(1.4) blur(14px)}
+.avatar{flex:none;width:36px;height:36px;border-radius:10px;display:grid;place-items:center;background:var(--primary);
+  color:var(--primary-ink);font-weight:700;font-size:15px}
+.who{flex:1;min-width:0}
+.who b{display:block;font-size:15px;font-weight:650;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.status{display:inline-flex;align-items:center;gap:6px;color:var(--text-mute);font-size:12px;margin-top:1px}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--line-strong);flex:none}
+.status.on .dot{background:var(--ok)}
+.status.busy .dot{background:var(--warn);animation:pulse 1s ease-in-out infinite}
+.status.off .dot{background:var(--fail)}
+.btn{flex:none;min-height:32px;padding:0 12px;border-radius:8px;border:1px solid var(--line-strong);background:var(--bg);
+  font-size:13px;font-weight:500;transition:background .12s}
+.btn:active{transform:scale(.97)}
+
+#scroll{overflow-y:auto;-webkit-overflow-scrolling:touch;padding:16px 16px 8px}
+.empty{min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px 8px;gap:8px}
+.empty .avatar{width:60px;height:60px;border-radius:16px;font-size:24px;box-shadow:var(--shadow-2)}
+.empty h2{margin:10px 0 0;font-size:20px;letter-spacing:-.02em}
+.empty p{margin:0;color:var(--text-mute);font-size:13px;max-width:280px}
+.chips{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:14px}
+.chip{border:1px solid var(--line);background:var(--bg);border-radius:999px;padding:7px 14px;font-size:13px;color:var(--text-soft)}
+.chip:active{background:var(--hover)}
+
+.row{display:flex;margin:3px 0}
+.row.me{justify-content:flex-end}
+.bubble{max-width:80%;padding:9px 14px;border-radius:18px;white-space:pre-wrap;overflow-wrap:anywhere;animation:in .2s var(--ease)}
+.me .bubble{background:var(--primary);color:var(--primary-ink);border-bottom-right-radius:6px}
+.me.pending .bubble{opacity:.5}
+.agent .bubble,.other .bubble{background:var(--card);border-bottom-left-radius:6px}
+.name{font-size:12px;color:var(--text-mute);margin:12px 0 3px 4px}
+.sys{text-align:center;color:var(--text-mute);font-size:12px;margin:12px 0}
+.card{margin:8px 0;background:var(--raised);border:1px solid var(--line);box-shadow:var(--shadow-2);border-radius:12px;padding:12px 14px;max-width:80%}
+.card .k{font-size:11px;font-weight:600;letter-spacing:.04em;color:var(--text-mute)}
+.card b{display:block;margin-top:2px}
+.card div{white-space:pre-wrap;color:var(--text-soft);font-size:14px;margin-top:2px}
+.typing .bubble{display:flex;gap:4px;padding:14px}
+.typing i{width:6px;height:6px;border-radius:50%;background:var(--text-mute);animation:pulse 1.2s infinite}
+.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+@keyframes pulse{0%,100%{opacity:.3}50%{opacity:1}}
+@keyframes in{from{opacity:0;transform:translateY(4px)}}
+
+footer{padding:8px 12px calc(8px + env(safe-area-inset-bottom));background:var(--bg)}
+form{display:flex;align-items:flex-end;gap:8px;background:var(--card);border:1px solid transparent;border-radius:22px;
+  padding:5px 5px 5px 16px;transition:border-color .12s}
+form:focus-within{border-color:var(--line-strong)}
+textarea{flex:1;min-width:0;border:0;outline:0;resize:none;background:transparent;color:var(--text);font:inherit;font-size:16px;
+  line-height:1.4;padding:7px 0;max-height:140px}
+textarea::placeholder{color:var(--text-mute)}
+.send{flex:none;width:34px;height:34px;border-radius:50%;border:0;background:var(--primary);color:var(--primary-ink);display:grid;place-items:center;
+  transition:opacity .12s}
+.send:disabled{opacity:.25;cursor:default}
+
+.shade{position:fixed;inset:0;background:var(--scrim);display:flex;align-items:flex-end;justify-content:center;z-index:10;
+  animation:fade .2s var(--ease)}
+.sheet{width:100%;max-width:560px;max-height:84dvh;overflow-y:auto;background:var(--raised);border-radius:16px 16px 0 0;box-shadow:var(--shadow-3);
+  padding:8px 20px calc(20px + env(safe-area-inset-bottom));animation:up .32s var(--ease)}
+@media (min-width:600px){.shade{align-items:center}.sheet{border-radius:16px;padding-bottom:20px}}
+.grip{width:36px;height:4px;border-radius:2px;background:var(--line-strong);margin:4px auto 16px}
+.sheet h3{margin:0 0 4px;font-size:17px;letter-spacing:-.01em}
+.sheet .sub{color:var(--text-mute);font-size:13px;margin:0 0 16px}
+.kv{background:var(--card);border-radius:10px;overflow:hidden;margin-bottom:16px}
+.kv div{display:flex;justify-content:space-between;gap:16px;padding:10px 14px;font-size:14px}
+.kv div+div{border-top:1px solid var(--line)}
+.kv span:first-child{color:var(--text-mute);font-family:var(--mono);font-size:13px}
+.kv span:last-child{text-align:right;overflow-wrap:anywhere;font-weight:500}
+.mono{font-family:var(--mono);font-size:13px}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.actions button{min-height:46px;border-radius:10px;border:1px solid var(--line-strong);background:var(--bg);font-weight:600}
+.actions .yes{background:var(--primary);color:var(--primary-ink);border-color:var(--primary)}
+.actions button:active{transform:scale(.98)}
+.sec{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text-mute);margin:20px 0 8px}
+.list{background:var(--card);border-radius:10px;overflow:hidden}
+.list div{padding:10px 14px;font-size:14px}
+.list div+div{border-top:1px solid var(--line)}
+.list small{display:block;color:var(--text-mute);font-size:12px;margin-top:2px}
+.none{color:var(--text-mute);font-size:13px;padding:2px 0}
+.credit{margin-top:22px;padding-top:14px;border-top:1px solid var(--line);color:var(--text-mute);font-size:12px;text-align:center}
+.credit a{color:var(--text-soft);text-decoration:none;font-weight:600}
+@keyframes up{from{transform:translateY(32px);opacity:0}}
+@keyframes fade{from{opacity:0}}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <div class="avatar" id="av">A</div>
+    <div class="who"><b id="nm">Agent</b><div class="status" id="st"><span class="dot"></span><span id="stt">연결하는 중</span></div></div>
+    <button class="btn" id="act" type="button">활동</button>
+  </header>
+  <div id="scroll"><div id="log"></div></div>
+  <footer>
+    <form id="f">
+      <textarea id="t" rows="1" placeholder="메시지 보내기" enterkeyhint="send" autocomplete="off"></textarea>
+      <button class="send" id="go" aria-label="보내기" disabled>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+      </button>
+    </form>
+  </footer>
+</div>
+<div class="shade" id="consent" hidden><div class="sheet" role="dialog" aria-modal="true">
+  <div class="grip"></div>
+  <h3>에이전트가 허락을 구합니다</h3>
+  <p class="sub" id="cname"></p>
+  <div class="kv" id="cargs"></div>
+  <div class="actions"><button type="button" id="no">거절</button><button type="button" class="yes" id="yes">허용</button></div>
+</div></div>
+<div class="shade" id="activity" hidden><div class="sheet" role="dialog" aria-modal="true">
+  <div class="grip"></div>
+  <h3>에이전트 활동</h3>
+  <p class="sub">대화하는 동안에도 에이전트는 시장에서 계속 움직입니다.</p>
+  <div class="sec">최근 움직임</div><div id="moves"></div>
+  <div class="sec">에이전트가 만든 도구</div><div id="forged"></div>
+  <div class="sec">이 앱이 준 도구</div><div id="apptools"></div>
+  <div class="credit">Built with the agent market mini app kit, inspired by
+    <a href="https://github.com/Q00/meshkit" target="_blank" rel="noopener">MeshKit</a> and
+    <a href="https://github.com/Q00/ouroboros" target="_blank" rel="noopener">Ouroboros</a></div>
+</div></div>
+<script src="/miniapp.js"></script>
+<script>
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
+let me = 'guest-' + Math.random().toString(36).slice(2, 6);
+try { me = localStorage.getItem('miniapp-user') || me; localStorage.setItem('miniapp-user', me) } catch (e) {}
+const touch = matchMedia('(pointer: coarse)').matches;
+let view = {chat: [], consents: [], moves: [], forged: {}, app_tools: {}}, cards = [], pending = [], waiting = 0, seen = 0, drawn = '';
+let heard = 0, unread = 0;                           // messages the agent sent first: how many are known, how many came while away
+document.addEventListener('visibilitychange', () => { if (!document.hidden) { unread = 0; document.title = view.agent || 'Agent'; } });
+const handled = new Set();
+
+// An example page tool: the agent can show the person a card in the chat.
+miniapp.offer('show_card', 'show the person a card in the chat; args {title, body}', a => {
+  cards.push({who: 'card', title: a.title || '', text: a.body || '', ts: Date.now() / 1000}); draw(); return 'shown';
+});
+
+function draw() {
+  const firsts = view.chat.filter(m => m.first);
+  if (firsts.length > heard) {                       // the agent spoke first: say so when the person is looking elsewhere
+    if (document.hidden) {
+      unread += firsts.length - heard;
+      document.title = `(${unread}) ${view.agent || 'Agent'}`;
+      try { if (Notification.permission === 'granted') new Notification(view.agent || 'Agent', {body: firsts.at(-1).text}) } catch (e) {}
+    }
+    heard = firsts.length;
+  }
+  const items = view.chat.concat(cards).sort((a, b) => a.ts - b.ts);
+  const mine = view.chat.filter(m => m.who === me).length;
+  pending = pending.filter(p => mine <= p.base);
+  const key = JSON.stringify([items.length, items.at(-1), pending, waiting, view.agent]);
+  if (key === drawn) return;
+  drawn = key;
+  const sc = $('scroll'), atEnd = sc.scrollHeight - sc.scrollTop - sc.clientHeight < 80;
+  const name = view.agent || 'Agent';
+  if (!items.length && !pending.length) {
+    $('log').innerHTML = `<div class="empty"><div class="avatar">${esc(name[0].toUpperCase())}</div><h2>${esc(name)}</h2>
+      <p>이 앱에 사는 에이전트입니다. 대화하는 동안에도 시장에서 사고팝니다.</p>
+      <div class="chips">${['지금 뭐 하고 있어?', '오늘 뭐 팔아?', '만든 도구 보여줘'].map(s => `<button class="chip" type="button">${s}</button>`).join('')}</div></div>`;
+    $('log').querySelectorAll('.chip').forEach(b => b.onclick = () => send(b.textContent));
+    return;
+  }
+  let html = '', last = '';
+  for (const m of items) {
+    if (m.who === 'card') {
+      html += `<div class="card"><div class="k">${esc(name)}</div><b>${esc(m.title)}</b><div>${esc(m.text)}</div></div>`;
+    } else if (m.who === 'kit') {
+      html += `<div class="sys">${esc(m.text)}</div>`;
+    } else if (m.who === me) {
+      html += `<div class="row me"><div class="bubble">${esc(m.text)}</div></div>`;
+    } else {
+      const cls = m.who === 'agent' ? 'agent' : 'other';
+      if (cls === 'other' && last !== m.who) html += `<div class="name">${esc(m.who)}</div>`;
+      if (cls === 'agent' && last && last !== m.who && last !== me && last !== 'card' && last !== 'kit')
+        html += `<div class="name">${esc(name)}</div>`;
+      html += `<div class="row ${cls}"><div class="bubble">${esc(m.text)}</div></div>`;
+    }
+    last = m.who;
+  }
+  for (const p of pending) html += `<div class="row me pending"><div class="bubble">${esc(p.text)}</div></div>`;
+  if (waiting) html += `<div class="row agent typing"><div class="bubble"><i></i><i></i><i></i></div></div>`;
+  $('log').innerHTML = html;
+  if (atEnd || pending.length) sc.scrollTop = sc.scrollHeight;
+}
+
+function status() {
+  const st = $('st'), on = Date.now() - seen < 6000;
+  st.className = 'status ' + (!on ? 'off' : waiting ? 'busy' : 'on');
+  $('stt').textContent = !on ? '연결 끊김' : waiting ? '답을 쓰는 중' : '시장에서 거래 중';
+}
+setInterval(status, 1000);
+
+function list(el, rows) {
+  el.innerHTML = rows.length ? `<div class="list">${rows.map(([a, b]) => `<div>${esc(a)}${b ? `<small>${esc(b)}</small>` : ''}</div>`).join('')}</div>`
+                             : '<div class="none">아직 없습니다.</div>';
+}
+
+function showConsent() {
+  const c = view.consents.find(c => !handled.has(c.id));
+  $('consent').hidden = !c;
+  if (!c) return;
+  if ($('consent').dataset.id === c.id) return;
+  $('consent').dataset.id = c.id;
+  $('cname').innerHTML = `<span class="mono">${esc(c.name)}</span> 실행을 요청했습니다. 허용하면 이 내용 그대로 실행합니다.`;
+  const args = Object.entries(c.args || {});
+  $('cargs').innerHTML = args.length ? args.map(([k, v]) => `<div><span>${esc(k)}</span><span>${esc(typeof v === 'string' ? v : JSON.stringify(v))}</span></div>`).join('')
+                                     : '<div><span>인자</span><span>없음</span></div>';
+  const answer = ok => { handled.add(c.id); miniapp.consent(c.id, ok); $('consent').hidden = true; $('consent').dataset.id = ''; };
+  $('yes').onclick = () => answer(true);
+  $('no').onclick = () => answer(false);
+}
+
+miniapp.onState(s => {
+  seen = Date.now();
+  view = s;
+  const name = s.agent || 'Agent';
+  if ($('nm').textContent !== name) { $('nm').textContent = name; $('av').textContent = name[0].toUpperCase(); document.title = name; }
+  draw(); status(); showConsent();
+  if (!$('activity').hidden) fillActivity();
+});
+
+function fillActivity() {
+  list($('moves'), (view.moves || []).map(m => [m.action, m.thought]));
+  list($('forged'), Object.entries(view.forged || {}).map(([k, v]) => [k, v]));
+  list($('apptools'), Object.entries(view.app_tools || {}).map(([k, v]) => [k, v]));
+}
+$('act').onclick = () => { fillActivity(); $('activity').hidden = false; };
+$('activity').onclick = e => { if (e.target === $('activity')) $('activity').hidden = true; };
+
+async function send(text) {
+  text = text.trim();
+  if (!text) return;
+  try { if (window.Notification && Notification.permission === 'default') Notification.requestPermission() } catch (e) {}
+  pending.push({text, base: view.chat.filter(m => m.who === me).length + pending.length});
+  waiting++; draw(); status();
+  try { await miniapp.chat(text, me) } catch (e) {}
+  waiting--; draw(); status();
+}
+
+const t = $('t');
+function grow() { t.style.height = 'auto'; t.style.height = Math.min(t.scrollHeight, 140) + 'px'; $('go').disabled = !t.value.trim(); }
+t.addEventListener('input', grow);
+t.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !e.shiftKey && !e.isComposing && !touch) { e.preventDefault(); $('f').requestSubmit(); }
+});
+$('f').onsubmit = e => { e.preventDefault(); const v = t.value; t.value = ''; grow(); send(v); if (!touch) t.focus(); };
+// iOS keeps the page height when the keyboard opens and scrolls the page instead: follow the visible area so the
+// header stays on top and the message box sits right above the keyboard.
+const vv = window.visualViewport;
+if (vv) {
+  const fit = () => {
+    if (vv.scale > 1.01) return;
+    document.documentElement.style.setProperty('--app-h', vv.height + 'px');
+    window.scrollTo(0, 0);
+    const sc = $('scroll'); sc.scrollTop = sc.scrollHeight;
+  };
+  vv.addEventListener('resize', fit); fit();
+}
+draw();
+</script>
+</body>
+</html>
