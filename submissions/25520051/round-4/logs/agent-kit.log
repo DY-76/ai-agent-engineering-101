@@ -526,3 +526,33 @@
 03:14:21 [mind] update_card | 실제 customer_service 응답의 판매가를 기준으로 카드 설명을 갱신합니다. 반값 티켓·등급 상승 문구는 제외하고, 확인된 SKU와 상품·가격·행사만 400자 이내로 반영합니다.
 03:14:31 [mind] reply | 요청된 카드 갱신이 완료되었습니다. 포럼 공지는 지시대로 올리지 않았습니다.
 03:14:38 [mind] sleeps 300 s: 추가 고객 문의 또는 주인 지시를 기다립니다.
+03:19:57 [mind] market_snapshot | 현재 재고와 임박 상품을 먼저 확인해 판매 우선순위와 실제 가격을 점검하겠습니다.
+03:20:14 [mind] sleeps 300 s: 새벽 시간대에는 포럼 공지를 하지 않고, 재고 판매·고객 문의를 우선 대기합니다.
+03:25:26 [mind] market_snapshot | 현재는 첫 판매 전이며, 주인 지시에 따라 매입보다 실제 재고·기한·가격 점검과 고객 응대에 집중합니다. 최신 재고와 수요를 확인하겠습니다.
+03:25:40 [mind] sleeps 300 s: 오전 9시 전까지 대기하며 고객 문의와 구매 요청을 우선 처리
+03:30:54 [mind] market_snapshot | 현재는 판매 전환이 최우선이므로 실제 재고·기한·가격을 확인해 고객 응대와 판매 유도에 대비합니다.
+03:31:06 [mind] sleeps 650 s: 재입고 창 직전 재고·수요를 다시 확인하고, 판매 우선 원칙에 맞는 최소 매입 여부를 판단
+03:42:08 [mind] market_snapshot | 현재 재고와 수요를 확인해 임박 상품 우선 판매·응대 전략을 점검하겠습니다.
+03:42:22 [mind] sleeps 60 s: 현재 재고 판매와 고객 응대에 집중하며 불필요한 추가 매입을 보류
+03:43:39 [mind] market_snapshot | 현재 재고와 기한을 확인해 판매 우선순위를 점검합니다.
+03:43:52 [mind] settle_master | 현재 재고가 충분하고 임박 두부가 있으므로 추가 매입보다 실제 정산 판매 여부와 회원 현황을 먼저 확인하겠습니다.
+03:43:59 [mind] sleeps 300 s: 판매 문의와 구매 요청을 대기
+03:49:18 [mind] market_snapshot | 현재 재고와 기한·가격을 확인해 판매 우선순위를 점검하겠습니다.
+03:49:29 [mind] sleeps 900 s: 오전 9시 이후 공지 가능 시각 및 고객 문의를 기다리며 판매 우선
+03:55:34 [mind] read_tool | 요청한 customer_service v13의 원본을 먼저 읽어 치환 대상 문자열과 테스트 조건을 확인하겠습니다.
+03:56:56 [forge] customer_service v14: test failed: TypeError: run() missing 1 required positional argument: 'kit'
+03:56:56 [mind] forge_tool | customer_service v13 소스에 STOP 집합과 두 치환을 반영해 다시 교체합니다. 기존 v8 실행 구조와 가격·재고·JWT 처리는 유지하고, 테스트에는 치환 대상 존재 확인과 두부/감자 동작 검증을 포함합니다.
+03:58:20 [forge] customer_service v14 passed its test and is ready (replaces v13)
+03:58:20 [mind] forge_tool | 이전 forge 요청이 실행되지 않았습니다. 테스트 호출 규약을 바로잡고, 기존 v13 로직을 유지하면서 요청된 두 치환을 적용해 다시 교체하겠습니다.
+03:58:28 [mind] reply | customer_service v14가 테스트를 통과해 성공적으로 교체되었습니다. 요청한 두 가지 수정(STOP 기반 단어 필터와 8팩 오매칭 방지)이 반영되었습니다.
+03:58:36 [mind] sleeps 300 s: customer_service v14 교체 완료 후 새 문의 대기
+04:00:57 [maroo] buy_batch sent 9.089 tOKRW from the shop wallet: https://explorer-testnet.maroo.io/tx/0xfda8fa705f4e928270d5756ccf02bfad3631ce2dd2e3a2d908133e5e1be959f1
+04:01:08 [maroo] buy_batch sent 21.161 tOKRW from the shop wallet: https://explorer-testnet.maroo.io/tx/0x084c2394615924ad2f14f78081c45f0f965a5d5dd80602aab829e80227be9eef
+04:01:17 [maroo] buy_batch sent 20.277 tOKRW from the shop wallet: https://explorer-testnet.maroo.io/tx/0x499a03e058ca3c5457a438371d0692a8244d33c57c6b93ed72f41be2d1b0bf9d
+04:01:27 [maroo] buy_batch sent 13.947 tOKRW from the shop wallet: https://explorer-testnet.maroo.io/tx/0xebc565cf2851ba6954b133af5ae58817e143ca19bc9d6cbc4daf6d1a8725d7ad
+04:01:39 [maroo] buy_batch sent 8.429 tOKRW from the shop wallet: https://explorer-testnet.maroo.io/tx/0x57cce4dd05b194b1fa8aef3e3d08b9ed2c291c5bde406f4f49ed3626fab37060
+04:01:50 [maroo] buy_batch sent 10.359 tOKRW from the shop wallet: https://explorer-testnet.maroo.io/tx/0x1bc7338c1162211034f909f224cc772a51b32b6566a22fc276c7b7e418a76527
+04:01:51 [mind] buy_batch | 주인 지시에 따라 다른 조회 없이 지정된 6개 품목만 재입고합니다.
+04:02:03 [mind] reply | 지정 품목 매입이 정상 완료되었고 총액은 83,262크레딧입니다. 주인에게 결과를 보고합니다.
+04:02:10 [mind] reply | 대기 중인 메시지의 실제 ID로 매입 완료 결과를 보고합니다.
+04:02:17 [mind] sleeps 3600 s: 추가 지시나 손님 문의를 기다립니다.
