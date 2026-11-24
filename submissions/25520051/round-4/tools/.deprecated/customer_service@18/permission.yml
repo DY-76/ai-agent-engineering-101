@@ -1,0 +1,14 @@
+name: customer_service
+description: v17 고객 응대 도구에 checkout 구매 의사 예외와 등급·기한·최종가격 표시를 추가합니다. args: text, claimed_from
+permission:
+  network: [market.ourolabs.ai]
+  write: [inquiries.jsonl, offers.json]
+  identity: [shop]
+  wallet: [sign_jwt]
+  pay_limit: 0
+  timeout: 180
+  handles: [a2a]
+logic: logic.py
+test: test.py
+version: 18
+replaces: customer_service@17
