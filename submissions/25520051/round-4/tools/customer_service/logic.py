@@ -1,138 +1,49 @@
-import json, math, re, time, urllib.request, urllib.error
-
-CATALOG_URL = None
-INVENTORY_URL = None
-
-STOP = {'그리고','또는','또','좀','정도','정확히','얼마','얼마야','알려주세요','알려줘','주세요','구매','살게요','결제','문의','찾아','찾습니다','있나요','있어','원해요','원합니다'}
-
-
-def http_get(url, headers=None):
-    req = urllib.request.Request(url, headers=headers or {})
-    with urllib.request.urlopen(req, timeout=20) as r:
-        return json.loads(r.read().decode())
-
-
-def ceil_price(x):
-    return int(math.ceil(x))
-
-
-def load_market(kit):
-    base = kit.market.rstrip('/')
-    inv = http_get(base + '/api/inventory')
-    cat = http_get(base + '/api/catalog')
-    return inv, cat
-
-
-def norm_words(s):
-    s = re.sub(r'[^0-9A-Za-z가-힣]+', ' ', s.lower())
-    return [w for w in s.split() if w and w not in STOP]
-
-
-def unit_info(unit, cat_by_sku):
-    sku = unit.get('sku')
-    c = cat_by_sku.get(sku, {})
-    return {
-        'sku': sku,
-        'name': c.get('name') or unit.get('name') or sku,
-        'category': c.get('category') or unit.get('category') or '',
-        'list_price': c.get('price') or unit.get('price') or 0,
-        'cost': unit.get('cost') or 0,
-        'expires_at': unit.get('expires_at') or 0,
-        'grade': unit.get('grade') or c.get('grade') or ''
-    }
-
-
-def lower_bound(info):
-    return ceil_price((info['cost'] + 210) / 0.99)
-
-
-def fair_price(info):
-    return max(ceil_price(info['list_price'] * 0.7), lower_bound(info))
-
-
-def remaining_hours(info):
-    if not info['expires_at']:
-        return 9999
-    return max(0, (info['expires_at'] - time.time()) / 3600)
-
-
-def match_items(text, units):
-    tw = set(norm_words(text))
-    matched = []
-    for u in units:
-        words = set(norm_words(u['name'] + ' ' + u['category']))
-        if tw & words:
-            matched.append(u)
-    return matched
-
-
-def summarize_inventory(units):
-    lines = []
-    for u in sorted(units, key=lambda x: (x['expires_at'] or 0, x['name'])):
-        hrs = remaining_hours(u)
-        lines.append(f"- {u['name']} | 등급 {u.get('grade','?')} | 남은 시간 {hrs:.1f}시간 | 가격 {fair_price(u)}")
-    return lines
-
+import httpx, time, uuid, math, re
 
 def run(args, kit):
-    inv, cat = load_market(kit)
-    units = inv.get('units', []) if isinstance(inv, dict) else []
-    cat_items = cat.get('items', []) if isinstance(cat, dict) else cat.get('catalog', []) if isinstance(cat, dict) else []
-    cat_by_sku = {x.get('sku') or x.get('id'): x for x in cat_items if isinstance(x, dict)}
-    infos = [unit_info(u, cat_by_sku) for u in units]
-    now = time.time()
-    text = (args.get('text') or '').strip()
-    history = args.get('history') or []
-    claimed_from = args.get('claimed_from') or ''
-    recent_offers = []
-    try:
-        with open('offers.json', 'r', encoding='utf-8') as f:
-            recent_offers = json.load(f)
-    except Exception:
-        recent_offers = []
-
-    # exclude units offered within 5 minutes
-    recent_skus = set()
-    for o in recent_offers if isinstance(recent_offers, list) else []:
-        try:
-            if now - float(o.get('ts', 0)) <= 300:
-                recent_skus.add(o.get('sku'))
-        except Exception:
-            pass
-    avail = [u for u in infos if u['sku'] not in recent_skus and remaining_hours(u) >= 1]
-    matched = match_items(text, avail)
-
-    is_buy = any(p in text for p in ['살게요', '주세요', '구매할게요', '결제', '사겠습니다', '살래요'])
-    is_ask = any(p in text for p in ['알려주세요', '얼마', '있나요', '찾아요', '문의', '추천']) and not is_buy
-
-    if not avail:
-        return {'reply': '현재 바로 안내드릴 수 있는 재고가 없습니다. 잠시 뒤 다시 확인해 주세요.', 'state': 'completed'}
-
-    # if no good match or vague, list inventory
-    if not matched or is_ask and len(matched) == 0:
-        return {'reply': '지금 있는 상품을 먼저 안내드립니다.\n' + '\n'.join(summarize_inventory(avail[:12])), 'state': 'completed'}
-
-    # choose best match
-    item = sorted(matched, key=lambda x: (x['expires_at'] or 0, x['list_price']))[0]
-    lp = item['list_price']
-    lb = lower_bound(item)
-    base_price = fair_price(item)
-
-    if is_ask and not is_buy:
-        return {'reply': f"추천드리면, 지금은 {item['name']}가 가장 잘 맞습니다. 등급 {item.get('grade','?')}, 남은 시간 {remaining_hours(item):.1f}시간, 안내 가격 {base_price}입니다. 원하시면 '주세요' 또는 '살게요'라고 말씀해 주세요.", 'state': 'completed'}
-
-    # build checkout jwt for purchase intent
-    payload = {
-        'claim': item.get('grade', 1),
-        'cert': 'market_checkout',
-        'shop_url': kit.shop_url,
-        'unit': item['sku'],
-        'currency': 'KRW',
-        'iat': int(now)
-    }
-    token = kit.sign_jwt(payload, 'shop')
-    return {
-        'reply': f"{item['name']}로 진행하겠습니다. 현재 안내 가격은 {base_price}이며, 결제용 청산소 토큰을 함께 드립니다.",
-        'data': {'checkout_jwt': token, 'sku': item['sku'], 'price': base_price, 'lower_bound': lb, 'name': item['name']},
-        'state': 'input_required'
-    }
+    headers={'authorization':'Bearer '+kit.token('shop')}
+    inv=httpx.get(kit.market.rstrip('/')+'/api/inventory',headers=headers,timeout=20).json()
+    cat=httpx.get(kit.market.rstrip('/')+'/api/catalog',headers=headers,timeout=20).json()
+    units=inv.get('units',[]) if isinstance(inv,dict) else inv
+    catalog=cat.get('items',cat.get('catalog',[])) if isinstance(cat,dict) else cat
+    bysku={x.get('sku'):x for x in catalog}; now=int(time.time()); products=[]
+    for u in units:
+        c=bysku.get(u.get('sku'))
+        if not c: continue
+        exp=u.get('expires_at')
+        if exp is not None and float(exp)-now < 3600: continue
+        price=max(math.ceil(float(c.get('list_price',0))*.63),math.ceil((float(u.get('cost',0))+210)/.99))
+        products.append((u,c,price))
+    text=str(args.get('text','')); low=text.lower()
+    raw=re.findall(r'[가-힣a-zA-Z0-9]+',low)
+    endings=['있어요','살게요','주세요','보여주세요','알려주세요','해주세요','입니다','은','는','이','가','을','를','에','도','요']
+    words=[]
+    for w in raw:
+        for e in endings:
+            if len(w)>len(e) and w.endswith(e):
+                w=w[:-len(e)]; break
+        if len(w)>1 and w not in words: words.append(w)
+    name_matches=[]
+    for p in products:
+        name=str(p[1].get('name','')).lower()
+        score=sum(1 for w in words if w in name)
+        if score: name_matches.append((score,p))
+    name_matches.sort(key=lambda z:(-z[0], float(z[1][0].get('expires_at') or 1e30)))
+    category_matches=[p for p in products if any(w in str(p[1].get('category','')).lower() for w in words)]
+    buy=any(w in text for w in ['살게','주세요','구매','결제']) and not any(w in text for w in ['알려주세요','보여주세요'])
+    if not products: return {'reply':'죄송합니다. 현재 안내드릴 수 있는 재고가 없습니다.','state':'completed'}
+    matched=[p for _,p in name_matches] if name_matches else category_matches
+    if buy and name_matches:
+        u,c,price=matched[0]; now=int(time.time())
+        payload={'id':str(uuid.uuid4()),'shop':kit.name,'shop_url':kit.shop_url,'item':c['sku'],'price':price,'task':str(args.get('task_id') or uuid.uuid4().hex),'currency':'credits','iat':now,'unit':u['unit'],'cert':u['cert'],'claim':u['grade']}
+        return {'reply':f"네, {c.get('name')} {price}크레딧으로 준비하겠습니다.",'data':{'checkout_jwt':kit.sign_jwt(payload,'shop')},'state':'input_required'}
+    chosen=matched or products; grouped={}
+    for u,c,price in chosen:
+        key=c.get('sku'); grouped.setdefault(key,{'c':c,'price':price,'units':[]})['units'].append(u)
+    lines=[]
+    for g in grouped.values():
+        u=min(g['units'],key=lambda x:float(x.get('expires_at') or 1e30)); exp=u.get('expires_at')
+        remain='기한 정보 없음' if exp is None else f"남은 기한 {max(0,int(float(exp)-now))//3600}시간"
+        lines.append(f"{g['c'].get('name','상품')} / {len(g['units'])}개 / 등급 {u.get('grade')} / {remain} / {g['price']}크레딧")
+    prefix='이 상품 맞으세요?\n' if buy and not name_matches and category_matches else '현재 안내 가능한 상품입니다.\n'
+    return {'reply':prefix+'\n'.join(lines),'state':'input_required'}
