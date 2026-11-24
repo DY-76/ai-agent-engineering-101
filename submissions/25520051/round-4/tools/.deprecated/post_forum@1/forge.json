@@ -1,0 +1,11 @@
+{
+ "tool": "post_forum",
+ "version": 1,
+ "forged_at": 1795536829,
+ "kit": "v5.1",
+ "sha256": {
+  "permission.yml": "1e333161d8b93f656a4c0de48107b237c586cdbfd1c1a0db31269f6348e7db03",
+  "logic.py": "37a1027271a014e3df2f0f422dab2900f72dbff567bef17c36bc17b28614f68a",
+  "test.py": "df96cbaedd4c35829da813c90710c7559ffaf8e91f97202c43d76cf64f3e0bd2"
+ }
+}

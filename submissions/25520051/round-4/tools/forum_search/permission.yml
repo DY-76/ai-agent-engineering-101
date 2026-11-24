@@ -1,0 +1,9 @@
+name: forum_search
+description: 포럼 최신 글에서 지정한 문구를 검색합니다. args: {query, limit}.
+permission:
+  network: [market.ourolabs.ai]
+  pay_limit: 0
+  timeout: 30
+logic: logic.py
+test: test.py
+version: 1

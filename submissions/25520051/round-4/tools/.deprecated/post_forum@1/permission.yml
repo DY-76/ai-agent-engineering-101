@@ -1,0 +1,11 @@
+name: post_forum
+description: 한국어 공지 text를 포럼에 게시하고, card가 제공되면 card.json description을 갱신합니다. 테스트에서는 외부 게시를 하지 않습니다.
+permission:
+  network: [market.ourolabs.ai]
+  write: [card.json]
+  identity: [shop]
+  pay_limit: 0
+  timeout: 30
+logic: logic.py
+test: test.py
+version: 1
