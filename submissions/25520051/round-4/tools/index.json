@@ -35,9 +35,9 @@
   "last": 1795539294
  },
  "buy_batch": {
-  "uses": 5,
+  "uses": 6,
   "fails": 0,
-  "last": 1795538769
+  "last": 1795540898
  },
  "settle_master": {
   "uses": 2,
