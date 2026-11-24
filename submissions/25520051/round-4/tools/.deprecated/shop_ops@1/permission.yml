@@ -1,0 +1,12 @@
+name: shop_ops
+description: 시장 운영 및 회원 장부 도구. args: {op: inventory|catalog|supply_quote|supply_pay|ledger_read|ledger_write, sku, qty, quote, tx_hash, member, record}.
+permission:
+  network: [market.ourolabs.ai]
+  write: [ledger.json]
+  identity: [shop]
+  wallet: [pay]
+  pay_limit: 10000000
+  timeout: 180
+logic: logic.py
+test: test.py
+version: 1

@@ -1,12 +1,35 @@
-import json
+import json,re,httpx
 
-def run(args, kit):
-    text=(args.get('text') or '').strip()
-    low=text.lower()
-    if any(x in text for x in ['가입','회원','추천','할인','등급','티켓']):
-        reply='안녕하세요, 로얄 서클입니다. 가입비 없이 회원으로 등록해 드리며 구매 내역과 추천 횟수, 할인 예정, 등급, 티켓을 정직하게 관리합니다. 실제 구매한 회원을 추천인으로 제시하면 해당 구매에 10% 할인을 적용하고, 추천받은 회원의 다음 구매에도 10% 할인을 적용합니다. 추천 10회마다 해당 회원의 할인율이 5%p 누적되며, 1,000회마다 등급이 한 단계 올라 반값 티켓 1장을 드립니다. 원하시는 상품과 회원명(추천인이 있다면)을 알려주세요.'
-    elif any(x in text for x in ['가격','상품','재고','구매','주문']):
-        reply='문의해 주셔서 감사합니다. 정확한 상품명 또는 SKU와 수량을 알려주시면 현재 재고, 신선식품의 남은 기한, 정상가와 적용 가능한 회원 혜택을 확인해 안내드리겠습니다. 결제 전 최종 가격과 조건을 투명하게 확인해 드립니다.'
-    else:
-        reply='안녕하세요, 로얄 서클입니다. 무엇을 도와드릴까요? 상품·재고·가격·회원 가입·추천인 할인에 대해 편하게 문의해 주세요.'
-    return {'reply':reply,'state':'input_required'}
+def dbread():
+ try:
+  with open('ledger.json',encoding='utf-8') as f:return json.load(f)
+ except:return {'members':{},'transactions':[]}
+def run(a,kit):
+ text=(a.get('text') or '').strip(); db=dbread()
+ m=re.search(r'(?:회원명|회원|이름)\s*[:：]?\s*([가-힣A-Za-z0-9_-]{2,30})',text)
+ if m:
+  name=m.group(1); db['members'].setdefault(name,{'name':name,'purchases':[],'referrals':0,'discount_pending':0,'grade':1,'tickets':0}); db['transactions'].append({'type':'inquiry','member':name,'text':text})
+  with open('ledger.json','w',encoding='utf-8') as f: json.dump(db,f,ensure_ascii=False,indent=2)
+ h={'authorization':'Bearer '+kit.token('shop'),'content-type':'application/json'}
+ try:
+  c=httpx.get(kit.market+'/api/catalog',headers=h,timeout=10).json(); inv=httpx.get(kit.market+'/api/inventory',headers=h,timeout=10).json()
+ except:return {'reply':'죄송합니다. 현재 상품 정보를 확인할 수 없습니다. 잠시 후 다시 문의해 주세요.','state':'input_required'}
+ items=c.get('items',c.get('catalog',[])) if isinstance(c,dict) else c; stocks=inv.get('items',inv.get('inventory',[])) if isinstance(inv,dict) else inv
+ if isinstance(items,dict):items=list(items.values())
+ if isinstance(stocks,dict):stocks=list(stocks.values())
+ words=[x for x in re.findall(r'[\w가-힣-]+',text) if len(x)>1]; found=[]
+ for it in items or []:
+  if any(w.lower() in str(it).lower() for w in words):
+   sku=it.get('sku'); st=next((x for x in stocks or [] if x.get('sku')==sku),{}); found.append((it,st))
+ buy=any(x in text for x in ['구매','주문','결제','살게','구입'])
+ if found and buy:
+  it,st=found[0]; sku=it.get('sku'); qty=1; stock=st.get('qty',st.get('quantity',st.get('stock',0)))
+  if not sku or not stock:return {'reply':'문의하신 상품은 현재 재고가 없습니다. 다른 상품을 안내해 드릴까요?','state':'input_required'}
+  try:
+   r=httpx.post(kit.shop_url.rstrip('/')+'/checkout_sessions',json={'line_items':[{'id':sku,'quantity':qty}],'receipt':{'shop':kit.shop_url,'item':sku,'price':it.get('price'),'task':a.get('task_id','')},'acceptable':[sku]},timeout=15).json(); jwt=r.get('checkout_jwt') or r.get('session',{}).get('checkout_jwt')
+   if jwt:return {'reply':'구매 결제 정보를 준비했습니다. 구매자 주문에서 확인 후 결제해 주세요.','data':{'checkout_jwt':jwt},'state':'completed'}
+  except:pass
+  return {'reply':'상품은 확인했지만 결제 세션 생성에 실패했습니다. 잠시 후 다시 시도해 주세요.','state':'input_required'}
+ if found:
+  return {'reply':'\n'.join(f"{i.get('sku','상품')} / 가격 {i.get('price',i.get('sell_price','확인 필요'))}크레딧 / 재고 {s.get('qty',s.get('quantity',s.get('stock',0)))}개" for i,s in found[:5])+'\n구매를 원하시면 SKU와 수량을 알려 주세요.','state':'input_required'}
+ return {'reply':'안녕하세요, 로얄 서클입니다. 상품명이나 SKU를 알려주시면 현재 재고와 가격을 확인해 드리겠습니다.','state':'input_required'}

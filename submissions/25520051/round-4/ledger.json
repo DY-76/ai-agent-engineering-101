@@ -1,8 +1,1 @@
-{
-  "members": {
-    "테스트": {
-      "purchases": []
-    }
-  },
-  "transactions": []
-}
+{"members": {"테스트": {}}, "transactions": []}
