@@ -1444,3 +1444,32 @@
 01:22:02 [mind] post_clearance | 주인의 지시에 따라 임박 특가 글을 한 번 게시합니다. 결과와 관계없이 재호출하지 않고, 다음에는 바로 잠들겠습니다.
 01:22:05 [mind] reply | 임박 특가 글 게시 도구가 30초 대기를 반환했습니다. 재호출하지 않겠다고 주인에게 알리고, 바로 잠들겠습니다.
 01:22:07 [mind] sleeps 600 s: 임박 특가 게시를 한 번 시도했고 재호출하지 말라는 지침에 따라 대기합니다.
+01:22:24 [mind] top_sellers | 주인의 지시에 따라 다른 조회 없이 top_sellers를 확인합니다.
+01:22:29 [maroo] buy_batch sent 9.296 tOKRW from the shop wallet: https://explorer-testnet.maroo.io/tx/0xc9d6ca8bcdad69752aee4913da9929b10aebbe01c8a1c6b17c70d2621dfa9080
+01:22:39 [maroo] buy_batch sent 22.36 tOKRW from the shop wallet: https://explorer-testnet.maroo.io/tx/0x1b8d97db9b7e1a99aa8b2fa8fecaa5d016b2ec2118533c02a04533bd19921f0d
+01:22:51 [maroo] buy_batch sent 6.685 tOKRW from the shop wallet: https://explorer-testnet.maroo.io/tx/0x4d2c0844c893b1b34f306f5ec346b209992771183212f17601dcfb74032b31d1
+01:22:52 [mind] buy_batch | top_sellers가 반환한 items를 그대로 buy_batch에 전달합니다.
+01:22:54 [mind] sleeps 600 s: 재입고 완료 후 다음 운영 점검까지 대기
+01:23:59 [mind] post_stock | 주인의 지시에 따라 조회 없이 post_stock을 한 번 호출합니다. 이후 결과와 관계없이 재호출하지 않고 잠들겠습니다.
+01:24:01 [mind] sleeps 30 s: 상품 글 게시를 마쳤으며 중복 게시 없이 대기합니다.
+01:24:34 [mind] market_snapshot | 우선 재입고 창과 현재 재고·수요를 확인하겠습니다. 창이 열려 있으면 지침대로 top_sellers 품목을 매입하고, 아니라면 마지막 게시 시점 및 대기할 다음 창을 확인하겠습니다.
+01:24:42 [mind] post_stock | 재입고 창은 닫혀 있으며 약 17분 뒤 열립니다. 현재 재고에는 임박 상품이 있어 실제 재고·가격 기준으로 상품 안내를 갱신하겠습니다.
+01:24:44 [mind] sleeps 30 s: 게시 도구의 대기 요청을 따르고 다음 운영 시점을 확인합니다.
+01:25:17 [mind] market_snapshot | 먼저 재입고 창 상태와 마지막 게시 시각을 확인해 운영 순서를 따르겠습니다.
+01:25:26 [mind] post_stock | 재입고 창은 아직 닫혀 있어 매입은 보류합니다. 실제 재고와 customer_service 산정 가격을 반영해 상품 게시물을 갱신하겠습니다.
+01:25:31 [mind] sleeps 600 s: 재입고 창까지 대기하며 다음 운영 점검을 합니다.
+01:26:12 [mind] customer_service | 상대가 이전 결제서의 서명 검증 실패를 알렸으므로 기존 토큰을 유효하다고 단정하지 않겠습니다. 가게 도구로 현재 재고를 다시 확인하고 새 결제서를 발급하도록 요청을 처리합니다.
+01:26:17 [mind] reply | customer_service가 새 결제서를 발급했습니다. 도구 응답만으로 구매자 측 검증기에서 서명이 통과한다고 보증할 수는 없으므로, 새 토큰과 현재 안내 정보를 전달하고 기존 결제서는 폐기하도록 안내하겠습니다.
+01:26:23 [mind] market_snapshot | 응답을 보냈습니다. 운영 순서에 따라 재입고 창과 현재 재고·수요를 확인하겠습니다.
+01:26:25 [mind] sleeps 600 s: 재입고 창 시작 전 대기
+01:30:59 [mind] post_stock | 주인의 미니앱 지시대로 다른 조회 없이 post_stock을 한 번 호출합니다. 429가 나와도 재호출하지 않겠습니다.
+01:31:03 [mind] sleeps 600 s: 게시 완료. 다음 점검 전까지 대기
+01:38:00 [mind] post_stock | 주인의 지시에 따라 다른 조회 없이 post_stock을 인자 없이 한 번 호출합니다.
+01:38:02 [mind] sleeps 600 s: 게시 완료 후 다음 확인 시점까지 대기
+01:41:52 [mind] top_sellers | 주인의 이번 지시는 미니앱의 가게 주인 메시지이므로 우선합니다. 먼저 top_sellers를 조회하겠습니다.
+01:41:54 [mind] sleeps 600 s: 재입고 후보가 없어 주인의 지시에 따라 대기합니다.
+01:45:01 [mind] post_stock | 주인의 지시에 따라 다른 조회 없이 post_stock을 한 번 호출하겠습니다.
+01:45:04 [mind] sleeps 600 s: 상품 글 게시 완료; 다음 주기까지 대기
+01:50:40 [mind] write_note | 가게 주인의 지시를 메모에 저장한 뒤 확인 답변을 보내고 잠들겠습니다.
+01:50:42 [mind] reply | 메모 저장이 확인됐습니다. 주인에게 완료 사실을 알리고, 지시에 따라 바로 잠들겠습니다.
+01:50:45 [mind] sleeps 600 s: 재입고 창과 새 메시지를 기다립니다.
