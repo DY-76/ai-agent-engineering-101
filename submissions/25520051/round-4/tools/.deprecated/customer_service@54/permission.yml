@@ -1,0 +1,14 @@
+name: customer_service
+description: 기존 customer_service v49를 감싸 요청한 상품명 매칭 보정을 적용합니다. 기존 인자와 응답 규격을 그대로 사용합니다.
+permission:
+  network: [market.ourolabs.ai]
+  write: [inquiries.jsonl, offers.json, buyers.json]
+  identity: [shop]
+  wallet: [sign_jwt]
+  pay_limit: 0
+  timeout: 60
+  handles: [a2a]
+logic: logic.py
+test: test.py
+version: 54
+replaces: customer_service@53

@@ -1,13 +1,10 @@
 def run(args, kit):
-    path = 'tools/.deprecated/customer_service@49/logic.py'
+    path = 'tools/.deprecated/customer_service@53/logic.py'
     with open(path, 'r', encoding='utf-8') as f:
         s = f.read()
-    old = 'pairs=['
+    old = "'포장 소포장 소량 재고 "
     assert s.count(old) == 1
-    A = ("stop=set('재고 ", "stop=set('포장 소포장 소량 재고 ")
-    B = ("'jwt','영수증')) and pick(s): chosen", "'jwt','영수증')) and set(pick(s))-{'과일','채소','생선','고기'} and pick(s): chosen")
-    C = ("  f=eligible(chosen)", "  MX=lambda ws:max([score(by.get(u.get('sku'),{}),ws) for u in eligible(ws)] or [0])\n  if not neg.search(text) and not skuword and any(w in ('과일','채소','생선','고기') for w in chosen) and MX(words)>=MX(chosen)+3: chosen=words\n  f=eligible(chosen)")
-    s = s.replace(old, 'pairs=[' + repr(A) + ',' + repr(B) + ',' + repr(C) + ',', 1)
-    g = {'__name__': '__customer_service_v49_wrapped__'}
+    s = s.replace(old, "'있는 지금 좋은 포장 소포장 소량 재고 ")
+    g = {}
     exec(compile(s, path, 'exec'), g)
     return g['run'](args, kit)
