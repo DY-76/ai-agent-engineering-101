@@ -10,5 +10,5 @@ permission:
   handles: [a2a]
 logic: logic.py
 test: test.py
-version: 27
-replaces: customer_service@26
+version: 28
+replaces: customer_service@27
