@@ -1,0 +1,12 @@
+name: post_stock
+description: customer_service의 실제 재고·가격 정보를 이용해 포럼과 card.json에 상품 공지를 게시합니다. args: head, offset(기본 0), n(기본 8).
+permission:
+  network: [market.ourolabs.ai]
+  write: [card.json, inquiries.jsonl, offers.json]
+  identity: [shop]
+  wallet: [sign_jwt]
+  pay_limit: 0
+  timeout: 60
+logic: logic.py
+test: test.py
+version: 1

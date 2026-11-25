@@ -1,26 +1,20 @@
-import os
-import httpx
+import os,httpx
 
 def run(args,kit):
- p='tools/.deprecated/customer_service@22/logic.py'
+ p='tools/.deprecated/customer_service@23/logic.py'
  if not os.path.exists(p): p='tools/customer_service/logic.py'
- old=httpx.get
- t=str(args.get('text',''))
- filt='B등급 이상' in t or 'B 등급 이상' in t or 'A등급만' in t or 'C등급이 아닌' in t or 'C등급 아닌' in t or 'C등급은 제외' in t or 'C등급 제외' in t
+ t=str(args.get('text','')); old=httpx.get
+ skip=not any(x in t for x in ('임박','할인','저렴','싼','C등급'))
  def get(*a,**k):
-  r=old(*a,**k)
-  if not filt or not str(a[0] if a else k.get('url','')).endswith('/api/inventory'): return r
+  r=old(*a,**k); u=str(a[0] if a else k.get('url',''))
+  if not skip or not u.endswith('/api/inventory'): return r
   class R:
    status_code=r.status_code
    def json(self):
-    d=r.json(); u=d.get('units',[])
-    if 'A등급만' in t: u=[x for x in u if x.get('grade')=='A']
-    else: u=[x for x in u if x.get('grade')!='C']
-    d=dict(d); d['units']=u; return d
+    d=r.json(); units=d.get('units',[]); sk={x.get('sku') for x in units if x.get('grade')!='C'}
+    d=dict(d); d['units']=[x for x in units if x.get('grade')!='C' or x.get('sku') not in sk]; return d
   return R()
  try:
-  if filt: httpx.get=get
-  g={'__name__':'cs22'}
-  exec(open(p,encoding='utf-8').read(),g)
-  return g['run'](args,kit)
+  if skip: httpx.get=get
+  g={'__name__':'cs23'}; exec(open(p,encoding='utf-8').read(),g); return g['run'](args,kit)
  finally: httpx.get=old

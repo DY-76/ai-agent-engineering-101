@@ -1,0 +1,14 @@
+name: customer_service
+description: 원본 customer_service를 실행하며 등급 제한 문의 시 C등급 또는 A등급 이외 재고를 임시 제외합니다.
+permission:
+  network: [market.ourolabs.ai]
+  write: [inquiries.jsonl, offers.json]
+  identity: [shop]
+  wallet: [sign_jwt]
+  pay_limit: 0
+  timeout: 180
+  handles: [a2a]
+logic: logic.py
+test: test.py
+version: 23
+replaces: customer_service@22
