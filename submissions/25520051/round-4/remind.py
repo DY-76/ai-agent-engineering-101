@@ -17,6 +17,14 @@ def say(t):
         f.write(time.strftime("%m-%d %H:%M:%S ") + t + "\n")
 
 
+def paused():
+    """The owner is giving the agent a longer instruction: .kit/pause was touched in the last 6 minutes."""
+    try:
+        return time.time() - (ROOT / ".kit" / "pause").stat().st_mtime < 360
+    except OSError:
+        return False
+
+
 def asleep():
     with open(ROOT / "logs" / "agent-kit.log", "rb") as f:
         f.seek(0, 2)
@@ -27,7 +35,7 @@ def asleep():
 
 def tell(text):
     for _ in range(20):
-        if asleep():
+        if asleep() and not paused():
             break
         time.sleep(6)
     else:

@@ -1098,3 +1098,31 @@
 19:05:59 [mind] reply | 게시가 정상 완료되었습니다. 주인에게 결과를 알리고, 다음 작업까지 최대 600초 대기하겠습니다.
 19:06:01 [mind] reply | 응답 대상은 발신자 이름이 아니라 대기 중인 메시지 ID입니다. 해당 메시지에 완료 사실을 회신합니다.
 19:06:03 [mind] sleeps 600 s: post_stock 게시 완료 및 주인 회신 후 다음 운영 시점까지 대기
+19:11:22 [mind] post_clearance | 주인 요청에 따라 임박 특가 글을 한 번만 게시하고, 결과와 관계없이 바로 잠들겠습니다.
+19:11:24 [mind] sleeps 600 s: 임박 특가 게시를 완료했으며, 다음 운영 점검 시각까지 대기합니다.
+19:16:19 [mind] post_stock | 주인 요청에 따라 다른 조회 없이 post_stock을 인자 없이 한 번 호출하겠습니다. 429가 발생해도 재호출하지 않겠습니다.
+19:16:24 [mind] sleeps 30 s: 상품 글 게시 후 다음 대기 시점까지 휴식
+19:16:58 [mind] market_snapshot | 먼저 재입고 창과 현재 재고 상태를 확인하겠습니다. 창이 열려 있으면 지침대로 top_sellers 결과를 받아 매입하고, 이후 마지막 글 게시 시각을 기준으로 상품글 갱신과 문의 응대를 진행하겠습니다.
+19:17:00 [mind] sleeps 399 s: 재입고 창이 열리기 직전까지 대기한 뒤 판매 상위 품목을 확인하고 매입합니다.
+19:23:49 [mind] top_sellers | 운영 지침에 따라 먼저 재입고 창 상태와 최근 판매 기반 매입 목록을 확인합니다.
+19:23:51 [mind] sleeps 600 s: 이번 재입고 후보가 없어 다음 운영 시점까지 대기
+19:27:53 [mind] post_stock | 주인 지침에 따라 다른 조회 없이 post_stock을 인자 없이 한 번 호출하겠습니다.
+19:27:56 [mind] reply | 상품 글 게시가 성공했습니다. 주인에게 결과를 알리고 지침대로 바로 잠들겠습니다.
+19:27:58 [mind] sleeps 600 s: post_stock 성공 후 다음 지침 주기까지 대기
+19:38:08 [mind] top_sellers | 먼저 재입고 창 상태와 최근 판매 기반 후보를 확인하겠습니다.
+19:38:13 [mind] market_snapshot | top_sellers가 반환한 매입 후보가 없습니다. 이제 재입고 창과 게시 시점을 확인해 필요한 운영 작업만 진행하겠습니다.
+19:38:16 [mind] sleeps 225 s: 재입고 창 시작 직후 top_sellers를 다시 확인하고, 후보가 있으면 매입합니다.
+19:39:26 [mind] post_stock | 주인의 요청에 따라 다른 조회 없이 post_stock을 인자 없이 한 번 호출하겠습니다. 호출 후 바로 잠들겠습니다.
+19:39:28 [mind] sleeps 600 s: post_stock 완료. 다음 점검까지 대기
+19:42:17 [mind] top_sellers | 주인 지시에 따라 다른 조회 없이 top_sellers를 확인하고, 받은 items가 있으면 그대로 buy_batch에 전달한 뒤 바로 잠들겠습니다.
+19:42:18 [mind] sleeps 600 s: 재입고 창에서 top_sellers 결과 items가 비어 있어 매입하지 않았습니다. 다음 운영 주기까지 대기합니다.
+19:50:54 [mind] read_tool | 요청된 customer_service v34 원본을 먼저 읽어 구조를 확인하겠습니다.
+19:51:03 [mind] post_stock | 지금은 글 게시 지시가 우선이므로 다른 조회 없이 post_stock을 한 번 호출하겠습니다.
+19:51:05 [mind] sleeps 600 s: 게시 완료 후 다음 업무 시점까지 대기
+19:57:39 [mind] read_tool | 주인 요청대로 먼저 customer_service v34의 실제 소스를 읽어 동일 구조로 수정하겠습니다.
+19:57:51 [forge] customer_service v35 passed its test and is ready (replaces v34)
+19:57:51 [mind] forge_tool | v34의 래퍼 구조를 유지하면서 요청한 네 가지 동작만 반영해 같은 이름으로 교체하겠습니다. 시간 필터는 현재 시각을 사용하고, 결제 안내 문구와 재고 없음 응답의 history 재시도를 적용합니다.
+19:57:54 [mind] reply | customer_service v35 수정본 테스트를 통과했습니다. 요청하신 내용을 주인께 알리고 다음 확인을 위해 600초 이내로 잡니다.
+19:57:56 [mind] sleeps 600 s: 다음 재입고 창과 신규 메시지를 기다립니다.
+19:58:09 [mind] post_stock | 재고와 판매가를 customer_service 기준으로 게시하겠습니다.
+19:58:11 [mind] sleeps 600 s: 게시 완료; 다음 운영 확인까지 대기
