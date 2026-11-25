@@ -1,5 +1,5 @@
 name: customer_service
-description: 회원·재고 문의를 기존 v32 로직에 위임하고, 상품을 찾지 못한 경우 카탈로그 이름과 최근 대화로 재탐색합니다. args: {text, claimed_from, history, task_id, context_id}.
+description: 회원·재고 문의를 v33 원본에 위임하며 부정 문장을 분리하고, 조건에 따라 임박 C등급 재고를 숨깁니다. args: {text, claimed_from, history, task_id, context_id}.
 permission:
   network: [market.ourolabs.ai]
   write: [inquiries.jsonl, offers.json]
@@ -9,5 +9,5 @@ permission:
   handles: [a2a]
 logic: logic.py
 test: test.py
-version: 33
-replaces: customer_service@32
+version: 34
+replaces: customer_service@33

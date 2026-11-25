@@ -1,5 +1,3 @@
-def test(run, kit):
-    a=run({'text':'뭐 있어요?','claimed_from':'test','history':[]},kit)
-    assert a.get('reply','').startswith('현재 안내 가능한')
-    b=run({'text':'1개만 주세요','claimed_from':'test','history':[{'them':'감자 얼마예요?'}]},kit)
-    assert b.get('data',{}).get('checkout_jwt')
+def test(run,kit):
+ a=run({'text':'가자미는 사지 않겠습니다. 부추 결제서 보내 주세요.','claimed_from':'test','history':[]},kit)
+ assert '부추' in a.get('reply','') and a.get('data',{}).get('checkout_jwt')
