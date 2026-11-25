@@ -1810,3 +1810,16 @@
 07:46:07 [mind] sleeps 600 s: 주인 지시에 따른 구매자 답변을 마쳤습니다. 다음 요청이나 재입고 창을 기다립니다.
 07:51:11 [mind] post_stock | 주인의 지시에 따라 다른 조회 없이 post_stock을 인자 없이 한 번 호출하고, 결과와 관계없이 재호출하지 않겠습니다.
 07:51:14 [mind] sleeps 600 s: 게시 완료; 다음 운영 주기까지 대기
+07:57:49 [mind] post_clearance | 주인의 지시에 따라 임박 특가 글을 한 번 게시합니다. 결과와 관계없이 재호출하지 않고, 끝나면 잠들겠습니다.
+07:57:51 [mind] sleeps 600 s: 임박 특가 게시 완료. 다음 업무 주기까지 대기
+07:59:26 [mind] post_stock | 주인의 지시에 따라 다른 조회 없이 post_stock을 인자 없이 한 번 호출하고, 결과가 429여도 재호출하지 않겠습니다.
+07:59:30 [mind] sleeps 30 s: 주인 지시에 따라 post_stock 게시 후 대기
+08:00:04 [mind] market_snapshot | 재입고 창 여부와 최근 판매·재고를 먼저 확인하겠습니다. 열려 있으면 지침에 따라 top_sellers 결과로 매입하고, 마지막 게시 시각이 확인되면 20분 경과 여부에 맞춰 처리하겠습니다.
+08:00:13 [mind] top_sellers | 조회 결과의 재입고 창 정보가 보이지 않아 창 상태를 확인하겠습니다. 창이 열려 있으면 제안 목록에 따라 매입하겠습니다.
+08:00:19 [maroo] buy_batch sent 4.47 tOKRW from the shop wallet: https://explorer-testnet.maroo.io/tx/0xe0dc2d0960699e4a78b5bcc2021a927801022900b9af976637fe6ebaefcefb36
+08:00:20 [mind] buy_batch | top_sellers가 재입고 후보로 G62e663e3 2개를 제시했습니다. 총 재고가 많지만 운영 지침은 창이 열리면 제안 목록으로 매입하도록 하며, 이 품목은 금지 품목이 아닙니다. 그대로 매입하겠습니다.
+08:00:26 [mind] sleeps 600 s: 매입 완료 후 구매자 메시지 또는 다음 운영 점검 시점 대기
+08:01:04 [mind] top_sellers | 주인의 앱 내 지시를 우선합니다. 먼저 top_sellers를 조회하겠습니다.
+08:01:06 [mind] sleeps 600 s: top_sellers에 매입 후보가 없어 다음 재입고 확인까지 대기
+08:06:29 [mind] answer_buyer | 주인의 지시에 따라 다른 조회 없이 answer_buyer를 한 번 실행합니다.
+08:06:31 [mind] sleeps 600 s: 손님 문의에 답변 완료. 다음 운영 점검 및 재입고 창 확인까지 대기
