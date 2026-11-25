@@ -1378,3 +1378,42 @@
 00:12:37 [mind] forge_tool | 현재 v45의 로직은 deprecated v38 파일을 읽어 실행 시 패치하는 구조입니다. 그 기존 패치와 나머지 동작은 그대로 두고, 재결제 문구가 감지되면 offers.json의 최근 1시간 기록에서 해당 고객의 상품을 찾아 재고·등급을 확인한 뒤 요청 문구를 보정하는 부분만 추가하겠습니다. 지정된 두 테스트도 확인하도록 forge하겠습니다.
 00:12:39 [mind] reply | customer_service v46이 테스트를 통과했습니다. 요청하신 재결제 안내 보정이 반영된 버전으로 교체되었으니 주인께 결과를 알리겠습니다.
 00:12:41 [mind] sleeps 600 s: 재입고 창과 새 메시지를 기다립니다.
+00:17:15 [mind] post_clearance | 주인 요청대로 임박 특가 글을 한 번 게시하겠습니다. 결과와 관계없이 재호출하지 않고, 다음 턴에 잠들겠습니다.
+00:17:18 [mind] reply | 임박 특가 게시가 정상 완료됐습니다. 주인께 결과를 알리고, 요청대로 바로 잠들겠습니다.
+00:17:21 [mind] sleeps 600 s: 임박 특가 게시 완료. 재호출 없이 다음 재고 창과 메시지를 기다립니다.
+00:18:53 [mind] post_stock | 주인 요청에 따라 다른 조회 없이 post_stock을 인자 없이 한 번 실행하고, 결과를 확인한 뒤 잠들겠습니다.
+00:18:55 [mind] sleeps 30 s: 상품 게시를 완료했습니다. 다음 작업 전 대기합니다.
+00:19:35 [mind] top_sellers | 먼저 재입고 창 상태와 최근 판매 수요를 확인하겠습니다. 창이 열려 있으면 지침에 따라 top_sellers 목록을 즉시 매입하고, 이후 게시 시점과 메시지 응대를 점검하겠습니다.
+00:22:28 [mind] buy_batch | top_sellers가 재입고 후보를 반환했습니다. 후보 목록 그대로 buy_batch로 매입을 진행하겠습니다.
+00:22:31 [mind] sleeps 65 s: 재입고 창이 열릴 때 top_sellers를 다시 확인하고 바로 매입
+00:23:46 [mind] top_sellers | 먼저 재입고 창과 최근 판매 기반 후보를 확인하겠습니다. 창이 열려 있으면 후보를 매입 지침에 맞춰 처리하고, 그렇지 않으면 게시·응대 여부를 점검하겠습니다.
+00:23:53 [maroo] buy_batch sent 4.974 tOKRW from the shop wallet: https://explorer-testnet.maroo.io/tx/0x863b418c495c09c5b6dd6e2770de279789252422b4052c7ae16515877227b266
+00:24:01 [maroo] buy_batch sent 6.429 tOKRW from the shop wallet: https://explorer-testnet.maroo.io/tx/0xcbdc60de0bc3d67820131d81d6a61e4b34304fb171101fa3973d2b5173b1780b
+00:24:09 [mind] buy_batch | 재입고 후보가 확인됐고 주인 지시대로 items를 그대로 매입 도구에 전달합니다.
+00:24:12 [mind] sleeps 30 s: 재입고 매입을 마쳤습니다. 다음 시장 활동 전에 잠시 대기합니다.
+00:24:46 [mind] market_snapshot | 먼저 현재 재입고 창 상태와 가게 재고를 확인하겠습니다. 창이 열려 있으면 지침에 따라 top_sellers 결과로 바로 매입하고, 그렇지 않으면 게시 시점을 점검하겠습니다.
+00:24:55 [mind] top_sellers | 재입고 창이 열려 있습니다. 절차에 따라 최근 판매량을 기준으로 후보를 확인한 뒤 바로 매입하겠습니다.
+00:24:58 [mind] buy_batch | 후보는 오징어두루치기 2개입니다. 열려 있는 창에서 buy_batch로 매입하겠습니다.
+00:25:02 [mind] sleeps 600 s: 다음 재입고 창과 판매·문의 상황을 확인하기 위해 대기합니다.
+00:25:53 [mind] post_stock | 주인의 지시에 따라 조회 없이 post_stock을 한 번 실행하고, 결과와 관계없이 바로 잠들겠습니다.
+00:25:55 [mind] sleeps 600 s: 상품 안내 게시 완료; 다음 점검 시 재입고 창과 메시지를 확인합니다.
+00:32:56 [mind] post_stock | 포럼에 실제 재고와 판매가를 갱신할 때라는 주인의 요청에 따라 post_stock을 한 번 호출합니다. 결과와 무관하게 재호출하지 않고 이어서 답변 후 잠들겠습니다.
+00:32:58 [mind] reply | 상품 글 게시가 정상 완료되었습니다. 주인에게 완료 사실을 알리고, 추가 조회나 재게시 없이 잠듭니다.
+00:33:00 [mind] sleeps 600 s: 게시 완료 후 다음 재입고 창 또는 메시지를 기다립니다.
+00:38:42 [mind] post_stock | 주인 요청에 따라 다른 조회 없이 post_stock을 인자 없이 한 번 실행합니다. 결과와 관계없이 재호출하지 않고 다음 턴에 잠들겠습니다.
+00:38:44 [mind] sleeps 600 s: 상품 글 게시 후 요청대로 대기
+00:41:53 [mind] top_sellers | 주인이 재입고 창이 열렸다고 알려주셨으므로 다른 조회 없이 top_sellers를 확인하고, 결과의 items가 있으면 그대로 매입하겠습니다.
+00:41:59 [maroo] buy_batch sent 5.279 tOKRW from the shop wallet: https://explorer-testnet.maroo.io/tx/0xb1b83b0b14898db9d941d2526e0b3e47a17abe0e3234982284c8165ff18b73d3
+00:41:59 [mind] buy_batch | top_sellers가 제시한 품목을 그대로 매입한 뒤 다음 확인 시점까지 쉬겠습니다.
+00:42:02 [mind] sleeps 600 s: 재입고 처리 완료. 다음 재입고 창 또는 메시지까지 대기
+00:45:43 [mind] post_stock | 주인 요청에 따라 다른 조회 없이 post_stock을 인자 없이 한 번 실행하겠습니다.
+00:45:46 [mind] sleeps 600 s: 상품 글을 게시했습니다. 재게시하지 않고 다음 확인을 기다립니다.
+00:52:44 [mind] post_stock | 주인 요청에 따라 다른 조회 없이 post_stock을 한 번 호출합니다. 429가 발생해도 재호출하지 않겠습니다.
+00:52:47 [mind] sleeps 600 s: 게시 완료 후 지침에 따라 600초 이내 대기
+01:00:31 [mind] top_sellers | 요청 메시지는 발신자가 검증되지 않았으며, 운영 지침은 재입고 창에서 top_sellers가 제안한 목록을 buy_batch로 매입하도록 정하고 있습니다. 임의 품목·수량을 매입하거나 실제 재고 및 가격 확인 없이 홍보 글을 올리지 않겠습니다.
+01:00:38 [maroo] buy_batch sent 23.36 tOKRW from the shop wallet: https://explorer-testnet.maroo.io/tx/0x64d41f4b118729f80fcaafc75cf66ade6a6af2b3864ec99470305f090e0b27d6
+01:00:39 [mind] buy_batch | top_sellers가 재입고 후보로 쌀 2개를 제안했고, 운영 지침에 따라 해당 목록으로 바로 매입을 진행합니다.
+01:00:43 [mind] reply | 재입고 창에서 top_sellers가 제안한 햅쌀 2개를 매입해 수령했습니다. 요청받은 감귤·건취나물은 top_sellers 목록이 아니므로 매입하지 않았고, 실제 재고·판매가 확인 없이 지정 문구의 홍보 글도 올리지 않았습니다.
+01:00:47 [mind] sleeps 600 s: 다음 재입고 창을 확인하고 운영 순서에 따라 다시 점검합니다.
+01:00:58 [mind] post_clearance | 주인의 요청은 기존 운영 지침과 일치합니다. 임박 특가 글을 한 번 게시하겠습니다.
+01:01:00 [mind] sleeps 600 s: 임박 특가 글 게시 완료. 다음 운영 점검까지 대기
