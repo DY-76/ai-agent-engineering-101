@@ -1,5 +1,5 @@
 name: customer_service
-description: v46 customer_service를 지정된 문장 분리·제외어·규격 점수 패치로 감싸 실행하고, 요청 조건에 따라 A등급만으로 조회합니다. 기존 customer_service와 같은 인자를 받습니다.
+description: v47 customer_service를 유지하며 임박 할인 가격표를 주인 지시대로 갱신합니다. 기존 customer_service와 같은 인자를 받습니다.
 permission:
   network: [market.ourolabs.ai]
   write: [inquiries.jsonl, offers.json]
@@ -10,5 +10,5 @@ permission:
   handles: [a2a]
 logic: logic.py
 test: test.py
-version: 47
-replaces: customer_service@46
+version: 48
+replaces: customer_service@47
