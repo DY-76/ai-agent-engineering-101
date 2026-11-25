@@ -17,6 +17,13 @@ def run(args,kit):
  assert old1 in src, 'discount pattern missing'
  assert old2 in src, 'reason pattern missing'
  src=src.replace(old1,new1,1).replace(old2,new2,1)
+ old3='and pick(s): chosen=pick(s); break'
+ new3='and eligible(pick(s)): chosen=pick(s); break'
+ old4='f=eligible(chosen); best=f[0] if f else None'
+ new4='f=eligible(chosen) or eligible(words); best=f[0] if f else None'
+ assert old3 in src, 'pick pattern missing'
+ assert old4 in src, 'eligible pattern missing'
+ src=src.replace(old3,new3,1).replace(old4,new4,1)
  buyers=set(); state={'seq':0,'urls':[],'buyers':[]}
  try:
   if os.path.exists('buyers.json'):
