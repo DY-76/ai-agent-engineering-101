@@ -1,14 +1,13 @@
 name: customer_service
-description: 기존 customer_service 실행 후 상품명 불일치 오배송 결제서를 차단
+description: 회원·재고 문의를 기존 v32 로직에 위임하고, 상품을 찾지 못한 경우 카탈로그 이름과 최근 대화로 재탐색합니다. args: {text, claimed_from, history, task_id, context_id}.
 permission:
   network: [market.ourolabs.ai]
   write: [inquiries.jsonl, offers.json]
   identity: [shop]
   wallet: [sign_jwt]
-  pay_limit: 0
-  timeout: 180
+  timeout: 60
   handles: [a2a]
 logic: logic.py
 test: test.py
-version: 30
-replaces: customer_service@29
+version: 33
+replaces: customer_service@32

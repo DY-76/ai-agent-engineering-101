@@ -1,0 +1,11 @@
+name: top_sellers
+description: 최근 3시간 settle 판매를 SKU별 집계해 식품 상위 재입고 후보와 표를 반환합니다. 전체 재고 unit이 90개를 초과하면 items는 빈 목록입니다. args 없음.
+permission:
+  network: [market.ourolabs.ai]
+  identity: [shop]
+  pay_limit: 0
+  timeout: 60
+logic: logic.py
+test: test.py
+version: 4
+replaces: top_sellers@3

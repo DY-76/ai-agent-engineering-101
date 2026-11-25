@@ -1,0 +1,13 @@
+name: buy_batch
+description: 재입고 창에서 지정한 SKU들을 견적받고, HTTP 402 정상 견적도 결제·수령하는 전용 도구입니다. args: {items:[{sku,qty}]}
+permission:
+  network: [market.ourolabs.ai]
+  write: [ledger.json]
+  identity: [shop]
+  wallet: [pay]
+  pay_limit: 200000
+  timeout: 180
+logic: logic.py
+test: test.py
+version: 2
+replaces: buy_batch@1

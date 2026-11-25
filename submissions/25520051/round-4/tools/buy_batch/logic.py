@@ -1,9 +1,8 @@
-import json,time,httpx
+import time,httpx
 
 def nap(wait,start):
     left=170-(time.monotonic()-start)
-    if left>0:
-        time.sleep(min(max(0,float(wait)),left))
+    if left>0: time.sleep(min(max(0,float(wait)),left))
 
 def run(a,k):
     h={'authorization':'Bearer '+k.token('shop'),'content-type':'application/json'}
@@ -21,6 +20,13 @@ def run(a,k):
         try: q=r.json()
         except: q={}
         pay=q.get('pay',{}); cost=int(q.get('total',0) or 0)
+        units=q.get('units')
+        if isinstance(units,list) and units and all(isinstance(u,dict) and u.get('list_price') is not None and u.get('cost') is not None for u in units):
+            unit_cost=sum(float(u['cost']) for u in units)
+            list_total=sum(float(u['list_price']) for u in units)
+            if unit_cost>list_total*0.58:
+                out.append({'sku':sku,'qty':qty,'cost':cost,'status':'too_expensive','quote':q})
+                continue
         if not pay or not q.get('quote') or total+cost>200000:
             out.append({'sku':sku,'status':'skipped','http_status':r.status_code,'quote':q}); continue
         tx=k.pay(pay['to'],int(pay['wei']),pay['data'],role='shop'); total+=cost
