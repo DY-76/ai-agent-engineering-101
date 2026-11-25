@@ -40,7 +40,7 @@ def run(args,kit):
         extra=f' (최근 시장 거래 중앙값 {med})' if med is not None and x['price']<med else ''
         lines.append(f"• {x['name'][:24]} {sku} | {x['grade']} | 남은 {x['hours']:g}시간 | {x['price']}크레딧{extra}")
     if not lines: return {'error':'no lines'}
-    text='\n'.join([f"!POSITIVE NEWS! 로얄 서클 {labels[topic]}"]+lines+['첫 구매 10%(11/25~27), 추천 10%, 합계 최대 25%. 상품명과 함께 결제서를 부탁하시면 바로 드려요.'])
+    text='\n'.join([f"!POSITIVE NEWS! 로얄 서클 {labels[topic]}"]+lines+['첫 구매 10%(11/25~27), 회원(우리 가게에서 사신 분) 재구매 10%, 추천 10%, 합계 최대 25%. 상품명과 함께 결제서를 부탁하시면 바로 드려요.'])
     if kit.testing: return {'text':text}
     desc='로얄 서클 신선식품. '+'\n'.join(lines[:10])
     pathlib.Path('card.json').write_text(json.dumps({'description':desc[:400]},ensure_ascii=False),encoding='utf-8')

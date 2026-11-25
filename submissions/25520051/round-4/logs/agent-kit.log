@@ -1271,3 +1271,28 @@
 21:51:30 [mind] sleeps 600 s: 다음 작업 지시나 메시지를 기다립니다.
 21:51:41 [mind] post_stock | 주인이 요청한 대로 다른 조회 없이 post_stock을 한 번 호출하겠습니다.
 21:51:43 [mind] sleeps 600 s: post_stock 게시 완료. 다음 재입고 창 또는 메시지를 기다립니다.
+21:58:20 [mind] post_clearance | 임박 특가 게시 요청을 한 번 실행합니다. 429가 나와도 재시도하지 않겠습니다.
+21:58:22 [mind] sleeps 600 s: 임박 특가 게시 완료 후 다음 운영 점검까지 대기
+21:59:57 [mind] post_stock | 주인 요청에 따라 다른 조회 없이 post_stock을 인자 없이 한 번 호출합니다.
+21:59:59 [mind] sleeps 30 s: post_stock 완료 후 다음 확인까지 대기
+22:00:38 [mind] top_sellers | 운영 지침의 첫 단계인 재입고 창 확인부터 진행합니다. 창이 열려 있으면 최신 판매 수요를 확인해 바로 매입하고, 닫혀 있으면 재고와 상태를 확인한 뒤 다음 창에 맞춰 대기하겠습니다.
+22:00:46 [mind] post_stock | top_sellers 결과에 매입 후보가 없으므로 매입은 건너뜁니다. 마지막 게시 시각을 여기서 확인할 수 없으니 지침에 따라 실제 재고와 판매가를 기준으로 재고 글을 갱신합니다.
+22:00:50 [mind] sleeps 30 s: 게시 결과의 다음 확인 대기 시간에 맞춰 시장 상태와 메시지를 기다립니다.
+22:01:25 [mind] market_snapshot | 운영 순서에 따라 먼저 재입고 창과 현재 재고·판매 수요를 확인하겠습니다. 창이 열려 있으면 top_sellers 결과로 매입하고, 마지막 글 게시 시각을 확인해 필요한 경우에만 상품 글을 갱신하겠습니다.
+22:01:27 [mind] sleeps 59 s: 재입고 창이 열릴 때 top_sellers 확인 후 매입하기
+22:02:25 [mind] top_sellers | 주인님의 현재 지시대로 다른 조회 없이 top_sellers를 확인하겠습니다.
+22:02:28 [mind] reply | top_sellers 결과에 매입 items가 없어 추가 매입 없이 주인님께 알리고, 다음 실행에서 바로 잠들겠습니다.
+22:02:30 [mind] sleeps 600 s: top_sellers에 매입 items가 없어 다음 재입고 창 또는 메시지까지 대기
+22:07:04 [mind] post_stock | 주인 요청과 운영 지침에 따라 추가 조회 없이 상품 글을 한 번 게시합니다.
+22:07:07 [mind] sleeps 600 s: 상품 글 게시 완료; 다음 운영 점검까지 대기
+22:13:59 [mind] post_stock | 주인 요청에 따라 다른 조회 없이 post_stock을 한 번 실행합니다.
+22:14:00 [mind] read_tool | 요청된 할인 규칙 변경은 회원 재구매 혜택을 추가하는 운영 지침과 부합합니다. 먼저 현재 customer_service v42 소스를 읽어 정확히 수정하겠습니다.
+22:14:15 [forge] customer_service v43 passed its test and is ready (replaces v42)
+22:14:15 [mind] forge_tool | 현재 v42는 v38 소스를 읽어 실행하는 구조입니다. 요청된 두 치환을 원본에 assert한 뒤 적용하고, checkout 응답에만 회원 안내를 덧붙이도록 기존 로직을 보존해 교체하겠습니다.
+22:14:18 [mind] reply | customer_service v43 교체와 테스트가 통과했습니다. 주인에게 완료 사실을 알리고, 앞서 요청한 대로 바로 잠듭니다.
+22:14:19 [mind] sleeps 600 s: customer_service v43 업데이트 완료. 주인 요청에 따라 추가 조회 없이 대기
+22:15:04 [mind] read_tool | 요청대로 먼저 post_stock 도구 파일을 읽어 원본과 권한·테스트를 확인한 뒤, 지정된 마지막 문구만 바꿔 같은 이름으로 다시 forge하겠습니다.
+22:15:17 [forge] post_stock v4 passed its test and is ready (replaces v3)
+22:15:17 [mind] forge_tool | 파일을 확인했습니다. post_stock의 기존 로직과 테스트, 권한은 그대로 두고 공지 마지막 문구에 회원 재구매 10%만 추가해 같은 이름으로 교체하겠습니다.
+22:15:20 [mind] reply | post_stock v4가 테스트를 통과했습니다. 요청하신 문구 변경만 적용했고 post_clearance는 건드리지 않았습니다.
+22:15:21 [mind] sleeps 600 s: 추가 메시지나 다음 운영 시점까지 대기

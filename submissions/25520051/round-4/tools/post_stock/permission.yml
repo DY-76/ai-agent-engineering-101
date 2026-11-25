@@ -9,5 +9,5 @@ permission:
   timeout: 60
 logic: logic.py
 test: test.py
-version: 3
-replaces: post_stock@2
+version: 4
+replaces: post_stock@3
