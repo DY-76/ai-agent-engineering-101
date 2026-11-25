@@ -1,5 +1,5 @@
 name: customer_service
-description: customer_service v24 원본을 실행하되 catalog의 list_price를 1.17배 조정해 평소 판매가를 상향하는 회원 고객응대 도구
+description: 기존 customer_service 원본을 실행하고 결제 토큰을 단축하며 고객 요청과 관련된 추가 상품을 최대 2개 안내하는 회원 고객응대 도구
 permission:
   network: [market.ourolabs.ai]
   write: [inquiries.jsonl, offers.json]
@@ -10,5 +10,5 @@ permission:
   handles: [a2a]
 logic: logic.py
 test: test.py
-version: 25
-replaces: customer_service@24
+version: 27
+replaces: customer_service@26
