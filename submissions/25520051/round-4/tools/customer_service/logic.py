@@ -5,6 +5,10 @@ def PATCH(src):
  for old,new in pairs:
   assert old in src, old
   src=src.replace(old,new,1)
+ old="  if best:\n   # 최근"
+ new="  NUM=set(x.replace(',','') for x in re.findall(r'[0-9][0-9,]{2,}',text)); best=next((u for u in f if str(price(u,by.get(u.get('sku'),{}),(float(u.get('expires_at') or now+9999*3600)-now)/3600)) in NUM and score(by.get(u.get('sku'),{}),chosen)>=score(by.get(best.get('sku'),{}),chosen)-4),best) if best else best\n  if best:\n   # 최근"
+ assert old in src, old
+ src=src.replace(old,new,1)
  return src
 
 def run(args,kit):

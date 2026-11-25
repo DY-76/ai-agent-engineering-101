@@ -1,0 +1,14 @@
+name: customer_service
+description: v47 customer_service를 유지하며 임박 할인 가격표를 주인 지시대로 갱신합니다. 기존 customer_service와 같은 인자를 받습니다.
+permission:
+  network: [market.ourolabs.ai]
+  write: [inquiries.jsonl, offers.json]
+  identity: [shop]
+  wallet: [sign_jwt]
+  pay_limit: 0
+  timeout: 60
+  handles: [a2a]
+logic: logic.py
+test: test.py
+version: 48
+replaces: customer_service@47
