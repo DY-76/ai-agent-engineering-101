@@ -1,5 +1,5 @@
 name: post_clearance
-description: customer_service에서 임박 할인 상품을 조회해 등급 C 상품을 최대 8개 포럼에 게시합니다. args: head(선택).
+description: customer_service의 실제 안내 결과에서 등급 C 또는 남은 기한 24시간 이하인 임박 상품을 골라 최대 8개 포럼에 게시합니다. 8팩, 김수미, 남은 기한 1시간 이하 상품은 제외하며 적격 상품 줄이 2개 미만이면 게시 없이 {none:true}를 반환합니다. args: head(선택).
 permission:
   network: [market.ourolabs.ai]
   write: [inquiries.jsonl, offers.jsonl]
@@ -9,4 +9,5 @@ permission:
   timeout: 60
 logic: logic.py
 test: test.py
-version: 1
+version: 2
+replaces: post_clearance@1
