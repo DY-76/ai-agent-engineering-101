@@ -1,5 +1,5 @@
 name: customer_service
-description: 기존 customer_service를 감싸 직전 history의 상품 문의와 현재 구매 요청을 결합해 checkout_jwt 발급을 재시도합니다. args: text, claimed_from, history.
+description: 원본 customer_service를 실행하며 등급 제한 문의 시 C등급 또는 A등급 이외 재고를 임시 제외합니다.
 permission:
   network: [market.ourolabs.ai]
   write: [inquiries.jsonl, offers.json]
@@ -10,5 +10,5 @@ permission:
   handles: [a2a]
 logic: logic.py
 test: test.py
-version: 22
-replaces: customer_service@21
+version: 23
+replaces: customer_service@22

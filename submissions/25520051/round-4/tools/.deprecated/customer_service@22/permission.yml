@@ -1,0 +1,14 @@
+name: customer_service
+description: 기존 customer_service를 감싸 직전 history의 상품 문의와 현재 구매 요청을 결합해 checkout_jwt 발급을 재시도합니다. args: text, claimed_from, history.
+permission:
+  network: [market.ourolabs.ai]
+  write: [inquiries.jsonl, offers.json]
+  identity: [shop]
+  wallet: [sign_jwt]
+  pay_limit: 0
+  timeout: 180
+  handles: [a2a]
+logic: logic.py
+test: test.py
+version: 22
+replaces: customer_service@21
