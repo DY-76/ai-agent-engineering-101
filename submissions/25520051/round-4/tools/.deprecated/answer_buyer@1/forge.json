@@ -1,0 +1,11 @@
+{
+ "tool": "answer_buyer",
+ "version": 1,
+ "forged_at": 1795636575,
+ "kit": "v5.1",
+ "sha256": {
+  "permission.yml": "86a092ff81c6f7f7d6ffe9444eb207987bc81752b7e23e507f37c75745aa61b1",
+  "logic.py": "6b8fb70a4421c44f728bdb32521128fd6d43a7f79b4438d455e3c7e06eecf46a",
+  "test.py": "c58fd9de11aa3acd386eb3febfb4ecc76516325a997bf3293464003119d00cd1"
+ }
+}

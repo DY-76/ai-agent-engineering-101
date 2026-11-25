@@ -8,6 +8,7 @@ ROOT = Path(__file__).resolve().parent
 MARKET = "https://market.ourolabs.ai"
 POST_EVERY, CLEAR_EVERY = 330, 40 * 60
 POST = "가게 주인입니다. 글 올릴 때입니다. 다른 조회 없이 post_stock을 인자 없이 한 번 부르고 바로 주무세요. 429면 다시 부르지 마세요."
+ANSWER = "가게 주인입니다. 손님 글에 답할 때입니다. 다른 조회 없이 answer_buyer를 인자 없이 한 번 부르세요. 결과가 none이면 post_stock을 한 번 부르세요. 429면 다시 부르지 말고 바로 주무세요."
 CLEAR = "가게 주인입니다. 임박 특가 글을 올릴 때입니다. post_clearance를 한 번 부르고 바로 주무세요. 429면 다시 부르지 마세요."
 BUY = "가게 주인입니다. 재입고 창이 열렸습니다. 다른 조회 없이 top_sellers를 부르고, items가 있으면 그대로 buy_batch에 넣고 바로 주무세요. 없으면 바로 주무세요."
 
@@ -55,7 +56,7 @@ def main():
         lock.bind(("127.0.0.1", 8797))
     except OSError:
         sys.exit("already running")
-    post, clear, window = 0.0, time.time() - CLEAR_EVERY + 300, 0
+    post, clear, window, turn = 0.0, time.time() - CLEAR_EVERY + 300, 0, 0
     while True:
         try:
             with urllib.request.urlopen(MARKET + "/api/restock", timeout=15) as r:
@@ -65,9 +66,11 @@ def main():
                     window = w["closes_at"]
                     say("buy")
             elif time.time() - post > POST_EVERY and (w["open"] or w["opens_at"] - w["now"] > 40):
-                if tell(POST):
+                turn += 1
+                what, name = (POST, "post") if turn % 3 == 0 else (ANSWER, "answer")
+                if tell(what):
                     post = time.time()
-                    say("post")
+                    say(name)
             elif time.time() - clear > CLEAR_EVERY and time.time() - post > 310:
                 if tell(CLEAR):
                     clear = time.time()

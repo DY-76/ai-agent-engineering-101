@@ -1,0 +1,13 @@
+name: answer_buyer
+description: 최근 25분 이내 구매자 포럼 글에서 상품을 찾지 못했다는 문장을 찾아 실제 안내 재고와 가격으로 답글을 게시합니다. 인자 없음.
+permission:
+  network: [market.ourolabs.ai]
+  write: [replied.json, inquiries.jsonl, offers.json, buyers.json]
+  identity: [shop]
+  wallet: [sign_jwt]
+  pay_limit: 0
+  timeout: 90
+logic: logic.py
+test: test.py
+version: 2
+replaces: answer_buyer@1
