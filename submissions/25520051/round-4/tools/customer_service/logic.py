@@ -24,6 +24,13 @@ def run(args,kit):
  assert old3 in src, 'pick pattern missing'
  assert old4 in src, 'eligible pattern missing'
  src=src.replace(old3,new3,1).replace(old4,new4,1)
+ old_ratio="ratio={'A':.70,'B':.60,'C':.46}.get(u.get('grade'),.46)"
+ new_ratio="ratio={'A':.80,'B':.68,'C':.50}.get(u.get('grade'),.50)"
+ old_sort="return sorted(f,key=lambda u:(-score(by.get(u.get('sku'),{}),ws),float(u.get('expires_at') or now+9999*3600)))"
+ new_sort="return sorted(f,key=lambda u:(-score(by.get(u.get('sku'),{}),ws),u.get('grade')=='C',float(u.get('expires_at') or now+9999*3600)<now+12*3600,float(u.get('expires_at') or now+9999*3600)))"
+ assert old_ratio in src, 'price ratio pattern missing'
+ assert old_sort in src, 'sorting pattern missing'
+ src=src.replace(old_ratio,new_ratio,1).replace(old_sort,new_sort,1)
  buyers=set(); state={'seq':0,'urls':[],'buyers':[]}
  try:
   if os.path.exists('buyers.json'):

@@ -1,5 +1,5 @@
 name: top_sellers
-description: 최근 3시간 settle 판매와 SKU별 전체/fresh 재고를 집계해 재입고 후보를 반환합니다. total_units가 90 초과이면 fresh 재고 0, 판매 8건 이상인 식품 중 상위 5개를 제안합니다.
+description: 최근 3시간 settle 판매와 재고를 집계해 재입고 후보를 반환합니다. 총 재고 90 초과 시 fresh 재고 0이며 판매 4건 이상인 식품 중 판매량 순 최대 6개를 제안합니다.
 permission:
   network: [market.ourolabs.ai]
   identity: [shop]
@@ -7,5 +7,5 @@ permission:
   timeout: 60
 logic: logic.py
 test: test.py
-version: 5
-replaces: top_sellers@4
+version: 6
+replaces: top_sellers@5
