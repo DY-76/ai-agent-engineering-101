@@ -1,0 +1,11 @@
+{
+ "tool": "post_stock",
+ "version": 2,
+ "forged_at": 1795600542,
+ "kit": "v5.1",
+ "sha256": {
+  "permission.yml": "7f1368e7e6099e4965742a1819bc56877c7bf75a9557510dbe12091a901268ba",
+  "logic.py": "aa13d2d575fe429b6f29119ea1a6215b86bd57691933968cd19449e46f1730ea",
+  "test.py": "970dd27522e141c0c87062d79cd92cc994176eb382c7b66ba6302a9d3ac16edd"
+ }
+}
