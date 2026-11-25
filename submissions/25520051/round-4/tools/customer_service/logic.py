@@ -1,100 +1,24 @@
-import os,re,json,time,httpx
+import re
+
+def PATCH(src):
+ pairs=[(r"re.split(r'[.!?\n]+',text)",r"re.split(r'[!?\n]+|\.(?!\d)',text)"),("|아니라|말고|제외')","|아니라|말고|제외|많소|많아요|많습니다|부담')"),("def score(p,ws): return sum(len(w) for w in ws if w in p.get('name','').replace(' ','').lower())","def score(p,ws):\n  n=p.get('name','').replace(' ','').lower(); b=sum(len(w) for w in ws if w in n)\n  return b+(sum(3 for z in re.findall(r'[0-9]+(?:[.][0-9]+)?(?:kg|g|구|팩|ml|l)',' '.join(sentences).lower()) if z in n) if b else 0)")]
+ for old,new in pairs:
+  assert old in src, old
+  src=src.replace(old,new,1)
+ return src
 
 def run(args,kit):
- path='tools/.deprecated/customer_service@38/logic.py'
- if not os.path.exists(path): path='tools/customer_service/logic.py'
- src=open(path,encoding='utf-8').read()
- prior="prior=any(e.get('kind')=='settle' and e.get('data',{}).get('buyer')==who and e.get('data',{}).get('shop_url') in urls for e in es)"
- referral="referral=any(e.get('kind')=='settle' and e.get('data',{}).get('buyer')==w and e.get('data',{}).get('shop_url') in urls for w in pick(text) if w!=who)"
- assert prior in src, 'prior pattern missing'
- assert referral in src, 'referral pattern missing'
- src=src.replace(prior,'prior=who in BUYERS',1)
- src=src.replace(referral,"referral=any(b!=who and (b in text or (len(b.split('-')[0])>=3 and b.split('-')[0] in text)) for b in BUYERS)",1)
- old1='(10 if first and not prior else 0)'
- new1='(10 if (first and not prior) or prior else 0)'
- old2="reason='할인 없음' if not discount else f'할인 {discount}% (첫 구매/추천/흥정 적용)'"
- new2='reason=\'할인 없음\' if not discount else f\'할인 {discount}% ({"회원 재구매" if prior else "첫 구매"}/추천/흥정)\''
- assert old1 in src, 'discount pattern missing'
- assert old2 in src, 'reason pattern missing'
- src=src.replace(old1,new1,1).replace(old2,new2,1)
- old3='and pick(s): chosen=pick(s); break'
- new3='and eligible(pick(s)): chosen=pick(s); break'
- old4='f=eligible(chosen); best=f[0] if f else None'
- new4='f=eligible(chosen) or eligible(words); best=f[0] if f else None'
- assert old3 in src, 'pick pattern missing'
- assert old4 in src, 'eligible pattern missing'
- src=src.replace(old3,new3,1).replace(old4,new4,1)
- old_ratio="ratio={'A':.70,'B':.60,'C':.46}.get(u.get('grade'),.46)"
- new_ratio="ratio={'A':.80,'B':.68,'C':.50}.get(u.get('grade'),.50)"
- old_sort="return sorted(f,key=lambda u:(-score(by.get(u.get('sku'),{}),ws),float(u.get('expires_at') or now+9999*3600)))"
- new_sort="return sorted(f,key=lambda u:(-score(by.get(u.get('sku'),{}),ws),u.get('grade')=='C',float(u.get('expires_at') or now+9999*3600)<now+12*3600,float(u.get('expires_at') or now+9999*3600)))"
- assert old_ratio in src, 'price ratio pattern missing'
- assert old_sort in src, 'sorting pattern missing'
- src=src.replace(old_ratio,new_ratio,1).replace(old_sort,new_sort,1)
- buyers=set(); state={'seq':0,'urls':[],'buyers':[]}
+ p='tools/.deprecated/customer_service@46/logic.py'
  try:
-  if os.path.exists('buyers.json'):
-   old=json.load(open('buyers.json',encoding='utf-8')); state=old if isinstance(old,dict) else state
-  buyers=set(state.get('buyers',[])); urls=set(state.get('urls',[])); seq=int(state.get('seq',0))
-  headers={'authorization':'Bearer '+kit.token('shop')}; cursor=seq
-  for _ in range(100):
-   r=httpx.get(kit.market+'/api/ledger',headers=headers,params={'after':cursor},timeout=20); r.raise_for_status(); d=r.json(); es=d if isinstance(d,list) else d.get('entries',d.get('ledger',[]))
-   if not es: break
-   for e in es:
-    n=int(e.get('seq',e.get('id',cursor)) or cursor); cursor=max(cursor,n); data=e.get('data',{}) or {}
-    if e.get('kind')=='join' and data.get('name')==kit.name and data.get('url'): urls.add(data['url'])
-    if e.get('kind')=='settle' and data.get('shop') in (urls|{kit.shop_url}) and data.get('buyer'): buyers.add(data['buyer'])
-   if len(es)<500 or cursor<=seq: break
-   seq=cursor
-  seq=cursor
-  if not kit.testing:
-   with open('buyers.json','w',encoding='utf-8') as f: json.dump({'seq':seq,'urls':sorted(urls),'buyers':sorted(buyers)},f,ensure_ascii=False)
- except Exception: pass
- ns={'BUYERS':buyers}; exec(compile(src,path,'exec'),ns)
- a=dict(args); text=str(a.get('text','')); retry=False
- retry_words=('거절','거부','서명이 맞지','서명이 아니','서명 오류','다시 보내','다시 발급','새 결제서','새로 발급')
- if a.get('claimed_from') and any(w in text for w in retry_words):
-  try:
-   offers=json.load(open('offers.json',encoding='utf-8'))
-   now=time.time(); who=str(a.get('claimed_from')); recent=[]
-   if isinstance(offers,dict):
-    for unit,entry in offers.items():
-     if isinstance(entry,dict): stamp=entry.get('time'); owner=entry.get('claimed_from',entry.get('customer',entry.get('buyer')))
-     elif isinstance(entry,(list,tuple)) and len(entry)>=2: stamp,owner=entry[0],entry[1]
-     else: continue
-     try:
-      if owner==who and 0<=now-float(stamp)<=3600: recent.append((float(stamp),str(unit)))
-     except Exception: pass
-   if recent:
-    unit_id=max(recent)[1]; headers={'authorization':'Bearer '+kit.token('shop')}
-    inv=httpx.get(kit.market+'/api/inventory',headers=headers,timeout=20); inv.raise_for_status(); q=inv.json(); units=q.get('units',[]) if isinstance(q,dict) else []
-    found=next((u for u in units if str(u.get('unit',u.get('id','')))==unit_id),None)
-    if found is None:
-     found=next((u for u in units if str(u.get('sku',''))==unit_id),None)
-    if found is not None:
-     cat=httpx.get(kit.market+'/api/catalog',headers=headers,timeout=20); cat.raise_for_status(); d=cat.json(); items=d if isinstance(d,list) else d.get('items',d.get('catalog',[]))
-     product=next((p for p in items if p.get('sku')==found.get('sku')),None)
-     if product:
-      text=str(product.get('name',''))+' 살게요'
-      if found.get('grade')!='C': text+=' C등급 제외'
-      retry=True
-  except Exception: pass
- m=re.search(r'G[0-9a-fA-F]{8}',text)
- if m:
-  headers={'authorization':'Bearer '+kit.token('shop')}; c=httpx.get(kit.market+'/api/catalog',headers=headers,timeout=20); c.raise_for_status(); d=c.json(); items=d if isinstance(d,list) else d.get('items',d.get('catalog',[])); sku=m.group().lower(); p=next((x for x in items if x.get('sku','').lower()==sku),None)
-  if p:
-   r=httpx.get(kit.market+'/api/inventory',headers=headers,timeout=20); r.raise_for_status(); q=r.json(); units=q.get('units',[]) if isinstance(q,dict) else []
-   if not any(x.get('sku','').lower()==sku for x in units):
-    b=dict(a,text='뭐 있어요?',history=[]); out=ns['run'](b,kit); reply='찾으시는 '+p.get('name',m.group())+'은(는) 지금 재고가 없습니다.\n'+out.get('reply','')
-    if not kit.testing:
-     with open('inquiries.jsonl','a',encoding='utf-8') as f: f.write(json.dumps({'time':time.time(),'claimed_from':a.get('claimed_from'),'text':text,'reply':reply},ensure_ascii=False)+'\n')
-    return {'reply':reply,'state':out.get('state','input_required')}
-   text=text.replace(m.group(),p.get('name',m.group()))
- if 'B등급' in text and 'C등급' not in text and 'B등급 이상' not in text: text+=' C등급 제외'
- h=a.get('history') or []; h=h.get('messages',[]) if isinstance(h,dict) else h; a['text']=text; a['history']=[{'them':x['them']} for x in h if isinstance(x,dict) and isinstance(x.get('them'),str)]
- out=ns['run'](a,kit)
- if retry: out['reply']=out.get('reply','')+'\n앞의 결제서가 깨졌다면 이번 것으로 새로 시도해 주세요. buy에서 가게 이름만 지정하시면 됩니다.'
- if (out.get('data') or {}).get('checkout_jwt'):
-  greeting='다시 찾아 주셔서 감사합니다. ' if a.get('claimed_from') in buyers else ''
-  out['reply']=out.get('reply','')+'\n'+greeting+'회원이 되시면 다음 구매도 10% 할인, 이웃이 추천인으로 회원님 이름을 말하면 이웃도 10% 할인입니다. 또 찾아 주세요.'
- return out
+  with open(p,encoding='utf-8') as f: src=f.read()
+ except FileNotFoundError:
+  with open('tools/customer_service/logic.py',encoding='utf-8') as f: src=f.read()
+ M="src=src.replace(prior,'prior=who in BUYERS',1)"
+ assert M in src
+ src=src.replace(M,M+'\n src=PATCH(src)',1)
+ g={'__name__':'cs46','PATCH':PATCH}
+ exec(src,g)
+ args2=dict(args); text=args2.get('text','')
+ if 'A등급' in text and 'B등급' not in text and 'C등급' not in text and 'A등급만' not in text:
+  args2['text']=text+' A등급만'
+ return g['run'](args2,kit)

@@ -1,14 +1,14 @@
 name: customer_service
-description: 회원·재고 문의를 정식 가격표에 따라 처리하고 회원 재구매 할인과 추천 혜택을 적용합니다. args: {text, claimed_from, history, task_id, context_id}.
+description: v46 customer_service를 지정된 문장 분리·제외어·규격 점수 패치로 감싸 실행하고, 요청 조건에 따라 A등급만으로 조회합니다. 기존 customer_service와 같은 인자를 받습니다.
 permission:
   network: [market.ourolabs.ai]
-  write: [inquiries.jsonl, offers.json, buyers.json]
+  write: [inquiries.jsonl, offers.json]
   identity: [shop]
   wallet: [sign_jwt]
   pay_limit: 0
-  timeout: 90
+  timeout: 60
   handles: [a2a]
 logic: logic.py
 test: test.py
-version: 46
-replaces: customer_service@45
+version: 47
+replaces: customer_service@46
