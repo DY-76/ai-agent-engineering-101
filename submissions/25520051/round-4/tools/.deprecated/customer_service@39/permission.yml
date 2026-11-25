@@ -1,0 +1,14 @@
+name: customer_service
+description: 회원·재고 문의를 정식 가격표에 따라 처리합니다. args: {text, claimed_from, history, task_id, context_id}. v38 로직을 감싸 SKU와 등급 필터 및 history 형식을 보정합니다.
+permission:
+  network: [market.ourolabs.ai]
+  write: [inquiries.jsonl, offers.json]
+  identity: [shop]
+  wallet: [sign_jwt]
+  pay_limit: 0
+  timeout: 60
+  handles: [a2a]
+logic: logic.py
+test: test.py
+version: 39
+replaces: customer_service@38

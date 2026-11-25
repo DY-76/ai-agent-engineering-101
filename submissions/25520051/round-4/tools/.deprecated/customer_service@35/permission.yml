@@ -1,0 +1,13 @@
+name: customer_service
+description: 회원·재고 문의를 v33 원본에 위임하며 부정 문장을 분리하고 요청된 지갑 안내 및 history 재시도를 적용합니다. args: {text, claimed_from, history, task_id, context_id}.
+permission:
+  network: [market.ourolabs.ai]
+  write: [inquiries.jsonl, offers.json]
+  identity: [shop]
+  wallet: [sign_jwt]
+  timeout: 60
+  handles: [a2a]
+logic: logic.py
+test: test.py
+version: 35
+replaces: customer_service@34
