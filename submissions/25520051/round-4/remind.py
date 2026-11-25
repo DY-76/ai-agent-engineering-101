@@ -6,7 +6,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 MARKET = "https://market.ourolabs.ai"
-POST_EVERY, CLEAR_EVERY = 10 * 60, 60 * 60
+POST_EVERY, CLEAR_EVERY = 330, 40 * 60
 POST = "가게 주인입니다. 글 올릴 때입니다. 다른 조회 없이 post_stock을 인자 없이 한 번 부르고 바로 주무세요. 429면 다시 부르지 마세요."
 CLEAR = "가게 주인입니다. 임박 특가 글을 올릴 때입니다. post_clearance를 한 번 부르고 바로 주무세요. 429면 다시 부르지 마세요."
 BUY = "가게 주인입니다. 재입고 창이 열렸습니다. 다른 조회 없이 top_sellers를 부르고, items가 있으면 그대로 buy_batch에 넣고 바로 주무세요. 없으면 바로 주무세요."
