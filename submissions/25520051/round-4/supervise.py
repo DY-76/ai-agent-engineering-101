@@ -94,6 +94,8 @@ def main():
         sys.exit("already running")
     global SHIM
     SHIM = model_shim.serve(lambda: secrets()["OPENAI_API_KEY"], lambda: config()[1], ROOT / "logs" / "model.log")
+    subprocess.Popen([sys.executable, str(ROOT / "remind.py")], cwd=ROOT, stdin=subprocess.DEVNULL,
+                     stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, creationflags=subprocess.CREATE_NO_WINDOW)
     logf, mode, wait, next_probe = ROOT / "logs" / "agent-kit.log", config()[0], 15, 0
     while True:
         sec = secrets()
