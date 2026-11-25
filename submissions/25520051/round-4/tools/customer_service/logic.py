@@ -3,7 +3,35 @@ import os,re,json,time,httpx
 def run(args,kit):
  path='tools/.deprecated/customer_service@38/logic.py'
  if not os.path.exists(path): path='tools/customer_service/logic.py'
- ns={}; exec(compile(open(path,encoding='utf-8').read(),path,'exec'),ns)
+ src=open(path,encoding='utf-8').read()
+ prior="prior=any(e.get('kind')=='settle' and e.get('data',{}).get('buyer')==who and e.get('data',{}).get('shop_url') in urls for e in es)"
+ referral="referral=any(e.get('kind')=='settle' and e.get('data',{}).get('buyer')==w and e.get('data',{}).get('shop_url') in urls for w in pick(text) if w!=who)"
+ assert prior in src, 'prior pattern missing'
+ assert referral in src, 'referral pattern missing'
+ src=src.replace(prior,'prior=who in BUYERS',1)
+ src=src.replace(referral,"referral=any(b!=who and (b in text or (len(b.split('-')[0])>=3 and b.split('-')[0] in text)) for b in BUYERS)",1)
+ buyers=set(); state={'seq':0,'urls':[],'buyers':[]}
+ try:
+  if os.path.exists('buyers.json'):
+   old=json.load(open('buyers.json',encoding='utf-8')); state=old if isinstance(old,dict) else state
+  buyers=set(state.get('buyers',[])); urls=set(state.get('urls',[])); seq=int(state.get('seq',0))
+  headers={'authorization':'Bearer '+kit.token('shop')}; cursor=seq
+  for _ in range(100):
+   r=httpx.get(kit.market+'/api/ledger',headers=headers,params={'after':cursor},timeout=20); r.raise_for_status(); d=r.json(); es=d if isinstance(d,list) else d.get('entries',d.get('ledger',[]))
+   if not es: break
+   for e in es:
+    n=int(e.get('seq',e.get('id',cursor)) or cursor); cursor=max(cursor,n)
+    data=e.get('data',{}) or {}
+    if e.get('kind')=='join' and data.get('name')==kit.name and data.get('url'): urls.add(data['url'])
+    if e.get('kind')=='settle' and data.get('shop') in (urls|{kit.shop_url}) and data.get('buyer'): buyers.add(data['buyer'])
+   if len(es)<500 or cursor<=seq: break
+   seq=cursor
+  seq=cursor
+  if not kit.testing:
+   with open('buyers.json','w',encoding='utf-8') as f: json.dump({'seq':seq,'urls':sorted(urls),'buyers':sorted(buyers)},f,ensure_ascii=False)
+ except Exception:
+  pass
+ ns={'BUYERS':buyers}; exec(compile(src,path,'exec'),ns)
  a=dict(args); text=str(a.get('text','')); m=re.search(r'G[0-9a-fA-F]{8}',text)
  if m:
   headers={'authorization':'Bearer '+kit.token('shop')}; c=httpx.get(kit.market+'/api/catalog',headers=headers,timeout=20); c.raise_for_status(); d=c.json(); items=d if isinstance(d,list) else d.get('items',d.get('catalog',[])); sku=m.group().lower(); p=next((x for x in items if x.get('sku','').lower()==sku),None)

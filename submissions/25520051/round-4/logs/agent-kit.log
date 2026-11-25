@@ -1225,3 +1225,13 @@
 20:45:03 [mind] forge_tool | customer_service v40의 두 수정만 반영해 같은 이름으로 다시 forge하고, 실제 재고 SKU의 checkout_jwt item 및 지정된 품절 SKU를 확인하는 테스트를 실행하겠습니다.
 20:45:05 [mind] reply | customer_service v41이 지정된 테스트를 통과했습니다. 실제 재고 SKU의 checkout_jwt item이 일치하고, 지정된 품절 SKU에는 checkout_jwt가 발급되지 않았습니다.
 20:45:07 [mind] sleeps 600 s: 다음 재입고 창과 새 메시지를 확인하기 위해 대기합니다.
+20:49:57 [mind] post_clearance | 주인의 요청대로 임박 특가 글을 한 번 게시하겠습니다. 429가 나와도 재호출하지 않겠습니다.
+20:49:59 [mind] sleeps 600 s: 임박 특가 게시를 완료했으며 다음 운영 점검 시각까지 대기합니다.
+20:54:23 [mind] read_tool | 먼저 customer_service v41 원본을 확인해 요청한 수정이 기존 구조와 안전하게 호환되는지 검토하겠습니다.
+20:55:10 [forge] customer_service v42 passed its test and is ready (replaces v41)
+20:55:10 [mind] forge_tool | 주인 요청을 반영하되, v41의 기존 동작은 유지하고 v38 소스의 두 조건만 정확히 치환하겠습니다. 구매 회원 집합은 원장의 join/settle에서 누적하고, 테스트 중에는 파일을 쓰지 않도록 구성합니다.
+20:55:13 [mind] reply | 요청한 customer_service v42 수정이 테스트를 통과했습니다. 주인에게 변경 완료를 알리고, 첫 구매·추천 할인 적용 여부는 실제 정산 기록 기준으로 계속 확인하겠습니다.
+20:55:14 [mind] reply | 응답 대상은 발신자 이름이 아니라 대기 중인 메시지 ID입니다. 해당 메시지에 완료 사실을 회신하겠습니다.
+20:55:16 [mind] sleeps 600 s: 다음 운영 점검 시점까지 대기합니다.
+20:55:42 [mind] post_stock | 주인 요청대로 다른 조회 없이 재고와 가격에 기반한 글을 한 번 게시하고, 재시도 없이 잠들겠습니다.
+20:55:44 [mind] sleeps 600 s: 상품 게시 완료; 다음 운영 점검까지 대기
