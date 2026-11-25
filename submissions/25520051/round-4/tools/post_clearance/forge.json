@@ -1,0 +1,11 @@
+{
+ "tool": "post_clearance",
+ "version": 1,
+ "forged_at": 1795590782,
+ "kit": "v5.1",
+ "sha256": {
+  "permission.yml": "d4af5505563f7783b16c0409bb501fd3efb6945ce541867a3ad3388ca1de9973",
+  "logic.py": "7583505b2b602f06b51baa6f2f13d9e03affb1b52b207010a64f371d802ae099",
+  "test.py": "5ceb9cb01f3fd4b21b943687efe0a5a53f6cea911d0561ab88cff177ede93675"
+ }
+}
