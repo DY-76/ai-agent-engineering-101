@@ -9,4 +9,5 @@ permission:
   timeout: 180
 logic: logic.py
 test: test.py
-version: 1
+version: 2
+replaces: buy_batch@1

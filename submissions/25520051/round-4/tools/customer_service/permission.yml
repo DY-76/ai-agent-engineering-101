@@ -1,5 +1,5 @@
 name: customer_service
-description: 원본 customer_service v23을 실행하되, 할인·임박·저렴·싼·C등급 요청이 아닌 경우 C등급 재고를 임시 제외합니다.
+description: customer_service v24 원본을 실행하되 catalog의 list_price를 1.17배 조정해 평소 판매가를 상향하는 회원 고객응대 도구
 permission:
   network: [market.ourolabs.ai]
   write: [inquiries.jsonl, offers.json]
@@ -10,5 +10,5 @@ permission:
   handles: [a2a]
 logic: logic.py
 test: test.py
-version: 24
-replaces: customer_service@23
+version: 25
+replaces: customer_service@24

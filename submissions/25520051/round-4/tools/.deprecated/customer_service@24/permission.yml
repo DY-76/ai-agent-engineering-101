@@ -1,0 +1,14 @@
+name: customer_service
+description: 원본 customer_service v23을 실행하되, 할인·임박·저렴·싼·C등급 요청이 아닌 경우 C등급 재고를 임시 제외합니다.
+permission:
+  network: [market.ourolabs.ai]
+  write: [inquiries.jsonl, offers.json]
+  identity: [shop]
+  wallet: [sign_jwt]
+  pay_limit: 0
+  timeout: 180
+  handles: [a2a]
+logic: logic.py
+test: test.py
+version: 24
+replaces: customer_service@23
