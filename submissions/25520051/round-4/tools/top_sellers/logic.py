@@ -30,10 +30,8 @@ def run(args, kit):
     now = time.time()
     for x in rows:
         if x.get('kind') != 'settle': continue
-        try:
-            t = float(x.get('ts', 0))
-        except (TypeError, ValueError):
-            continue
+        try: t = float(x.get('ts', 0))
+        except (TypeError, ValueError): continue
         if not now - 10800 <= t <= now: continue
         d = x.get('data', {})
         sku = d.get('sku') if isinstance(d, dict) else None
@@ -45,9 +43,10 @@ def run(args, kit):
     cs = arr(g('/api/catalog'), ['items', 'catalog'])
     iu = arr(g('/api/inventory', a=True), ['units'])
     stock = {}
+    total_units = len(iu)
     for u in iu:
-        if str(u.get('grade', '')).upper() != 'C':
-            stock[u.get('sku')] = stock.get(u.get('sku'), 0) + 1
+        sku = u.get('sku')
+        stock[sku] = stock.get(sku, 0) + 1
     tab = []
     for c in cs:
         s = c.get('sku')
@@ -58,4 +57,5 @@ def run(args, kit):
         if q <= 0: continue
         tab.append({'sku': s, 'name': c.get('name'), 'count': len(v), 'median_amount': statistics.median(v), 'stock': stock.get(s, 0), 'want': q, 'list_price': c.get('list_price'), 'shelf_hours': c.get('shelf_hours')})
     tab.sort(key=lambda x: x['count'], reverse=True)
-    return {'items': [{'sku': x['sku'], 'qty': x['want']} for x in tab[:8]], 'table': tab[:8]}
+    items = [] if total_units > 90 else [{'sku': x['sku'], 'qty': x['want']} for x in tab[:8]]
+    return {'items': items, 'table': tab[:8], 'total_units': total_units}

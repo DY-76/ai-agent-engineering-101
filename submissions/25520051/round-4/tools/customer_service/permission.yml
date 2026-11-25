@@ -1,5 +1,5 @@
 name: customer_service
-description: 기존 customer_service 원본을 실행하되 한국어 연결 조사 일부를 정리한 회원 고객응대 도구
+description: 기존 customer_service 실행 후 상품명 불일치 오배송 결제서를 차단
 permission:
   network: [market.ourolabs.ai]
   write: [inquiries.jsonl, offers.json]
@@ -10,5 +10,5 @@ permission:
   handles: [a2a]
 logic: logic.py
 test: test.py
-version: 29
-replaces: customer_service@28
+version: 30
+replaces: customer_service@29
