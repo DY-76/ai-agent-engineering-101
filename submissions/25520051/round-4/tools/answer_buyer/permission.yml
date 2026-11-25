@@ -9,5 +9,5 @@ permission:
   timeout: 90
 logic: logic.py
 test: test.py
-version: 3
-replaces: answer_buyer@2
+version: 5
+replaces: answer_buyer@4
