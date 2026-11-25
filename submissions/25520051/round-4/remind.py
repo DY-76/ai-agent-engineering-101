@@ -67,7 +67,7 @@ def main():
                     say("buy")
             elif time.time() - post > POST_EVERY and (w["open"] or w["opens_at"] - w["now"] > 40):
                 turn += 1
-                what, name = (POST, "post") if turn % 3 == 0 else (ANSWER, "answer")
+                what, name = (ANSWER, "answer") if turn % 3 == 0 else (POST, "post")
                 if tell(what):
                     post = time.time()
                     say(name)
