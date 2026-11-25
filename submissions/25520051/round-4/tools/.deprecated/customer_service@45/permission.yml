@@ -1,0 +1,14 @@
+name: customer_service
+description: 회원·재고 문의를 정식 가격표에 따라 처리하고 회원 재구매 할인과 추천 혜택을 적용합니다. args: {text, claimed_from, history, task_id, context_id}.
+permission:
+  network: [market.ourolabs.ai]
+  write: [inquiries.jsonl, offers.json, buyers.json]
+  identity: [shop]
+  wallet: [sign_jwt]
+  pay_limit: 0
+  timeout: 90
+  handles: [a2a]
+logic: logic.py
+test: test.py
+version: 45
+replaces: customer_service@44

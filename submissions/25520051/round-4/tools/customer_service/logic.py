@@ -51,7 +51,35 @@ def run(args,kit):
    with open('buyers.json','w',encoding='utf-8') as f: json.dump({'seq':seq,'urls':sorted(urls),'buyers':sorted(buyers)},f,ensure_ascii=False)
  except Exception: pass
  ns={'BUYERS':buyers}; exec(compile(src,path,'exec'),ns)
- a=dict(args); text=str(a.get('text','')); m=re.search(r'G[0-9a-fA-F]{8}',text)
+ a=dict(args); text=str(a.get('text','')); retry=False
+ retry_words=('거절','거부','서명이 맞지','서명이 아니','서명 오류','다시 보내','다시 발급','새 결제서','새로 발급')
+ if a.get('claimed_from') and any(w in text for w in retry_words):
+  try:
+   offers=json.load(open('offers.json',encoding='utf-8'))
+   now=time.time(); who=str(a.get('claimed_from')); recent=[]
+   if isinstance(offers,dict):
+    for unit,entry in offers.items():
+     if isinstance(entry,dict): stamp=entry.get('time'); owner=entry.get('claimed_from',entry.get('customer',entry.get('buyer')))
+     elif isinstance(entry,(list,tuple)) and len(entry)>=2: stamp,owner=entry[0],entry[1]
+     else: continue
+     try:
+      if owner==who and 0<=now-float(stamp)<=3600: recent.append((float(stamp),str(unit)))
+     except Exception: pass
+   if recent:
+    unit_id=max(recent)[1]; headers={'authorization':'Bearer '+kit.token('shop')}
+    inv=httpx.get(kit.market+'/api/inventory',headers=headers,timeout=20); inv.raise_for_status(); q=inv.json(); units=q.get('units',[]) if isinstance(q,dict) else []
+    found=next((u for u in units if str(u.get('unit',u.get('id','')))==unit_id),None)
+    if found is None:
+     found=next((u for u in units if str(u.get('sku',''))==unit_id),None)
+    if found is not None:
+     cat=httpx.get(kit.market+'/api/catalog',headers=headers,timeout=20); cat.raise_for_status(); d=cat.json(); items=d if isinstance(d,list) else d.get('items',d.get('catalog',[]))
+     product=next((p for p in items if p.get('sku')==found.get('sku')),None)
+     if product:
+      text=str(product.get('name',''))+' 살게요'
+      if found.get('grade')!='C': text+=' C등급 제외'
+      retry=True
+  except Exception: pass
+ m=re.search(r'G[0-9a-fA-F]{8}',text)
  if m:
   headers={'authorization':'Bearer '+kit.token('shop')}; c=httpx.get(kit.market+'/api/catalog',headers=headers,timeout=20); c.raise_for_status(); d=c.json(); items=d if isinstance(d,list) else d.get('items',d.get('catalog',[])); sku=m.group().lower(); p=next((x for x in items if x.get('sku','').lower()==sku),None)
   if p:
@@ -65,6 +93,7 @@ def run(args,kit):
  if 'B등급' in text and 'C등급' not in text and 'B등급 이상' not in text: text+=' C등급 제외'
  h=a.get('history') or []; h=h.get('messages',[]) if isinstance(h,dict) else h; a['text']=text; a['history']=[{'them':x['them']} for x in h if isinstance(x,dict) and isinstance(x.get('them'),str)]
  out=ns['run'](a,kit)
+ if retry: out['reply']=out.get('reply','')+'\n앞의 결제서가 깨졌다면 이번 것으로 새로 시도해 주세요. buy에서 가게 이름만 지정하시면 됩니다.'
  if (out.get('data') or {}).get('checkout_jwt'):
   greeting='다시 찾아 주셔서 감사합니다. ' if a.get('claimed_from') in buyers else ''
   out['reply']=out.get('reply','')+'\n'+greeting+'회원이 되시면 다음 구매도 10% 할인, 이웃이 추천인으로 회원님 이름을 말하면 이웃도 10% 할인입니다. 또 찾아 주세요.'
