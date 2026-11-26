@@ -2,7 +2,7 @@ import json,re,time,httpx
 def run(args,kit):
  p='tools/.deprecated/customer_service@53/logic.py';s=open(p,encoding='utf-8').read();o="'포장 소포장 소량 재고 ";assert s.count(o)==1
  q='assert s.count(old) == 1';assert s.count(q)==1 and s.count('g = {')==1
- s=s.replace('    A = (',"    D = ('{price(u,p,h)}크레딧', '{math.ceil(price(u,p,h)*.9) if who and chr(45) in who and (who in BUYERS or now<1795791600) else price(u,p,h)}크레딧')\n    A = (",1).replace("repr(A) + ','","repr(A) + ',' + repr(D) + ','",1)
+ s=s.replace('    A = (',"    D = ('{price(u,p,h)}크레딧', '{max(math.ceil(price(u,p,h)*.9),price(u,dict(),h)) if who and chr(45) in who and (who in BUYERS or now<1795791600) else price(u,p,h)}크레딧')\n    A = (",1).replace("repr(A) + ','","repr(A) + ',' + repr(D) + ','",1)
  s=s.replace(q,q+";s=s.replace('assert M in src','src=src.replace(K,V,1);assert M in src',1)",1).replace('g = {',"g = {'K':'.80,'+chr(39)+'B'+chr(39)+':.68','V':'.76,'+chr(39)+'B'+chr(39)+':.62',",1)
  s=s.replace(o,"'신선한 대용량 적당한 며칠 있는 지금 좋은 포장 소포장 소량 재고 ");g={};exec(compile(s,p,'exec'),g);r=g['run'](args,kit)
  if kit.testing and args.get('force_nostock'):r={'reply':'찾으시는 상품은 지금 재고가 없'}
