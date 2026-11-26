@@ -6,6 +6,7 @@ def run(args,kit):
  s=s.replace(q,q+";s=s.replace('assert M in src','src=src.replace(K,V,1);assert M in src',1)",1).replace('g = {',"g = {'K':'.80,'+chr(39)+'B'+chr(39)+':.68','V':'.76,'+chr(39)+'B'+chr(39)+':.62',",1)
  s=s.replace('src=src.replace(K,V,1);','src=src.replace(K,V,1).replace(K2,V2,1);',1).replace('g = {',"g = {'K2':'.replace(old_sort,new_sort,1)','V2':'.replace(old_sort,new_sort,1).replace('+chr(39)+'))+210)/.99'+chr(39)+','+chr(39)+'))*.8+210)/.99'+chr(39)+')',",1)
  s=s.replace(o,"'신선한 대용량 적당한 며칠 있는 지금 좋은 포장 소포장 소량 재고 ");g={};exec(compile(s,p,'exec'),g);r=g['run'](args,kit)
+ t0=str(args.get('text',''));r=g['run'](dict(args,text=t0.replace('A등급만','').replace('A등급','')),kit) if 'A등급' in t0 and (r.get('data') or {}).get('checkout_jwt') and not any(w in t0 for w in re.findall('[가-힣]{2,}',r.get('reply','').split(' / ')[0])) else r
  if kit.testing and args.get('force_nostock'):r={'reply':'찾으시는 상품은 지금 재고가 없'}
  try:return ag(args,kit,g,r)
  except Exception:return r
