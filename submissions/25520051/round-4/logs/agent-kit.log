@@ -2565,3 +2565,27 @@
 01:50:59 [mind] answer_buyer | 주인 지시에 따라 다른 조회 없이 answer_buyer를 한 번 호출하겠습니다.
 01:51:02 [mind] reply | 구매 실패 글에 실제 재고와 customer_service 가격을 확인해 답변했습니다. 주인께 처리 결과를 알립니다.
 01:51:04 [mind] sleeps 600 s: 응답을 마쳤습니다. 다음 주인 지시나 시장 작업 시점까지 대기합니다.
+01:56:45 [mind] post_stock | 주인의 지시에 따라 다른 조회 없이 post_stock을 인자 없이 한 번 호출합니다.
+01:56:46 [mind] sleeps 600 s: post_stock 게시 완료 후 다음 확인 주기까지 대기
+02:03:04 [mind] top_sellers | 주인 지시에 따라 다른 조회 없이 top_sellers를 먼저 실행합니다.
+02:03:10 [maroo] buy_batch sent 1.561 tOKRW from the shop wallet: https://explorer-testnet.maroo.io/tx/0xc19802fbddca599bb5222bd0da5641cb0fef2e44010a440a7d28bd0ab2495df3
+02:03:50 [mind] buy_batch | 주인 지시에 따라 top_sellers의 items를 그대로 매입하고, 완료되면 바로 잠듭니다.
+02:03:52 [mind] sleeps 600 s: 매입 후 다음 운영 시점까지 대기
+02:04:39 [mind] post_stock | 주인의 지시에 따라 조회 없이 post_stock을 한 번 호출합니다.
+02:04:41 [mind] sleeps 600 s: 게시 후 주인 지침대로 다음 주기를 기다립니다.
+02:11:40 [mind] answer_buyer | 주인의 지시에 따라 다른 조회 없이 answer_buyer를 한 번 실행합니다.
+02:11:42 [mind] sleeps 600 s: 손님 응대 후 다음 운영 점검까지 대기
+02:18:17 [mind] post_clearance | 주인 지시에 따라 임박 특가 게시를 한 번만 시도하고, 429가 나더라도 재호출하지 않겠습니다.
+02:18:20 [mind] sleeps 600 s: 임박 특가 게시를 완료했으며, 주인의 지시에 따라 재호출 없이 대기합니다.
+02:19:54 [mind] post_stock | 주인이 지시한 대로 다른 조회 없이 post_stock을 인자 없이 한 번 실행하고, 429가 나더라도 재호출하지 않겠습니다.
+02:19:55 [mind] reply | 게시가 성공했습니다. 주인에게 완료 사실을 알리고, 안내된 대기 시간에 맞춰 잠듭니다.
+02:19:57 [mind] sleeps 30 s: 게시 직후 대기하며 다음 메시지나 작업 기회를 기다립니다.
+02:20:37 [mind] top_sellers | 먼저 재입고 창 여부와 최근 판매 기반 매입 후보를 확인하겠습니다.
+02:22:18 [maroo] buy_batch sent 10.483 tOKRW from the shop wallet: https://explorer-testnet.maroo.io/tx/0x1dffc37420fc35712c2525d44c8e6f1e5f518c5bf97cd1f2b44bdc041e2101bc
+02:22:59 [mind] buy_batch | 재입고 후보 6종의 합계 수량은 8개로 한 번에 200,000크레딧 한도 이내입니다. 김수미 총각김치나 두부는 후보에 없으므로 목록대로 매입하겠습니다.
+02:23:07 [mind] post_stock | 매입 결과에서 시금치 2개만 정상 입고됐고, 나머지는 가격 또는 기한 조건으로 건너뛰었습니다. 실제 재고와 판매가를 기준으로 상품 게시글을 갱신하겠습니다.
+02:23:09 [mind] sleeps 600 s: 게시 후 대기하며 새 메시지나 다음 운영 시점을 기다립니다.
+02:23:20 [mind] top_sellers | 주인 지시에 따라 다른 조회 없이 top_sellers를 호출하겠습니다.
+02:23:36 [maroo] buy_batch sent 3.488 tOKRW from the shop wallet: https://explorer-testnet.maroo.io/tx/0x29c932c21af0ebeff480a4d82db88a2bbdc9c0a051bf1598cdadf5cc835c45fb
+02:23:37 [mind] buy_batch | 주인의 최신 지시에 따라 지정한 두 품목을 buy_batch로 매입하겠습니다.
+02:23:39 [mind] sleeps 600 s: 매입 결과 보고 후 다음 재입고 창 확인
