@@ -2157,3 +2157,28 @@
 16:09:17 [mind] answer_buyer | 주인의 지시에 따라 다른 조회 없이 answer_buyer를 한 번 실행합니다.
 16:09:25 [mind] post_stock | answer_buyer 결과가 none이므로 지시에 따라 post_stock을 한 번 실행합니다.
 16:09:26 [mind] sleeps 600 s: 다음 운영 확인 전 대기
+16:15:58 [mind] post_clearance | 주인의 미니앱 지시대로 임박 특가 게시 도구를 한 번 호출합니다. 429가 나와도 재호출하지 않겠습니다.
+16:16:02 [mind] sleeps 600 s: 임박 특가 게시 후 다음 운영 확인까지 대기
+16:17:48 [mind] post_stock | 주인의 지시에 따라 다른 조회 없이 post_stock을 인자 없이 한 번 호출한 뒤, 결과와 무관하게 다시 시도하지 않고 잠들겠습니다.
+16:17:50 [mind] sleeps 30 s: post_stock 게시 후 다음 업무 시점까지 대기
+16:18:23 [mind] market_snapshot | 먼저 재입고 창과 재고 현황을 확인하겠습니다.
+16:18:26 [mind] sleeps 249 s: 재입고 창 시작 직후 top_sellers 목록을 확인해 매입하기
+16:22:44 [mind] top_sellers | 주인의 현재 지시에 따라 다른 조회 없이 top_sellers를 확인하고, items가 있으면 그대로 매입하겠습니다.
+16:23:01 [maroo] buy_batch sent 4.803 tOKRW from the shop wallet: https://explorer-testnet.maroo.io/tx/0xacf8fd1ce4f5b21c430f64d73ff0c651f7616ffd4d438f345d54df65e4afdade
+16:23:02 [mind] buy_batch | 주인 지시대로 top_sellers가 반환한 items를 그대로 매입합니다.
+16:23:04 [mind] sleeps 600 s: 재입고 처리 후 지시에 따라 대기
+16:24:41 [mind] post_stock | 주인의 지시에 따라 조회를 추가하지 않고 post_stock을 한 번 실행한 뒤, 결과와 무관하게 재호출하지 않고 잠들겠습니다.
+16:24:43 [mind] sleeps 600 s: 상품 글 게시 완료 후 다음 운영 시점까지 대기
+16:31:42 [mind] answer_buyer | 주인의 미니앱 지시에 따라 다른 조회 없이 answer_buyer를 한 번 호출합니다.
+16:31:45 [mind] sleeps 600 s: 구매자 응대 완료. 주인 지시대로 none이 아니므로 추가 게시 없이 다음 점검까지 대기
+16:38:43 [mind] post_stock | 주인의 미니앱 지시를 따라 다른 조회 없이 post_stock을 한 번 실행하고, 결과와 관계없이 재호출 없이 바로 잠들겠습니다.
+16:38:45 [mind] sleeps 600 s: post_stock 성공 후 다음 운영 주기를 기다립니다.
+16:43:18 [mind] top_sellers | 주인 지시에 따라 다른 조회 없이 top_sellers를 확인하겠습니다.
+16:43:23 [maroo] buy_batch sent 2.587 tOKRW from the shop wallet: https://explorer-testnet.maroo.io/tx/0xc51e8d110f11b2dc12c004d30be035ce1a2fa5e5c91bee1f45c1c76ba4191149
+16:43:34 [maroo] buy_batch sent 3.595 tOKRW from the shop wallet: https://explorer-testnet.maroo.io/tx/0xf93019b7cdaa0999dca4a70a1fb85ad750d195690be31ec162e19ee8ffae59a8
+16:43:42 [mind] buy_batch | 주인 지시에 따라 top_sellers가 반환한 세 품목을 그대로 매입하겠습니다.
+16:43:43 [mind] sleeps 600 s: 재입고 매입 완료 후 대기
+16:45:46 [mind] post_stock | 주인의 지시에 따라 조회 없이 post_stock을 한 번 실행하고, 결과와 무관하게 바로 잠들겠습니다.
+16:45:47 [mind] sleeps 600 s: post_stock 게시 완료. 다음 업무 주기까지 대기
+16:52:46 [mind] answer_buyer | 주인의 지시에 따라 조회를 추가하지 않고 answer_buyer를 인자 없이 한 번 호출합니다.
+16:52:47 [mind] sleeps 600 s: 구매자 응대 완료. 다음 재입고 창 또는 새 메시지를 기다립니다.
