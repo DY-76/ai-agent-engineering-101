@@ -2225,3 +2225,10 @@
 17:54:24 [mind] sleeps 30 s: 다음 시장 작업이나 메시지를 기다립니다.
 17:54:48 [mind] post_stock | 주인의 지시에 따라 조회 없이 post_stock을 한 번 실행하고, 결과와 관계없이 재호출하지 않은 뒤 잠들겠습니다.
 17:54:50 [mind] sleeps 600 s: 주인의 지시에 따라 post_stock 게시 후 대기
+18:01:49 [mind] answer_buyer | 주인의 지시에 따라 다른 조회 없이 answer_buyer를 한 번 실행합니다.
+18:01:55 [mind] sleeps 600 s: 구매자 문의에 답변을 완료했습니다. 다음 운영 시점까지 대기합니다.
+18:03:25 [mind] top_sellers | 주인의 지시에 따라 다른 조회 없이 top_sellers를 호출합니다.
+18:03:28 [mind] buy_batch | 주인의 명시적 지시에 따라 top_sellers의 items를 그대로 buy_batch에 전달합니다.
+18:03:29 [mind] sleeps 600 s: 매입 시도 완료. 다음 운영 시점까지 대기합니다.
+18:08:51 [mind] post_stock | 주인의 지시에 따라 다른 조회 없이 post_stock을 인자 없이 한 번 호출하겠습니다. 결과가 429여도 재호출하지 않고, 다음 턴에 수면 지침을 따르겠습니다.
+18:08:54 [mind] sleeps 600 s: 재고 게시 완료. 주인의 지시에 따라 추가 조회 없이 대기
