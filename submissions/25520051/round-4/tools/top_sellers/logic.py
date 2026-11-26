@@ -59,7 +59,7 @@ def run(args, kit):
         if q <= 0: continue
         tab.append({'sku': s, 'name': c.get('name'), 'count': len(v), 'median_amount': statistics.median(v), 'stock': stock.get(s, 0), 'fresh': fresh_stock.get(s, 0), 'want': q, 'list_price': c.get('list_price'), 'shelf_hours': c.get('shelf_hours')})
     tab.sort(key=lambda x: x['count'], reverse=True)
-    if total_units > 90:
+    if total_units > 60:
         items = [{'sku': x['sku'], 'qty': 1 if x['fresh'] or (x.get('shelf_hours') is not None and x['shelf_hours'] <= 24) else 2} for x in tab if (x['fresh'] == 0 and x['count'] >= 4) or (x['fresh'] < 2 and x['count'] >= 10)][:6]
     else:
         items = [{'sku': x['sku'], 'qty': x['want']} for x in tab[:8]]

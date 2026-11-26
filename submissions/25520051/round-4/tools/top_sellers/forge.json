@@ -1,11 +1,11 @@
 {
  "tool": "top_sellers",
- "version": 7,
- "forged_at": 1795675961,
+ "version": 8,
+ "forged_at": 1795690473,
  "kit": "v5.1",
  "sha256": {
-  "permission.yml": "8b034c26e52b64a282f60f3e22d6c8a3bb09675641c5d622b0a3d8e80be1c8ea",
-  "logic.py": "fae1ee5a5ea7d872b0e7cfc3ba69b7ad78da3500a574ab43d8363beb98bf4924",
+  "permission.yml": "2be61420f85b4acef79811c0392aa80d229dd43a473994cfe9e1083de59c5600",
+  "logic.py": "8b5555f8b8ddcf962b2cca10afdc3bf9b6feb7e4f15bfcfaec76b58cce51090e",
   "test.py": "c94a028b26da79ec433bc987a429bd683d9f0f3e22ebf943b26eb14403cfd973"
  }
 }
