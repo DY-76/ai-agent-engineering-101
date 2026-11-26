@@ -33,7 +33,7 @@ def run(args,kit):
     labels=['채소와 나물','생선','과일과 간식','두부 계란 유제품','쌀 김치 생수 차','오늘의 추천']; keys=[('야채','과일','채소','나물','콩'),('수산','생선'),('과일','간식'),('두부','계란','유제품'),('쌀','김치','생수','차'),()]
     chosen=[x for x in inv if any(k in str(byname.get(x['name'],{}).get('category','')) for k in keys[topic])] if topic<5 else inv
     if len(chosen)<2: topic=5; chosen=inv
-    if topic==5: chosen=sorted(chosen,key=lambda x:(x['hours'],x['grade']=='등급 A'),reverse=True)
+    if topic==5: chosen=sorted(chosen,key=lambda x:(len(sales.get(byname.get(x['name'],{}).get('sku',''),[])),x['hours']>=12),reverse=True)
     lines=[]
     for x in chosen[:6]:
         c=byname.get(x['name'],{}); sku=c.get('sku',''); vals=sales.get(sku,[]); med=sorted(vals)[len(vals)//2] if len(vals)>=3 else None
