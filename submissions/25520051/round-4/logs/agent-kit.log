@@ -1900,3 +1900,33 @@
 10:03:59 [mind] sleeps 600 s: 재입고 처리를 마쳤습니다. 다음 확인 시간까지 대기합니다.
 10:05:27 [mind] post_stock | 주인의 요청에 따라 다른 조회 없이 post_stock을 인자 없이 한 번 호출하겠습니다.
 10:05:29 [mind] sleeps 600 s: 주인 요청에 따라 글 게시 후 대기
+10:12:29 [mind] post_stock | 주인의 지시에 따라 다른 조회 없이 post_stock을 인자 없이 한 번 실행하겠습니다.
+10:12:30 [mind] sleeps 600 s: post_stock 게시 성공 후 주인 지시에 따라 대기합니다.
+10:19:07 [mind] post_clearance | 가게 주인의 지시에 따라 임박 특가 글을 한 번 게시합니다. 429가 나더라도 다시 호출하지 않겠습니다.
+10:19:10 [mind] sleeps 600 s: 임박 특가 글 게시 완료. 추가 호출 없이 다음 운영 시점까지 대기
+10:20:45 [mind] answer_buyer | 주인의 지시에 따라 다른 조회 없이 answer_buyer를 한 번 실행하겠습니다.
+10:20:48 [mind] reply | answer_buyer는 none이 아니며, SUNGJINHO의 손질 가자미 특대 문의에 해당 조건으로 결제 가능한 단위가 없다는 안내가 처리됐습니다. 지시대로 post_stock은 부르지 않고 결과를 주인에게 전달합니다.
+10:20:50 [mind] reply | 응답 대상은 표시 이름이 아니라 대기 중인 메시지 ID로 지정해야 합니다. 실행 결과는 none이 아니므로 post_stock은 호출하지 않습니다.
+10:20:54 [mind] sleeps 600 s: 구매자 문의 응대를 마쳤고, 다음 운영 점검 전까지 대기
+10:21:31 [mind] top_sellers | 주인의 지시에 따라 다른 조회 없이 top_sellers를 확인하고, 후보가 있으면 그대로 매입하겠습니다.
+10:21:36 [maroo] buy_batch sent 2.855 tOKRW from the shop wallet: https://explorer-testnet.maroo.io/tx/0x1a9d7a9b16bb3d75893f5eb34a2db86e6ac2947d5c06c899d7dd410e42d40743
+10:21:57 [maroo] buy_batch sent 5.017 tOKRW from the shop wallet: https://explorer-testnet.maroo.io/tx/0x923c2e6b307e5ff12ca433596a1c826cac9b92f7afd5507741bda807ceed2599
+10:22:08 [maroo] buy_batch sent 18.455 tOKRW from the shop wallet: https://explorer-testnet.maroo.io/tx/0x7b78d1dfe2dab02b0934edf0028848a0e093c247cb1bdee440831d54946ee09c
+10:22:18 [maroo] buy_batch sent 9.747 tOKRW from the shop wallet: https://explorer-testnet.maroo.io/tx/0x87e5c3aa9c1a4acbcf8306185a0cd4d281b2f5817141f9202d549a7c2efe0ec8
+10:22:29 [maroo] buy_batch sent 8.877 tOKRW from the shop wallet: https://explorer-testnet.maroo.io/tx/0xd2d59d009b3507df1ecf644ad16cc1961532ccf780b8b4357fd3544972a88124
+10:22:30 [mind] buy_batch | top_sellers에 후보가 있어 지시대로 목록을 그대로 매입하고, 완료 후 바로 잠들겠습니다.
+10:22:32 [mind] sleeps 600 s: 재입고 처리 완료, 다음 확인 시점까지 대기
+10:26:37 [mind] post_stock | 주인의 지시에 따라 다른 조회 없이 post_stock을 인자 없이 한 번 호출합니다. 결과가 429여도 재호출하지 않고, 다음 턴에 잠들겠습니다.
+10:26:40 [mind] sleeps 600 s: 상품글 게시 후 주인 지시에 따라 대기
+10:33:37 [mind] post_stock | 주인 지시에 따라 다른 조회 없이 post_stock을 한 번 실행합니다. 이후 결과를 확인한 다음 수면하겠습니다.
+10:33:39 [mind] sleeps 600 s: 게시 완료 후 주인 지시에 따라 대기
+10:40:41 [mind] answer_buyer | 주인의 미니앱 지시대로 조회 없이 answer_buyer를 한 번 호출합니다.
+10:40:44 [mind] sleeps 600 s: 구매 문의 응대 완료. 다음 운영 주기를 위해 대기합니다.
+10:42:17 [mind] top_sellers | 주인 지시에 따라 다른 조회 없이 top_sellers를 먼저 확인하겠습니다.
+10:42:22 [maroo] buy_batch sent 8.585 tOKRW from the shop wallet: https://explorer-testnet.maroo.io/tx/0x7b00adee396b487460ccf3107a6881dcbbe5dc018f30e5d0eb9aca9e182b5527
+10:42:23 [mind] buy_batch | top_sellers가 제시한 항목을 변경 없이 buy_batch에 전달하겠습니다.
+10:42:25 [mind] sleeps 600 s: 재입고 완료 후 다음 운영 시점까지 대기
+10:47:42 [mind] post_stock | 주인의 지시에 따라 다른 조회 없이 post_stock을 인자 없이 한 번 실행하겠습니다. 429가 발생해도 재호출하지 않겠습니다.
+10:47:46 [mind] sleeps 600 s: post_stock 게시 후 대기
+10:54:45 [mind] post_stock | 주인의 앱 지시대로 조회를 추가하지 않고 post_stock을 인자 없이 한 번 호출하겠습니다. 이후 결과와 무관하게 429 재호출 없이 잠들겠습니다.
+10:54:47 [mind] sleeps 600 s: 상품글 게시 완료. 지시에 따라 추가 조회 없이 대기
