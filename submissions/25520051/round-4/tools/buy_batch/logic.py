@@ -27,6 +27,8 @@ def run(a,k):
             if unit_cost>list_total*0.58:
                 out.append({'sku':sku,'qty':qty,'cost':cost,'status':'too_expensive','quote':q})
                 continue
+            if any(float(u.get('expires_at') or 9e9)-time.time()<72000 for u in units):
+                out.append({'sku':sku,'qty':qty,'cost':cost,'status':'short_life'}); continue
         if not pay or not q.get('quote') or total+cost>200000:
             out.append({'sku':sku,'status':'skipped','http_status':r.status_code,'quote':q}); continue
         tx=k.pay(pay['to'],int(pay['wei']),pay['data'],role='shop'); total+=cost

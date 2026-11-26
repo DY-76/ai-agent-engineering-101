@@ -2265,3 +2265,37 @@
 18:56:07 [mind] forge_tool | v4를 확인했습니다. 요청하신 대로 topic==5 정렬 줄만 교체하고 나머지 로직, 테스트, 권한은 그대로 유지해 v5로 forge하겠습니다.
 18:56:08 [mind] reply | post_stock v5 forge가 테스트를 통과했습니다. 주인에게 완료 사실만 답하겠습니다.
 18:56:10 [mind] sleeps 600 s: 다음 운영 시점까지 대기
+18:59:35 [mind] post_stock | 가게 주인의 지시에 따라 다른 조회 없이 post_stock을 한 번 호출하고, 429가 발생해도 재시도하지 않겠습니다.
+18:59:38 [mind] sleeps 600 s: post_stock 게시 완료. 재입고 창 확인 시점 또는 새 메시지를 기다립니다.
+19:01:12 [mind] top_sellers | 주인의 지시에 따라 다른 조회 없이 top_sellers를 확인하고, 결과에 items가 있으면 그대로 매입하겠습니다.
+19:01:15 [mind] sleeps 600 s: 재입고 창에서 top_sellers 결과 items가 비어 있어 대기합니다.
+19:06:39 [mind] answer_buyer | 주인의 지시에 따라 다른 조회 없이 answer_buyer를 한 번 실행하겠습니다.
+19:06:42 [mind] sleeps 600 s: 구매자 응대를 마쳤습니다. 다음 재입고 창이나 메시지를 기다립니다.
+19:13:37 [mind] post_stock | 가게 주인의 지시에 따라 다른 조회 없이 post_stock을 한 번 실행하고, 결과와 관계없이 재호출하지 않겠습니다.
+19:13:40 [mind] sleeps 600 s: 게시 성공 후 지시에 따라 대기합니다.
+19:20:15 [mind] post_clearance | 주인의 지시에 따라 임박 특가 글을 한 번 게시하고, 재호출 없이 바로 잠들겠습니다.
+19:20:17 [mind] sleeps 600 s: 임박 특가 게시를 마쳤으므로 다음 확인까지 대기합니다.
+19:21:53 [mind] post_stock | 가게 주인의 지시에 따라 다른 조회 없이 post_stock을 인자 없이 한 번 호출하고, 결과와 관계없이 다시 호출하지 않겠습니다.
+19:21:55 [mind] sleeps 600 s: 게시를 마쳤습니다. 다음 점검까지 대기합니다.
+19:23:30 [mind] top_sellers | 주인의 지시에 따라 다른 조회 없이 top_sellers를 확인하고, 결과에 items가 있으면 그대로 buy_batch로 매입하겠습니다.
+19:23:32 [mind] sleeps 600 s: 재입고 창에서 매입 후보가 없어 대기합니다.
+19:28:54 [mind] answer_buyer | 주인의 지시에 따라 조회 없이 answer_buyer를 한 번 실행합니다.
+19:28:57 [mind] sleeps 600 s: 구매자 문의에 답변을 마쳤습니다. 다음 운영 점검을 위해 대기합니다.
+19:35:55 [mind] post_stock | 주인의 지시에 따라 조회 없이 post_stock을 인자 없이 한 번 호출합니다. 이후 결과와 관계없이 다시 호출하지 않고 잠들겠습니다.
+19:35:57 [mind] sleeps 600 s: 주인 지시대로 게시 후 다음 운영 시점까지 휴식
+19:42:25 [mind] top_sellers | 주인 지시에 따라 다른 조회 없이 top_sellers부터 확인합니다.
+19:42:31 [maroo] buy_batch sent 6.872 tOKRW from the shop wallet: https://explorer-testnet.maroo.io/tx/0xca31e50fdd119cbe576ff608dad6b1f3829d844ee7dd62a1035efde3d4eab6d8
+19:42:41 [maroo] buy_batch sent 7.797 tOKRW from the shop wallet: https://explorer-testnet.maroo.io/tx/0x5df23851848daf019484aae98ab3d14172471203632c972db64f00d7dafff879
+19:42:42 [mind] buy_batch | 주인 지시에 따라 top_sellers가 반환한 items를 그대로 buy_batch에 전달합니다.
+19:42:43 [mind] sleeps 600 s: 재입고 창 다음 점검 시점까지 대기
+19:43:59 [mind] post_stock | 주인님 지시에 따라 다른 조회 없이 post_stock을 한 번 실행하고, 결과가 429여도 재시도하지 않겠습니다.
+19:44:02 [mind] sleeps 600 s: 상품 게시 완료. 추가 조회 없이 다음 업무 주기를 기다립니다.
+19:51:00 [mind] answer_buyer | 주인의 지시에 따라 먼저 answer_buyer를 인자 없이 한 번 호출하겠습니다.
+19:51:08 [mind] post_stock | answer_buyer 결과가 none이므로 지시에 따라 post_stock을 한 번 호출하겠습니다.
+19:51:09 [mind] sleeps 600 s: 정기 운영 대기
+19:52:26 [mind] read_tool | 주인의 지시에 따라 기존 buy_batch를 확인한 뒤 v3의 나머지 로직·테스트·권한을 유지하여 요청한 short_life 조건만 반영하겠습니다.
+19:52:32 [forge] buy_batch v4 passed its test and is ready (replaces v3)
+19:52:32 [mind] forge_tool | 요청하신 대로 매입 견적의 가격비율 검사는 그대로 두고, 그 직후 견적 unit 중 하나라도 남은 기한이 20시간 미만이면 short_life로 건너뛰도록 추가합니다. 기존 테스트와 권한은 유지합니다.
+19:52:34 [mind] reply | buy_batch v4 forge가 테스트를 통과했습니다. 주인이 요청한 short_life 조건이 반영됐습니다.
+19:52:36 [mind] market_snapshot | 주인 지침에 따라 현재 재입고 창 상태를 확인하고, 열려 있다면 top_sellers 후보를 조회해 매입 여부를 판단하겠습니다.
+19:52:39 [mind] sleeps 600 s: 재입고 창이 열리기 전까지 대기합니다. 다음 실행에서 창 상태를 확인하고, 열려 있으면 top_sellers에 따라 매입하겠습니다.

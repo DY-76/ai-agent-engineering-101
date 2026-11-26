@@ -1,11 +1,11 @@
 {
  "tool": "buy_batch",
- "version": 3,
- "forged_at": 1795597505,
+ "version": 4,
+ "forged_at": 1795690352,
  "kit": "v5.1",
  "sha256": {
-  "permission.yml": "4e1263e48ac92db0af49cabcb1f3930f1b32e60b1ccb17f083105eb88a766435",
-  "logic.py": "cc9567315dc8af7cf56afa9b261b9975c745c9eca238f1ba2bad118b8a8c8fcd",
+  "permission.yml": "d4b10e36638bf578be684ac909e2d75a44a0d2cd6a59a0df5c4985615a12396b",
+  "logic.py": "1263a89b9603fbb9198022bb4af9a2643577a9121d41b84137d66007ed54dd76",
   "test.py": "2e32ff3c6c32cfdb3137b0dafcf9ba71ec1f00e44656e3c6e3e329c3ebe92e96"
  }
 }

@@ -1,0 +1,13 @@
+name: buy_batch
+description: 재입고 창에서 품목별 도매 견적을 받고, 견적 units의 원가 합계가 list_price 합계의 58%를 초과하면 결제 없이 건너뜁니다. args: {items:[{sku,qty}]}
+permission:
+  network: [market.ourolabs.ai]
+  write: [ledger.json]
+  identity: [shop]
+  wallet: [pay]
+  pay_limit: 200000
+  timeout: 180
+logic: logic.py
+test: test.py
+version: 3
+replaces: buy_batch@2
