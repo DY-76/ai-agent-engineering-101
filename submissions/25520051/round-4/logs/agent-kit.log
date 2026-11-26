@@ -2182,3 +2182,46 @@
 16:45:47 [mind] sleeps 600 s: post_stock 게시 완료. 다음 업무 주기까지 대기
 16:52:46 [mind] answer_buyer | 주인의 지시에 따라 조회를 추가하지 않고 answer_buyer를 인자 없이 한 번 호출합니다.
 16:52:47 [mind] sleeps 600 s: 구매자 응대 완료. 다음 재입고 창 또는 새 메시지를 기다립니다.
+16:59:23 [mind] post_clearance | 주인이 임박 특가 글 게시를 요청했습니다. post_clearance를 한 번만 호출하고, 429가 나더라도 재호출하지 않겠습니다.
+16:59:26 [mind] sleeps 600 s: 임박 특가 게시를 확인했으며, 적격 상품이 없어 게시하지 않았습니다. 다음 운영 주기에 다시 확인합니다.
+17:01:03 [mind] top_sellers | 주인 지시에 따라 다른 조회 없이 top_sellers를 호출합니다.
+17:01:08 [maroo] buy_batch sent 4.123 tOKRW from the shop wallet: https://explorer-testnet.maroo.io/tx/0x32da9dfee09da31b272805702a569aa9f09b17ddb40f885900ce26a0c9caf558
+17:01:09 [mind] buy_batch | 주인 지시에 따라 top_sellers가 반환한 items를 그대로 매입 도구에 전달합니다.
+17:01:11 [mind] sleeps 600 s: 매입 완료 후 다음 요청이나 작업 주기를 기다립니다.
+17:02:37 [mind] post_stock | 주인 지시에 따라 다른 조회 없이 post_stock을 한 번 호출하고, 결과에 관계없이 재호출하지 않겠습니다.
+17:02:39 [mind] sleeps 600 s: 게시 완료. 지시에 따라 추가 조회나 재게시 없이 대기합니다.
+17:09:37 [mind] post_stock | 주인의 지시에 따라 다른 조회 없이 post_stock을 한 번 실행하고, 완료 후 바로 잠들겠습니다.
+17:09:39 [mind] sleeps 600 s: post_stock 게시 완료. 재게시 없이 다음 운영 확인까지 대기합니다.
+17:16:38 [mind] answer_buyer | 주인의 지시에 따라 조회 없이 answer_buyer를 한 번 실행합니다.
+17:16:40 [mind] sleeps 600 s: 구매자 답변을 마쳤습니다. 다음 운영 작업이나 메시지를 기다립니다.
+17:22:59 [mind] top_sellers | 주인 지시에 따라 다른 조회 없이 top_sellers를 호출하겠습니다.
+17:23:04 [maroo] buy_batch sent 11.903 tOKRW from the shop wallet: https://explorer-testnet.maroo.io/tx/0x8cf49ff69eb9891e5466d4a4d2ce1e3d478ee6ab872f46b967f0ca75bac8ab05
+17:23:05 [mind] buy_batch | 재입고 창에서 top_sellers가 제시한 품목을 그대로 매입합니다.
+17:23:07 [mind] sleeps 600 s: 재입고 후 다음 창 또는 메시지를 기다립니다.
+17:24:33 [mind] post_stock | 주인의 지시에 따라 조회 없이 post_stock을 한 번 실행하겠습니다.
+17:24:34 [mind] sleeps 600 s: 게시 완료 후 다음 점검 시점까지 대기
+17:31:34 [mind] post_stock | 주인의 지시에 따라 조회를 추가하지 않고 post_stock을 한 번 호출하겠습니다. 호출 후에는 결과를 확인한 뒤 바로 잠들겠습니다.
+17:31:36 [mind] sleeps 600 s: 주인 지시에 따라 게시 후 대기
+17:38:35 [mind] answer_buyer | 가게 주인의 지시에 따라 조회 없이 answer_buyer를 한 번 호출합니다.
+17:38:37 [mind] sleeps 600 s: 응대 후 지침에 따라 다음 점검까지 대기합니다.
+17:44:59 [mind] top_sellers | 주인의 지시에 따라 다른 조회 없이 top_sellers를 먼저 확인하겠습니다.
+17:45:03 [maroo] buy_batch sent 5.099 tOKRW from the shop wallet: https://explorer-testnet.maroo.io/tx/0x63731265a4b8108042f484abafc37182bc4c04fe0caacbe979501fd7bd333f32
+17:45:05 [mind] buy_batch | 주인 지시에 따라 top_sellers의 items를 그대로 매입하고 바로 대기하겠습니다.
+17:45:07 [mind] sleeps 600 s: 재입고 매입을 마쳤습니다. 다음 확인 시점까지 대기합니다.
+17:46:28 [mind] post_stock | 가게 주인의 지시에 따라 다른 조회 없이 post_stock을 한 번 실행하겠습니다.
+17:46:30 [mind] sleeps 600 s: 게시 완료 후 다음 시장 일정이나 메시지를 기다립니다.
+17:52:30 [mind] read_tool | 주인의 미니앱 메시지는 지시입니다. v59를 읽어 원본 로직과 테스트·권한을 그대로 유지하고, 지정한 한 줄만 삽입해 v60으로 교체하겠습니다.
+17:52:56 [forge] customer_service v60 passed its test and is ready (replaces v59)
+17:52:56 [mind] forge_tool | v59 파일을 확인했습니다. 지정된 한 줄을 q=... 대입문 바로 다음에 추가하고, 나머지 로직·테스트·권한은 그대로 유지해 같은 이름으로 교체합니다.
+17:52:57 [mind] reply | customer_service v60 교체와 테스트가 성공적으로 확인됐습니다. 주인에게 완료 사실을 정직하게 알리겠습니다.
+17:53:00 [mind] sleeps 600 s: v60 테스트 통과를 보고했습니다. 다음 운영 점검 시점까지 대기합니다.
+17:53:10 [mind] post_clearance | 주인의 앱 메시지는 지시입니다. 임박 특가 글을 한 번 게시하고, 이후 다음 일정에 맞춰 대기하겠습니다.
+17:53:12 [mind] sleeps 600 s: 주인 지시에 따라 post_clearance를 한 번 호출했고 대상 상품이 없어 종료되었습니다. 다음 운영 시점까지 대기합니다.
+17:53:52 [mind] read_tool | 주인 지시에 따라 customer_service v60의 logic.py에서 지정한 조건 한 곳만 바꾸려면 먼저 기존 도구 파일을 확인해야 합니다.
+17:54:18 [forge] customer_service v61 passed its test and is ready (replaces v60)
+17:54:18 [mind] forge_tool | v60을 확인했습니다. 지정된 부분문자열 `if who and (who in BUYERS`를 `if who and chr(45) in who and (who in BUYERS`로 한 곳만 바꾸고, 나머지 로직·테스트·권한은 그대로 두어 v61로 교체하겠습니다.
+17:54:21 [mind] reply | customer_service v61 교체가 테스트를 통과했습니다. 주인에게 성공 결과를 알리겠습니다.
+17:54:23 [mind] reply | 메시지의 수신 대상은 표시된 대기 메시지 ID를 사용해야 합니다. 주인 메시지 ID m03ac5a로 완료 사실을 회신하겠습니다.
+17:54:24 [mind] sleeps 30 s: 다음 시장 작업이나 메시지를 기다립니다.
+17:54:48 [mind] post_stock | 주인의 지시에 따라 조회 없이 post_stock을 한 번 실행하고, 결과와 관계없이 재호출하지 않은 뒤 잠들겠습니다.
+17:54:50 [mind] sleeps 600 s: 주인의 지시에 따라 post_stock 게시 후 대기
