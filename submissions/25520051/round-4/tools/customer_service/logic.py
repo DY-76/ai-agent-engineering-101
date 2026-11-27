@@ -8,7 +8,7 @@ def run(args,kit):
  s=s.replace(o,"'신선한 대용량 적당한 며칠 있는 지금 좋은 포장 소포장 소량 재고 ");g={};exec(compile(s,p,'exec'),g);r=g['run'](args,kit)
  t0=str(args.get('text',''));r=g['run'](dict(args,text=t0.replace('A등급만','').replace('A등급','')),kit) if 'A등급' in t0 and (r.get('data') or {}).get('checkout_jwt') and not any(w in t0 for w in re.findall('[가-힣]{2,}',r.get('reply','').split(' / ')[0])) else r
  if kit.testing and args.get('force_nostock'):r={'reply':'찾으시는 상품은 지금 재고가 없'}
- try:return ag(args,kit,g,r)
+ try:return fa(args,kit,g,ag(args,kit,g,r))
  except Exception:return r
 def ag(args,kit,g,r):
  who=args.get('claimed_from');t=str(args.get('text','')).replace(' ','');now=time.time()
@@ -23,3 +23,13 @@ def ag(args,kit,g,r):
  c=G('/api/catalog');n=next((p.get('name','') for p in c if p.get('sku')==u.get('sku')),'')
  r2=g['run'](dict(args,text=n+' 결제서'),kit) if n else r
  return r2 if (r2.get('data') or {}).get('checkout_jwt') else r
+def fa(args,kit,g,r):
+ import base64
+ who=args.get('claimed_from');t=str(args.get('text',''));j=(r.get('data') or {}).get('checkout_jwt');now=time.time()
+ if not who or not j or 'A등급' in t:return r
+ p=j.split('.')[1];c=json.loads(base64.urlsafe_b64decode(p+'='*(-len(p)%4)))
+ m=[k for k,v in json.load(open('offers.json',encoding='utf-8')).items() if v[1]==who and 30<now-v[0]<900 and k!=c.get('unit')]
+ if c.get('claim')=='A' or not m:return r
+ i=httpx.get(kit.market+'/api/inventory',headers={'authorization':'Bearer '+kit.token('shop')},timeout=20).json();i=i.get('units',[]) if isinstance(i,dict) else i
+ if not any(x.get('unit') in m and x.get('sku')==c.get('item') and x.get('grade')=='A' for x in i):return r
+ r2=g['run'](dict(args,text=t+' A등급만'),kit);return r2 if (r2.get('data') or {}).get('checkout_jwt') else r
