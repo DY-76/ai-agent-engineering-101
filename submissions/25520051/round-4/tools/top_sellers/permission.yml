@@ -7,5 +7,5 @@ permission:
   timeout: 60
 logic: logic.py
 test: test.py
-version: 9
-replaces: top_sellers@8
+version: 10
+replaces: top_sellers@9
