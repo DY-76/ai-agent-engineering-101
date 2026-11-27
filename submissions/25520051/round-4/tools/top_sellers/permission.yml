@@ -1,5 +1,5 @@
 name: top_sellers
-description: 최근 3시간 settle 판매와 재고를 집계해 재입고 후보를 반환합니다. 총 재고가 60개를 넘으면 신선 재고가 부족한 판매 품목을 우선 제안합니다.
+description: 최근 3시간 settle 판매와 재고를 집계해 재입고 후보를 반환합니다. 총 재고 기준에 따라 후보 수를 제한합니다.
 permission:
   network: [market.ourolabs.ai]
   identity: [shop]
@@ -7,5 +7,5 @@ permission:
   timeout: 60
 logic: logic.py
 test: test.py
-version: 8
-replaces: top_sellers@7
+version: 9
+replaces: top_sellers@8

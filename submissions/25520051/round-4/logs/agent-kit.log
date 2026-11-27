@@ -3341,3 +3341,20 @@
 21:46:22 [mind] answer_buyer | 주인의 지시에 따라 다른 조회 없이 answer_buyer를 인자 없이 한 번 실행합니다.
 21:46:29 [mind] post_stock | answer_buyer 결과가 none이므로 주인의 지시에 따라 post_stock을 한 번 실행합니다.
 21:46:31 [mind] sleeps 600 s: 다음 운영 주기를 기다립니다.
+21:53:23 [mind] post_stock | 주인 지시에 따라 다른 조회 없이 post_stock을 인자 없이 한 번 실행합니다.
+21:53:25 [mind] sleeps 600 s: 게시 완료 후 다음 운영 확인까지 대기
+22:00:23 [mind] post_stock | 가게 주인의 지시에 따라 추가 조회 없이 post_stock을 한 번 실행합니다. 이후 바로 잠들겠습니다.
+22:00:25 [mind] sleeps 600 s: 상품 게시를 마쳤으며 다음 확인까지 대기
+22:02:32 [mind] top_sellers | 주인의 지시에 따라 다른 조회 없이 top_sellers를 호출하겠습니다.
+22:02:38 [maroo] buy_batch sent 10.547 tOKRW from the shop wallet: https://explorer-testnet.maroo.io/tx/0x9dfc050b05cd264c580671bb733f7f53219a9ac3952f9d5f5e68918c73a3b4f5
+22:03:19 [maroo] buy_batch sent 9.546 tOKRW from the shop wallet: https://explorer-testnet.maroo.io/tx/0xf3fb3e50dc79f59c0eac1176bb5a2bc16ea3e8c581cc93ad8a074677556d84fd
+22:03:30 [maroo] buy_batch sent 14.029 tOKRW from the shop wallet: https://explorer-testnet.maroo.io/tx/0x55b83fb3825a11c656d444ce63ab51913f31549e7430b856a0e0c3243dca0d5c
+22:03:31 [mind] buy_batch | 주인이 지정한 top_sellers 목록을 변경 없이 매입 요청하겠습니다.
+22:03:33 [mind] sleeps 600 s: top_sellers 목록 매입 후 다음 운영 확인 시점까지 대기
+22:07:24 [mind] answer_buyer | 주인 지시에 따라 다른 조회 없이 answer_buyer를 인자 없이 한 번 실행합니다.
+22:07:26 [mind] sleeps 600 s: 구매자 문의 답변을 완료했습니다. 다음 운영 주기를 기다립니다.
+22:12:37 [mind] read_tool | 주인의 지시대로 기존 top_sellers 도구를 먼저 확인한 뒤, 요청한 한 곳만 바꾸어 같은 이름으로 다시 forge하겠습니다.
+22:12:51 [forge] top_sellers v9 passed its test and is ready (replaces v8)
+22:12:51 [mind] forge_tool | 확인했습니다. 기존 로직·설명·테스트는 유지하고, 재고 기준 후보 수 제한만 요청대로 바꾸겠습니다.
+22:12:53 [mind] reply | 요청한 한 곳만 수정한 top_sellers v9가 테스트를 통과했습니다. 나머지 로직과 테스트는 그대로 유지했습니다.
+22:12:54 [mind] sleeps 30 s: 다음 운영 주기까지 대기
