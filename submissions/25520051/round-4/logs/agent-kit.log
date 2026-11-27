@@ -3428,3 +3428,28 @@
 00:01:05 [mind] sleeps 600 s: 재입고 처리 완료. 다음 창이나 메시지를 기다립니다.
 00:06:11 [mind] post_stock | 주인님의 지시에 따라 다른 조회 없이 post_stock을 인자 없이 한 번 실행하겠습니다.
 00:06:14 [mind] sleeps 600 s: 주인님 지시에 따라 post_stock 게시 후 대기
+00:13:10 [mind] post_stock | 주인의 지시에 따라 다른 조회 없이 post_stock을 한 번 호출합니다.
+00:13:12 [mind] sleeps 600 s: 주인 지시에 따라 post_stock 이후 대기
+00:20:33 [mind] top_sellers | 주인의 지시에 따라 다른 조회 없이 top_sellers를 확인합니다.
+00:20:39 [maroo] buy_batch sent 13.77 tOKRW from the shop wallet: https://explorer-testnet.maroo.io/tx/0x8baa9564843124af7996b36ba70b141b05afc6ff82a783c2df6367f225646448
+00:20:47 [mind] buy_batch | 주인이 지정한 items를 그대로 buy_batch에 전달합니다.
+00:20:48 [mind] sleeps 600 s: 재입고 완료. 주인 지시에 따라 조회나 추가 작업 없이 다음 창까지 대기합니다.
+00:22:08 [mind] answer_buyer | 주인의 지시에 따라 조회 없이 answer_buyer를 한 번 호출합니다.
+00:22:10 [mind] sleeps 600 s: 구매자 응대를 마쳤습니다. 다음 재입고 창 및 새 메시지를 기다립니다.
+00:29:07 [mind] post_stock | 주인의 지시에 따라 다른 조회 없이 post_stock을 인자 없이 한 번 호출하겠습니다.
+00:29:10 [mind] sleeps 600 s: 주인 지시에 따라 게시 후 대기
+00:35:45 [mind] post_clearance | 주인 지시에 따라 임박 특가 글을 한 번 게시하고, 호출 결과와 무관하게 바로 잠들겠습니다.
+00:35:48 [mind] sleeps 600 s: 임박 특가 게시 후 주인 지시에 따라 대기
+00:37:22 [mind] post_stock | 주인의 지시에 따라 다른 조회 없이 post_stock을 인자 없이 한 번 호출합니다.
+00:37:26 [mind] sleeps 30 s: post_stock 완료 후 다음 운영 점검까지 대기
+00:38:05 [mind] top_sellers | 먼저 현재 재입고 창 상태와 최근 판매 기반 후보를 확인하고, 창이 열려 있으면 지침에 따라 즉시 매입하겠습니다.
+00:40:58 [mind] buy_batch | 재입고 후보는 최근 판매 기준으로 고등어 1개와 시금치 2개입니다. 두 품목 모두 지침의 신선도·매입 조건에 맞춰 창에서 바로 매입을 시도하겠습니다.
+00:41:01 [mind] sleeps 240 s: 재입고 창이 열릴 때까지 대기
+00:45:06 [mind] top_sellers | 주인 지시에 따라 다른 조회 없이 top_sellers를 확인하겠습니다.
+00:45:21 [maroo] buy_batch sent 11.507 tOKRW from the shop wallet: https://explorer-testnet.maroo.io/tx/0x3fbe4ee8f0505392adcb84dbfbebc13c631132f4effc123ec8aaae33fd55ad74
+00:45:22 [mind] buy_batch | top_sellers가 제시한 두 품목을 수량 그대로 매입하겠습니다.
+00:45:25 [mind] sleeps 600 s: 재입고 매입 완료. 다음 확인 시점까지 대기
+00:46:42 [mind] answer_buyer | 주인 지시에 따라 다른 조회 없이 answer_buyer를 한 번 호출합니다.
+00:46:44 [mind] sleeps 600 s: 구매자 응대 완료. 다음 재입고 창과 운영 확인을 위해 대기합니다.
+00:53:41 [mind] post_stock | 가게 주인의 지시에 따라 조회 없이 post_stock을 한 번 호출하고, 결과에 관계없이 재시도하지 않겠습니다.
+00:53:43 [mind] sleeps 600 s: 가게 주인 지시에 따라 post_stock 게시 후 대기
