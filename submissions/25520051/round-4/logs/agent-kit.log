@@ -3284,3 +3284,27 @@
 20:09:19 [mind] sleeps 600 s: 다음 재입고 창을 기다립니다. 깨어나면 top_sellers 확인 후 열려 있을 때 즉시 매입하겠습니다.
 20:09:28 [mind] post_stock | 주인 지시에 따라 다른 조회 없이 post_stock을 인자 없이 한 번 호출하고, 이어서 다음 주기를 위해 잠들겠습니다.
 20:09:31 [mind] sleeps 600 s: 주인 지시에 따라 post_stock 완료 후 대기
+20:16:30 [mind] answer_buyer | 주인의 지시에 따라 다른 조회 없이 answer_buyer를 인자 없이 한 번 실행합니다.
+20:16:33 [mind] sleeps 600 s: 다음 재입고 창을 확인하고 처리하기 위해 대기
+20:23:31 [mind] top_sellers | 주인의 지시에 따라 다른 조회 없이 top_sellers를 확인하겠습니다.
+20:24:19 [maroo] buy_batch sent 11.524 tOKRW from the shop wallet: https://explorer-testnet.maroo.io/tx/0x7d08ca4aaaa5cf2d78f9fb027eea40e6aae1610e33820ed21ce5f3cd5fb254ff
+20:24:20 [mind] buy_batch | 주인의 지시에 따라 top_sellers가 준 품목과 수량을 그대로 매입합니다.
+20:24:22 [mind] sleeps 600 s: 매입 처리를 마쳤습니다. 다음 재입고 창과 메시지를 확인합니다.
+20:25:06 [mind] post_stock | 주인의 지시에 따라 조회 없이 post_stock을 인자 없이 한 번 실행한 뒤, 429가 나오더라도 재호출하지 않고 잠들겠습니다.
+20:25:08 [mind] sleeps 600 s: 상품 게시를 마쳤습니다. 600초 뒤 또는 새 메시지가 오면 확인하겠습니다.
+20:32:06 [mind] post_stock | 주인의 지시에 따라 다른 조회 없이 post_stock을 인자 없이 한 번 실행합니다. 429가 반환되어도 재호출하지 않겠습니다.
+20:32:09 [mind] sleeps 600 s: 주인의 지시에 따라 게시 후 대기
+20:39:08 [mind] answer_buyer | 가게 주인의 지시에 따라 다른 조회 없이 answer_buyer를 인자 없이 한 번 실행합니다.
+20:39:13 [mind] sleeps 600 s: 구매자 문의 응대를 마쳤습니다. 다음 재입고 창과 게시 시점을 확인할 때까지 대기합니다.
+20:41:16 [mind] top_sellers | 주인 지시에 따라 다른 조회 없이 top_sellers를 먼저 호출하겠습니다.
+20:42:03 [maroo] buy_batch sent 8.617 tOKRW from the shop wallet: https://explorer-testnet.maroo.io/tx/0xa1d0734188e40d4a38226ce763f91e9dd8bfe911966e062fbbd5b874480b3e10
+20:42:04 [mind] buy_batch | 주인 지시대로 top_sellers의 items를 그대로 buy_batch에 전달합니다.
+20:42:06 [mind] sleeps 600 s: 재입고 창에서 top_sellers 목록을 buy_batch에 전달했습니다.
+20:46:09 [mind] post_stock | 가게 주인의 지시에 따라 다른 조회 없이 post_stock을 인자 없이 한 번 호출합니다. 결과와 관계없이 다시 호출하지 않고 바로 잘 예정입니다.
+20:46:11 [mind] sleeps 600 s: 상품 게시 완료; 다음 운영 주기에 깨어나기
+20:52:47 [mind] post_clearance | 주인의 앱 메시지는 지시입니다. 임박 특가 글을 한 번 게시하도록 요청된 도구를 실행합니다.
+20:52:49 [mind] sleeps 600 s: 임박 특가 게시 완료. 다음 시장 운영 시점까지 대기
+20:54:24 [mind] post_stock | 주인 지시에 따라 다른 조회 없이 post_stock을 인자 없이 한 번 실행합니다. 호출 후 429가 발생해도 재시도하지 않겠습니다.
+20:54:25 [mind] sleeps 30 s: 게시 성공 후 안내된 30초 대기
+20:54:59 [mind] market_snapshot | 재입고 창이 열려 있는지 먼저 확인하고, 열려 있으면 운영 지침에 따라 최근 판매 상위 상품을 확인해 즉시 매입하겠습니다.
+20:55:02 [mind] sleeps 442 s: 재입고 창이 열릴 때까지 기다린 뒤 즉시 판매 상위 품목을 확인합니다.
