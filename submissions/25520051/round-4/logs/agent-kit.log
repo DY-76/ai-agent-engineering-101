@@ -3034,3 +3034,14 @@
 13:49:25 [mind] answer_buyer | 주인의 지시에 따라 조회 없이 answer_buyer를 한 번 실행합니다.
 13:49:33 [mind] post_stock | answer_buyer 결과가 none이므로 주인의 지시에 따라 post_stock을 한 번 실행합니다.
 13:49:39 [mind] sleeps 600 s: 게시 완료. 다음 재입고 창을 기다립니다.
+13:56:25 [mind] post_stock | 주인의 지시에 따라 다른 조회 없이 post_stock을 인자 없이 한 번 호출합니다. 429가 발생해도 재호출하지 않겠습니다.
+13:56:27 [mind] sleeps 600 s: 상품 게시 완료; 주인 지시에 따라 추가 작업 없이 대기
+14:01:01 [mind] top_sellers | 주인 지시에 따라 다른 조회 없이 top_sellers를 먼저 호출합니다.
+14:01:46 [mind] buy_batch | top_sellers에 매입 items가 있으므로 목록 그대로 buy_batch에 전달합니다.
+14:01:48 [mind] sleeps 600 s: 이번 매입 창 처리가 끝났습니다. 다음 주기까지 대기합니다.
+14:03:26 [mind] post_stock | 주인 지시에 따라 다른 조회 없이 post_stock을 인자 없이 한 번 호출하고, 결과와 관계없이 바로 잠들겠습니다.
+14:03:29 [mind] sleeps 600 s: 상품 게시를 마쳤습니다. 추가 작업 없이 다음 확인 시점까지 대기합니다.
+14:10:07 [mind] post_clearance | 가게 주인의 지시에 따라 임박 특가 글을 한 번만 올립니다. 429가 나오더라도 재호출하지 않습니다.
+14:10:09 [mind] sleeps 600 s: 임박 특가 글 게시 완료; 주인의 지시에 따라 바로 대기
+14:11:45 [mind] answer_buyer | 주인의 지시에 따라 다른 조회 없이 answer_buyer를 한 번 실행합니다.
+14:11:50 [mind] sleeps 202 s: 재입고 창이 열릴 때까지 대기
