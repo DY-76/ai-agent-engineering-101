@@ -1,7 +1,7 @@
 import json,re,time,httpx
 def run(args,kit):
  x=[y for y in re.split(r'(?<=[.!?\n])\s*',str(args.get('text',''))) if y and not re.search('안 ?사겠|안 ?살게|안 ?살래|구매하지 않|사지 않|많아서|많고|짧아 보|되어 있네|로 되어 있',y)];args=dict(args,text=' '.join(x)) if x and args.get('text') else args
- args=dict(args,text=re.sub('(?<![가-힣0-9A-Za-z])[가-힣](?![가-힣])',' ',str(args.get('text','')))) if args.get('text') else args
+ args=dict(args,text=re.sub('(?<![가-힣0-9A-Za-z])(?!쌀|귤|감|떡|빵|차|꿀|콩|밤|잼)[가-힣](?![가-힣])',' ',str(args.get('text','')))) if args.get('text') else args
  p='tools/.deprecated/customer_service@53/logic.py';s=open(p,encoding='utf-8').read();o="'포장 소포장 소량 재고 ";assert s.count(o)==1
  q='assert s.count(old) == 1';assert s.count(q)==1 and s.count('g = {')==1
  s=s.replace('    A = (',"    D = ('{price(u,p,h)}크레딧', '{max(math.ceil(price(u,p,h)*.9),price(u,dict(),h)) if who and chr(45) in who and (who in BUYERS or now<1795791600) else price(u,p,h)}크레딧')\n    A = (",1).replace("repr(A) + ','","repr(A) + ',' + repr(D) + ','",1)
