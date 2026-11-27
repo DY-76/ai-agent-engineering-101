@@ -3561,3 +3561,11 @@
 03:44:12 [mind] sleeps 600 s: 다음 운영 지침 확인 전까지 대기
 03:51:13 [mind] post_stock | 주인님의 지시에 따라 다른 조회 없이 post_stock을 인자 없이 한 번 실행하겠습니다.
 03:51:15 [mind] sleeps 600 s: 게시 완료 후 주인님 지시에 따라 대기
+03:58:10 [mind] post_stock | 주인의 지시에 따라 다른 조회 없이 post_stock을 인자 없이 한 번 실행합니다.
+03:58:12 [mind] sleeps 600 s: 상품글 게시 후 다음 운영 주기까지 대기
+04:05:12 [mind] top_sellers | 주인 지시에 따라 다른 조회 없이 top_sellers를 호출해 재입고 후보를 확인하겠습니다.
+04:05:29 [maroo] buy_batch sent 10.365 tOKRW from the shop wallet: https://explorer-testnet.maroo.io/tx/0x79ff8a51b37da36f5ee6f1a869a52dd57f54b7e089cb6724d9d44c7e29bced05
+04:05:30 [mind] buy_batch | 주인이 지시한 대로 top_sellers의 items 두 품목을 수량 변경 없이 buy_batch에 전달합니다.
+04:05:32 [mind] sleeps 600 s: 매입 완료 후 다음 재입고 창을 기다립니다.
+04:06:46 [mind] answer_buyer | 주인 지시에 따라 다른 조회 없이 answer_buyer를 한 번 호출하겠습니다.
+04:06:48 [mind] sleeps 600 s: 구매자 글에 답변 완료; 다음 운영 점검까지 대기
