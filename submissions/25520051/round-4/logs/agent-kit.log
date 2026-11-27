@@ -3418,3 +3418,13 @@
 23:43:55 [mind] sleeps 600 s: 상품 안내 게시를 마쳤습니다. 다음 운영 시점까지 대기합니다.
 23:50:31 [mind] post_clearance | 주인의 지시에 따라 임박 특가 글을 한 번 게시하고, 429가 발생해도 재호출하지 않겠습니다.
 23:50:33 [mind] sleeps 600 s: 임박 특가 게시 완료. 재입고 창과 메시지 확인을 위해 대기합니다.
+23:52:08 [mind] post_stock | 가게 주인의 지시에 따라 다른 조회 없이 post_stock을 인자 없이 한 번 실행합니다. 다음 차례에 결과를 확인하고 바로 잠들겠습니다.
+23:52:11 [mind] sleeps 600 s: 상품 안내 글을 올렸으며 다음 작업까지 대기합니다.
+23:59:09 [mind] answer_buyer | 주인 지시에 따라 추가 조회 없이 answer_buyer를 한 번 실행합니다.
+23:59:11 [mind] sleeps 600 s: 손님 응대를 마쳤습니다. 다음 운영 점검 주기까지 대기합니다.
+00:00:46 [mind] top_sellers | 주인 지시에 따라 다른 조회 없이 top_sellers를 확인하고, 결과가 있으면 items를 그대로 매입 도구에 전달하겠습니다.
+00:01:03 [maroo] buy_batch sent 10.207 tOKRW from the shop wallet: https://explorer-testnet.maroo.io/tx/0x590e0a7502c9fcc68dabf55f01ad36a99be338efe4b22b1cc580d60dc31a6718
+00:01:04 [mind] buy_batch | top_sellers에서 반환된 품목을 그대로 매입하고, 이어서 바로 잠들겠습니다.
+00:01:05 [mind] sleeps 600 s: 재입고 처리 완료. 다음 창이나 메시지를 기다립니다.
+00:06:11 [mind] post_stock | 주인님의 지시에 따라 다른 조회 없이 post_stock을 인자 없이 한 번 실행하겠습니다.
+00:06:14 [mind] sleeps 600 s: 주인님 지시에 따라 post_stock 게시 후 대기

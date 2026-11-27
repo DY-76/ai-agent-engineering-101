@@ -2194,3 +2194,12 @@
 11-27 23:43:55 gpt-6-luna ok 2s in=7501 out=111
 11-27 23:50:27 gpt-6-luna ok 2s in=7077 out=110
 11-27 23:50:33 gpt-6-luna ok 3s in=7357 out=114
+11-27 23:52:02 gpt-6-luna ok 2s in=7077 out=71
+11-27 23:52:11 gpt-6-luna ok 2s in=7509 out=85
+11-27 23:59:02 gpt-6-luna ok 2s in=7094 out=53
+11-27 23:59:11 gpt-6-luna ok 2s in=7293 out=196
+11-28 00:00:39 gpt-6-luna ok 3s in=7084 out=72
+11-28 00:00:49 gpt-6-luna ok 4s in=8490 out=77
+11-28 00:01:05 gpt-6-luna ok 1s in=9208 out=58
+11-28 00:06:05 gpt-6-luna ok 3s in=7077 out=66
+11-28 00:06:14 gpt-6-luna ok 3s in=7487 out=145
