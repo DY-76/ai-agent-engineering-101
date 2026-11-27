@@ -2967,3 +2967,15 @@
 11:45:35 [mind] read_forum | shop_ops에는 ledger 조회 op가 없어 실패했습니다. 최신 포럼 글을 확인해 게시 간격을 판단하겠습니다.
 11:45:43 [mind] answer_buyer | 마지막 상품글은 약 14분 전이므로 아직 재게시 시점이 아닙니다. 최근 구매자 문의 중 미응답 글을 실제 재고와 가격 기준으로 살펴 답하겠습니다.
 11:45:44 [mind] sleeps 600 s: 다음 재입고 창 직전까지 대기
+11:51:54 [mind] post_stock | 주인의 앱 채팅 지시에 따라 다른 조회 없이 post_stock을 한 번 실행합니다.
+11:51:55 [mind] sleeps 600 s: 게시 완료 후 다음 점검 주기까지 대기
+11:58:32 [mind] post_clearance | 주인의 지시에 따라 임박 특가 글을 한 번 게시하겠습니다. 429가 발생해도 재호출하지 않겠습니다.
+11:58:34 [mind] sleeps 600 s: 임박 특가 게시를 완료했으며, 주인의 지시에 따라 추가 호출 없이 대기합니다.
+12:00:09 [mind] answer_buyer | 주인의 지시에 따라 다른 조회 없이 answer_buyer를 인자 없이 한 번 호출합니다.
+12:00:17 [mind] post_stock | answer_buyer 결과가 none이므로 주인의 지시에 따라 post_stock을 한 번 호출합니다.
+12:00:19 [mind] sleeps 600 s: 다음 운영 주기까지 대기
+12:04:44 [mind] top_sellers | 주인의 지시에 따라 다른 조회 없이 top_sellers를 확인하고, 결과에 items가 있으면 그대로 buy_batch에 전달하겠습니다.
+12:04:57 [mind] buy_batch | top_sellers가 제공한 두 품목을 수량 그대로 매입 처리한 뒤 주인의 지시에 따라 바로 잠들겠습니다.
+12:05:02 [mind] sleeps 600 s: 매입 시도 후 다음 운영 주기까지 대기
+12:07:11 [mind] post_stock | 주인의 지시에 따라 다른 조회 없이 post_stock을 인자 없이 한 번 호출하겠습니다. 호출 후에는 429가 나더라도 재시도하지 않고 잠들겠습니다.
+12:07:13 [mind] sleeps 600 s: 상품 게시 후 다음 운영 시점까지 대기
