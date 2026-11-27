@@ -3045,3 +3045,36 @@
 14:10:09 [mind] sleeps 600 s: 임박 특가 글 게시 완료; 주인의 지시에 따라 바로 대기
 14:11:45 [mind] answer_buyer | 주인의 지시에 따라 다른 조회 없이 answer_buyer를 한 번 실행합니다.
 14:11:50 [mind] sleeps 202 s: 재입고 창이 열릴 때까지 대기
+14:15:16 [mind] market_snapshot | 먼저 재입고 창과 최근 판매 후보를 확인하겠습니다. 열려 있으면 지침대로 top_sellers 목록을 받아 바로 매입하고, 이후 게시 시점을 점검하겠습니다.
+14:15:25 [mind] post_stock | 재입고 창은 닫혀 있고 다음 창은 약 5분 뒤입니다. 우선 실제 재고와 판매가를 반영해 상품 게시물을 갱신하겠습니다.
+14:15:27 [mind] sleeps 343 s: 재입고 창이 열리기 직전에 깨어나 판매 후보를 확인하고 매입합니다.
+14:18:46 [mind] post_stock | 주인의 지시에 따라 조회 없이 post_stock을 한 번 호출하고, 429가 발생해도 재호출하지 않겠습니다.
+14:18:47 [mind] sleeps 30 s: 주인의 지시에 따라 게시 후 대기합니다.
+14:19:21 [mind] market_snapshot | 먼저 재입고 창 상태와 현재 판매·재고 정보를 확인하겠습니다. 창이 열려 있으면 지침대로 top_sellers 결과를 받아 즉시 매입하고, 아니면 마지막 게시 시점에 따라 필요한 운영을 진행하겠습니다.
+14:19:28 [mind] post_stock | 재입고 창은 아직 닫혀 있으며 약 106초 뒤 열립니다. 먼저 실제 재고와 customer_service가 정한 가격으로 상품 게시물을 갱신하겠습니다.
+14:19:30 [mind] sleeps 105 s: 재입고 창 시작 직후 top_sellers로 수요 품목을 확인해 매입
+14:21:15 [mind] top_sellers | 주인 지시에 따라 다른 조회 없이 top_sellers를 호출합니다.
+14:21:31 [maroo] buy_batch sent 7.965 tOKRW from the shop wallet: https://explorer-testnet.maroo.io/tx/0x810045cc7a5ee5b8e6dfbad8c69165f252063fd02c1da1d6eaa69cd17432caae
+14:22:03 [maroo] buy_batch sent 9.527 tOKRW from the shop wallet: https://explorer-testnet.maroo.io/tx/0x00fe89efb7bc8f6040ee186cdddfd21e25285597295b31caac95925cd38c1ea7
+14:22:13 [maroo] buy_batch sent 5.658 tOKRW from the shop wallet: https://explorer-testnet.maroo.io/tx/0x72fbddec84aa45152e5cffa0aafbeaee7f5162646977b0393ee09b96e2f215f9
+14:22:13 [mind] buy_batch | 주인 지시대로 top_sellers의 items를 그대로 매입하고, 완료 후 바로 잠들겠습니다.
+14:22:15 [mind] sleeps 600 s: 매입 완료; 다음 재입고 창 직전까지 대기
+14:25:56 [mind] post_stock | 주인의 지시에 따라 다른 조회 없이 post_stock을 인자 없이 한 번 호출합니다.
+14:25:59 [mind] sleeps 600 s: post_stock 게시 완료; 429 재시도 없이 다음 운영 주기까지 대기
+14:32:45 [mind] answer_buyer | 주인 지시에 따라 추가 조회 없이 answer_buyer를 한 번 실행합니다.
+14:32:54 [mind] post_stock | answer_buyer 결과가 none이므로 주인 지시에 따라 post_stock을 한 번 실행합니다.
+14:32:55 [mind] sleeps 600 s: 다음 운영 주기를 기다립니다.
+14:39:48 [mind] post_stock | 주인의 지시에 따라 다른 조회 없이 post_stock을 인자 없이 한 번 호출합니다. 429가 나와도 재호출하지 않겠습니다.
+14:39:50 [mind] sleeps 600 s: 상품 글 게시를 마쳤습니다. 재입고 창 일정에 맞춰 다음 운영 시점에 깨어나겠습니다.
+14:41:24 [mind] top_sellers | 주인의 지시에 따라 다른 조회 없이 top_sellers를 호출해 재입고 품목을 확인하겠습니다.
+14:41:28 [maroo] buy_batch sent 13.094 tOKRW from the shop wallet: https://explorer-testnet.maroo.io/tx/0x8c2809709e086f6d229841ea8866e089675b7fead0cd2ef1d5cb994beae73971
+14:41:39 [maroo] buy_batch sent 20.803 tOKRW from the shop wallet: https://explorer-testnet.maroo.io/tx/0x22ba724d6fddbf7b529777b7a704ef79a26e39b4c9c8a82919c06890d70144d5
+14:42:08 [mind] buy_batch | 주인이 지정한 대로 top_sellers의 items를 그대로 매입 도구에 전달합니다.
+14:42:10 [mind] sleeps 600 s: 매입 처리를 마쳤으니 다음 점검 주기까지 대기합니다.
+14:46:50 [mind] post_stock | 주인의 지시에 따라 다른 조회 없이 post_stock을 한 번 실행하겠습니다.
+14:46:52 [mind] sleeps 600 s: 게시 완료 후 주인 지시에 따라 대기
+14:53:28 [mind] post_clearance | 가게 주인의 지시에 따라 임박 특가 게시 도구를 한 번 호출하고, 429가 나더라도 재호출하지 않겠습니다.
+14:53:30 [mind] sleeps 600 s: 임박 특가 게시 완료 후 주인 지시에 따라 대기
+14:55:05 [mind] answer_buyer | 주인 지시에 따라 다른 조회 없이 answer_buyer를 인자 없이 한 번 실행합니다.
+14:55:14 [mind] post_stock | answer_buyer 결과가 none이므로 지시에 따라 post_stock을 한 번 실행합니다.
+14:55:16 [mind] sleeps 600 s: 상품 안내를 게시했습니다. 다음 재입고 창 시점에 맞춰 운영 지침을 이어가겠습니다.
