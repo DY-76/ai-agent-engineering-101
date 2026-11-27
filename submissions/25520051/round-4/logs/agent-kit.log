@@ -3569,3 +3569,28 @@
 04:05:32 [mind] sleeps 600 s: 매입 완료 후 다음 재입고 창을 기다립니다.
 04:06:46 [mind] answer_buyer | 주인 지시에 따라 다른 조회 없이 answer_buyer를 한 번 호출하겠습니다.
 04:06:48 [mind] sleeps 600 s: 구매자 글에 답변 완료; 다음 운영 점검까지 대기
+04:13:47 [mind] post_stock | 주인 지시에 따라 다른 조회 없이 post_stock을 인자 없이 한 번 호출하고, 결과와 관계없이 재호출하지 않겠습니다.
+04:13:48 [mind] sleeps 600 s: 게시 완료. 재게시 없이 다음 운영 주기까지 대기합니다.
+04:20:24 [mind] post_clearance | 주인의 지시에 따라 임박 특가 글을 한 번 게시합니다. 429가 발생하면 재호출하지 않고, 이후 바로 잠듭니다.
+04:20:26 [mind] sleeps 600 s: 임박 특가 게시를 마쳤습니다. 다음 운영 시점까지 대기합니다.
+04:22:03 [mind] top_sellers | 주인의 지시에 따라 다른 조회 없이 재입고 후보를 확인하고, 후보가 있으면 그대로 매입하겠습니다.
+04:22:16 [mind] buy_batch | top_sellers가 준 두 품목과 수량 그대로 매입하겠습니다.
+04:22:17 [mind] sleeps 600 s: 주인 지시에 따라 매입 시도 후 다음 확인까지 대기
+04:23:37 [mind] post_stock | 주인의 지시에 따라 다른 조회 없이 post_stock을 한 번 호출하고, 결과가 429여도 재호출하지 않겠습니다.
+04:23:38 [mind] sleeps 30 s: post_stock 성공 후 다음 작업을 기다립니다.
+04:24:17 [mind] top_sellers | 재입고 창 상태와 최근 판매 후보를 먼저 확인해 지침 순서대로 매입 여부를 판단하겠습니다.
+04:27:10 [mind] buy_batch | 최근 판매 후보 중 수요 대비 재고가 부족한 자반고등어와 새청무 쌀을 후보 수량대로 재입고하겠습니다. buy_batch가 창 상태와 매입 조건을 확인합니다.
+04:27:13 [mind] sleeps 600 s: 재입고 창이 열리기 전까지 대기합니다.
+04:30:38 [mind] answer_buyer | 주인의 지시에 따라 먼저 answer_buyer를 한 번 호출합니다.
+04:30:41 [mind] sleeps 600 s: 구매자 글에 답변을 완료했습니다. 재입고 창 또는 새 메시지를 기다립니다.
+04:37:38 [mind] post_stock | 주인의 지시에 따라 다른 조회 없이 post_stock을 인자 없이 한 번 호출하겠습니다. 결과가 429여도 다시 호출하지 않고 바로 잠들겠습니다.
+04:37:41 [mind] sleeps 600 s: 게시를 완료했으며 다음 운영 시점까지 대기합니다.
+04:43:25 [mind] top_sellers | 주인의 이번 턴 지시에 따라 다른 조회 없이 top_sellers를 호출하겠습니다.
+04:43:40 [maroo] buy_batch sent 11.813 tOKRW from the shop wallet: https://explorer-testnet.maroo.io/tx/0x5138735233d0d568c290451faf2d8f408b18f1f609b31ffc42e77e973f1865b2
+04:43:41 [mind] buy_batch | 주인 지시대로 top_sellers의 items 두 품목을 그대로 매입 도구에 전달합니다.
+04:43:43 [mind] sleeps 600 s: 주인 지시에 따라 매입 후 대기합니다.
+04:45:00 [mind] post_stock | 주인의 지시에 따라 조회 없이 post_stock을 한 번 실행하겠습니다.
+04:45:02 [mind] sleeps 600 s: 상품 안내글 게시 완료; 다음 업무 주기를 기다립니다.
+04:52:00 [mind] answer_buyer | 가게 주인의 지시에 따라 다른 조회 없이 answer_buyer를 한 번 실행합니다.
+04:52:08 [mind] post_stock | answer_buyer 결과가 none이므로 지시에 따라 post_stock을 한 번 실행합니다.
+04:52:10 [mind] sleeps 600 s: 다음 재입고 창을 기다립니다.
