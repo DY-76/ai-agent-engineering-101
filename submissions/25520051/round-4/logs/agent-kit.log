@@ -3879,3 +3879,37 @@
 10:54:07 [mind] post_stock | answer_buyer 결과가 none이므로 주인의 지시에 따라 post_stock을 한 번 실행합니다.
 10:54:09 [mind] sleeps 30 s: 상품 안내 게시 후 다음 운영 시점까지 대기
 10:54:47 [mind] top_sellers | 재입고 창이 열려 있는지 확인하고, 열려 있다면 지침에 따라 최근 판매 상위 품목을 바로 매입하겠습니다.
+10:57:40 [mind] buy_batch | 재입고 후보가 확인됐습니다. 지침에 따라 계란과 시금치를 후보 수량대로 매입하겠습니다.
+10:57:43 [mind] sleeps 258 s: 재입고 창이 열리기 직전에 깨어나 top_sellers를 확인하고 매입합니다.
+11:01:01 [mind] post_stock | 주인의 지시에 따라 조회 없이 post_stock을 인자 없이 한 번 실행하겠습니다. 429가 반환되어도 재호출하지 않겠습니다.
+11:01:03 [mind] sleeps 600 s: 상품글 게시 완료; 다음 확인까지 대기
+11:02:37 [mind] top_sellers | 주인의 지시에 따라 다른 조회 없이 먼저 top_sellers를 호출하겠습니다.
+11:02:42 [maroo] buy_batch sent 4.135 tOKRW from the shop wallet: https://explorer-testnet.maroo.io/tx/0x5e15fbfbafca5bf260bb723260359825fe60adbf938967d5a382e47efca062eb
+11:02:50 [mind] buy_batch | 주인 지시대로 top_sellers의 두 품목을 그대로 매입하겠습니다.
+11:02:52 [mind] sleeps 600 s: 주인 지시에 따라 매입 시도 후 대기
+11:08:02 [mind] post_stock | 주인의 지시에 따라 다른 조회 없이 post_stock을 인자 없이 한 번 호출합니다. 결과가 429여도 재호출하지 않고, 다음 응답에서 잠들겠습니다.
+11:08:04 [mind] sleeps 600 s: 주인 지시에 따라 post_stock 게시 후 대기합니다.
+11:15:01 [mind] answer_buyer | 가게 주인의 지시에 따라 다른 조회 없이 answer_buyer를 한 번 호출합니다.
+11:15:08 [mind] post_stock | answer_buyer 결과가 none이므로 가게 주인의 지시에 따라 post_stock을 한 번 호출합니다.
+11:15:11 [mind] sleeps 600 s: 게시를 완료했습니다. 다음 재입고 창과 메시지를 기다립니다.
+11:22:02 [mind] top_sellers | 주인 지시에 따라 다른 조회 없이 먼저 top_sellers를 호출하겠습니다.
+11:22:07 [maroo] buy_batch sent 2.095 tOKRW from the shop wallet: https://explorer-testnet.maroo.io/tx/0x0ee92031fae566f645c3547b61eca457cf06b78cff9a91601c5c1a7f858346a4
+11:22:15 [mind] buy_batch | top_sellers 결과의 items를 그대로 buy_batch에 전달하겠습니다.
+11:22:17 [mind] sleeps 600 s: 지시에 따른 재입고 처리 완료 후 대기
+11:23:36 [mind] post_stock | 주인님의 요청에 따라 다른 조회 없이 post_stock을 한 번 실행하겠습니다.
+11:23:38 [mind] sleeps 600 s: 게시 완료 후 주인님 지침에 따라 대기
+11:30:37 [mind] post_stock | 주인의 지시에 따라 조회 없이 post_stock을 인자 없이 한 번 실행하고, 결과가 429여도 재호출하지 않겠습니다.
+11:30:38 [mind] sleeps 600 s: 상품 게시를 완료했으며 주인의 지시에 따라 추가 작업 없이 대기합니다.
+11:37:14 [mind] post_clearance | 주인의 지시에 따라 임박 특가 글을 한 번 게시하고, 결과가 429여도 재호출하지 않겠습니다.
+11:37:15 [mind] sleeps 600 s: 임박 특가 게시 후 대기
+11:38:51 [mind] answer_buyer | 주인의 지시에 따라 다른 조회 없이 answer_buyer를 한 번 실행합니다.
+11:38:58 [mind] post_stock | answer_buyer 결과가 none이므로 주인의 지시에 따라 post_stock을 한 번 실행합니다.
+11:39:00 [mind] sleeps 30 s: post_stock returned a 30-second wait; following the owner's instruction not to retry after a rate limit/wait response.
+11:39:34 [mind] market_snapshot | 재입고 창 여부를 먼저 확인하고, 열려 있으면 최근 판매 기반 후보를 받아 즉시 매입하겠습니다.
+11:39:41 [mind] answer_buyer | 재입고 창은 닫혀 있으며 다음 창까지 약 266초 남았습니다. 지침에 따라 먼저 최근 구매자 문의에 답하고, 다음 창 직전까지 대기하겠습니다.
+11:39:44 [mind] sleeps 261 s: 재입고 창이 열리면 즉시 top_sellers를 확인해 buy_batch로 매입합니다.
+11:44:14 [mind] top_sellers | 재입고 창 여부와 최근 판매 기반 후보를 확인합니다. 창이 열려 있으면 지침에 따라 top_sellers 목록으로 즉시 매입하겠습니다.
+11:44:16 [mind] buy_batch | top_sellers에서 받은 items는 고등어 1개입니다. 주인 지시대로 목록 그대로 매입하고, 완료 후 다음 재입고 창을 기다리겠습니다.
+11:44:18 [mind] sleeps 600 s: 매입 창에서 후보 상품의 기한이 짧아 매입이 건너뛰어졌습니다. 다음 창을 기다립니다.
+11:45:52 [mind] post_stock | 주인의 지시에 따라 조회 없이 post_stock을 한 번 실행하겠습니다.
+11:45:54 [mind] sleeps 600 s: 주인의 지시에 따라 게시 후 대기
