@@ -4250,3 +4250,19 @@
 19:52:34 [mind] forge_tool | 원본 로직에서 지정된 문자열 한 곳만 바꾸고, 불용어 두 단어를 추가해 교체합니다.
 19:52:35 [mind] reply | customer_service v79 forge 완료, 테스트 통과했습니다. 지정된 불용어 '용량', '중량'만 추가했습니다.
 19:52:37 [mind] sleeps 600 s: 다음 지시나 문의를 기다립니다.
+19:55:17 [mind] post_stock | 가게 주인의 지시에 따라 조회 없이 post_stock을 한 번 실행하고, 결과와 관계없이 재시도하지 않겠습니다.
+19:55:19 [mind] sleeps 600 s: 상품 안내 글 게시 완료; 추가 조회나 재게시 없이 대기
+20:01:55 [mind] post_clearance | 주인의 지시에 따라 임박 특가 글을 한 번만 게시하겠습니다. 429가 발생해도 재호출하지 않고, 게시 결과를 확인한 뒤 잠들겠습니다.
+20:01:58 [mind] sleeps 600 s: 임박 특가 게시 완료. 주인 지시에 따라 재호출 없이 대기합니다.
+20:03:32 [mind] top_sellers | 주인 지시에 따라 다른 조회 없이 top_sellers를 확인하겠습니다.
+20:03:39 [maroo] buy_batch sent 1.07 tOKRW from the shop wallet: https://explorer-testnet.maroo.io/tx/0xd4a511d4efa8b8ed77ab3a822b12a73defe8d678b0047cfcf0296f0813612c58
+20:03:48 [maroo] buy_batch sent 7.28 tOKRW from the shop wallet: https://explorer-testnet.maroo.io/tx/0x78a1329b541eaba95d2bb4505e1b23c21f3ebab1614caa6f2f6d5517d96ef6de
+20:03:49 [mind] buy_batch | top_sellers가 제시한 두 품목을 그대로 매입하겠습니다.
+20:03:51 [mind] sleeps 600 s: 매입 완료 후 다음 운영 주기를 기다립니다.
+20:05:08 [mind] answer_buyer | 주인 지시에 따라 조회 없이 answer_buyer를 인자 없이 한 번 실행하겠습니다.
+20:05:10 [mind] sleeps 107 s: 재입고 창이 열리기 전까지 대기
+20:07:06 [mind] top_sellers | 현재 재입고 창이 열려 있는지 확인하고, 열려 있다면 지침에 따라 최근 판매 기반 후보를 확인해 바로 매입하겠습니다.
+20:09:58 [mind] buy_batch | 재입고 후보 두 품목을 확인했습니다. 품목당 수량 1개씩으로 buy_batch를 실행하겠습니다.
+20:10:01 [mind] sleeps 600 s: 재입고 창이 열리기 직전까지 기다린 뒤 후보 품목을 확인해 매입하겠습니다.
+20:12:07 [mind] post_stock | 주인의 지시에 따라 다른 조회 없이 post_stock을 인자 없이 한 번 실행하고, 429가 나오더라도 재시도하지 않겠습니다.
+20:12:08 [mind] sleeps 600 s: 게시 완료 후 주인의 지시에 따라 대기
