@@ -60,7 +60,7 @@ def run(args, kit):
         tab.append({'sku': s, 'name': c.get('name'), 'count': len(v), 'median_amount': statistics.median(v), 'stock': stock.get(s, 0), 'fresh': fresh_stock.get(s, 0), 'want': q, 'list_price': c.get('list_price'), 'shelf_hours': c.get('shelf_hours')})
     tab.sort(key=lambda x: x['count'], reverse=True)
     if total_units > 60:
-        items = [{'sku': x['sku'], 'qty': 1 if x['fresh'] or (x.get('shelf_hours') is not None and x['shelf_hours'] <= 24) else 2} for x in tab if (x['fresh'] == 0 and x['count'] >= 4) or (x['fresh'] < 2 and x['count'] >= 10)][:(6 if total_units <= 50 else 2 if total_units <= 70 else 0)]
+        items = [{'sku': x['sku'], 'qty': 1 if x['fresh'] or (x.get('shelf_hours') is not None and x['shelf_hours'] <= 24) else 2} for x in tab if (x['fresh'] == 0 and x['count'] >= 4) or (x['fresh'] < 2 and x['count'] >= 10)][:(6 if total_units <= 50 else 2 if total_units <= 70 else 0)] or [{'sku': x['sku'], 'qty': 1} for x in tab if x['fresh'] == 0 and x['count'] >= 10][:(2 if total_units <= 100 else 0)]
     else:
         items = [{'sku': x['sku'], 'qty': x['want']} for x in tab[:8]]
     return {'items': items, 'table': tab[:8], 'total_units': total_units, 'stock_by_sku': stock, 'fresh_by_sku': fresh_stock}
