@@ -3991,3 +3991,21 @@
 13:50:57 [mind] answer_buyer | 주인의 지시에 따라 다른 조회 없이 answer_buyer를 한 번 실행하겠습니다.
 13:51:04 [mind] post_stock | answer_buyer 결과가 none이므로 지시에 따라 post_stock을 한 번 실행하겠습니다.
 13:51:06 [mind] sleeps 600 s: 다음 문의나 재입고 창 알림을 기다립니다.
+13:57:34 [mind] post_clearance | 주인의 지시에 따라 임박 특가 글을 한 번 게시하겠습니다. 게시 후에는 다시 호출하지 않고 잠들겠습니다.
+13:57:36 [mind] sleeps 600 s: 임박 특가 글을 게시했으며, 다음 운영 주기까지 대기합니다.
+13:59:11 [mind] post_stock | 주인의 지시에 따라 다른 조회 없이 post_stock을 인자 없이 한 번 호출하겠습니다. 호출 후 바로 잠들겠습니다.
+13:59:13 [mind] sleeps 30 s: post_stock 호출 후 재호출하지 않고 다음 주기를 기다립니다.
+13:59:47 [mind] market_snapshot | 먼저 재입고 창 상태와 최근 판매 기반 매입 후보를 확인하겠습니다.
+13:59:55 [mind] post_stock | 재입고 창은 닫혀 있고 약 252초 뒤 열립니다. 현재 재고와 실제 가격 기준으로 상품 안내 게시를 갱신한 뒤, 창이 열리기 직전까지 기다리겠습니다.
+13:59:57 [mind] sleeps 240 s: 재입고 창이 열리기 직전까지 대기
+14:04:02 [mind] market_snapshot | 먼저 재입고 창 상태와 최근 판매 기반 후보를 확인하겠습니다.
+14:04:10 [mind] top_sellers | 재입고 창이 열려 있으므로 지침에 따라 최근 3시간 판매 기반 후보를 확인하고 바로 매입하겠습니다.
+14:04:15 [maroo] buy_batch sent 2.816 tOKRW from the shop wallet: https://explorer-testnet.maroo.io/tx/0xced073fccc8486b2da7ef23d8217e1bba101a4596d07f578bba7909f1d263c8e
+14:04:16 [mind] buy_batch | 후보 목록의 매입 대상은 실큰두부 1개입니다. 지정된 매입 도구로 견적·기한 조건을 확인해 진행하겠습니다.
+14:04:23 [mind] post_stock | 매입이 정상 완료됐습니다. 다음 순서대로 메시지에 답하고, 마지막 게시 후 20분이 지났다면 실제 재고와 customer_service 가격에 근거해 상품글을 갱신하겠습니다.
+14:04:25 [mind] sleeps 600 s: 정기 운영 순서에 따라 다음 상태 점검 전 대기
+14:06:12 [mind] post_stock | 주인의 지시에 따라 다른 조회 없이 post_stock을 한 번 호출합니다.
+14:06:14 [mind] sleeps 30 s: 상품 게시를 마쳤습니다. 주인의 지시에 따라 추가 조회 없이 대기합니다.
+14:06:52 [mind] top_sellers | 먼저 재입고 창 여부와 최근 판매 기반 후보를 확인하겠습니다. 창이 열려 있으면 운영 지침에 따라 바로 매입하겠습니다.
+14:07:00 [mind] post_stock | top_sellers 결과에 매입 후보가 없어 이번에는 매입하지 않습니다. 재고와 가격에 맞춘 최신 상품 안내를 게시하겠습니다.
+14:07:02 [mind] sleeps 600 s: 다음 재입고 창과 고객 메시지를 기다립니다.
