@@ -3855,3 +3855,27 @@
 10:11:28 [mind] market_snapshot | 먼저 재입고 창 상태와 최근 판매 기반 후보를 확인하겠습니다. 창이 열려 있으면 지침대로 top_sellers 목록으로 즉시 매입하고, 아니면 최근 게시 시점과 응대할 메시지를 확인하겠습니다.
 10:11:36 [mind] answer_buyer | 재입고 창은 닫혀 있어 매입하지 않겠습니다. 게시 시점을 확인할 근거가 현재 없어 중복 공지를 피하고, 최근 구매자 포럼 글에서 실제 재고로 응대하겠습니다.
 10:11:38 [mind] sleeps 600 s: 재입고 창이 열리기 전까지 대기합니다. 다음 창은 약 10분 뒤입니다.
+10:17:43 [mind] post_stock | 주인 지시에 따라 추가 조회 없이 post_stock을 한 번 실행한 뒤 대기하겠습니다.
+10:17:46 [mind] sleeps 600 s: 상품 게시를 마쳤으며 추가 호출 없이 다음 운영 시점까지 대기
+10:21:46 [mind] top_sellers | 주인 지시에 따라 다른 조회 없이 top_sellers를 호출하겠습니다.
+10:21:51 [maroo] buy_batch sent 3.995 tOKRW from the shop wallet: https://explorer-testnet.maroo.io/tx/0xf0dbba03173b3f7af853df315989b9e9794ef6c8f9e239f39be5fe3c0109113b
+10:21:59 [mind] buy_batch | 주인 지시에 따라 top_sellers의 두 품목을 그대로 매입합니다.
+10:22:01 [mind] sleeps 600 s: 주인 지시에 따라 매입 직후 대기
+10:24:44 [mind] post_stock | 주인의 지시에 따라 추가 조회 없이 post_stock을 인자 없이 한 번 호출합니다.
+10:24:46 [mind] sleeps 600 s: post_stock 완료; 추가 호출 없이 다음 메시지나 운영 시점을 기다립니다.
+10:31:44 [mind] answer_buyer | 주인의 지시에 따라 다른 조회 없이 answer_buyer를 한 번 실행하겠습니다.
+10:31:52 [mind] post_stock | answer_buyer 결과가 none이므로 지시에 따라 post_stock을 한 번 실행하겠습니다.
+10:31:53 [mind] sleeps 600 s: 주인의 요청에 따라 답변 및 재고 게시를 마쳤습니다. 다음 운영 점검 시점까지 대기합니다.
+10:38:45 [mind] post_stock | 주인 지시에 따라 다른 조회 없이 post_stock을 인자 없이 한 번 호출합니다.
+10:38:47 [mind] sleeps 600 s: 상품 글 게시를 마쳤습니다. 다음 확인 시점까지 대기합니다.
+10:40:32 [mind] top_sellers | 주인의 지시에 따라 다른 조회 없이 top_sellers를 확인합니다.
+10:40:45 [mind] buy_batch | top_sellers가 제공한 두 품목을 그대로 buy_batch에 전달합니다.
+10:40:47 [mind] sleeps 600 s: 주인 지시에 따라 매입 직후 대기합니다.
+10:45:47 [mind] post_stock | 주인 지시에 따라 다른 조회 없이 post_stock을 인자 없이 한 번 실행합니다.
+10:45:49 [mind] sleeps 600 s: post_stock 게시 완료. 다음 점검까지 대기합니다.
+10:52:23 [mind] post_clearance | 가게 주인의 지시에 따라 임박 특가 글을 한 번 게시하고, 이어지는 턴에 바로 잠들겠습니다.
+10:52:25 [mind] sleeps 600 s: 임박 특가 글 게시를 완료했으며, 추가 호출 없이 대기합니다.
+10:54:00 [mind] answer_buyer | 주인의 지시에 따라 추가 조회 없이 answer_buyer를 인자 없이 한 번 실행합니다.
+10:54:07 [mind] post_stock | answer_buyer 결과가 none이므로 주인의 지시에 따라 post_stock을 한 번 실행합니다.
+10:54:09 [mind] sleeps 30 s: 상품 안내 게시 후 다음 운영 시점까지 대기
+10:54:47 [mind] top_sellers | 재입고 창이 열려 있는지 확인하고, 열려 있다면 지침에 따라 최근 판매 상위 품목을 바로 매입하겠습니다.
