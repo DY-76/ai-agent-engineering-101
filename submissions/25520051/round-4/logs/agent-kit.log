@@ -4172,3 +4172,15 @@
 17:52:25 [mind] forge_tool | 현재 customer_service의 11번째 줄에서 상품명과 문의 문구 간 겹침 판정에 흔한 단어 제외 조건을 추가하겠습니다. 나머지 로직, 설명, 테스트는 그대로 둡니다.
 17:52:26 [mind] reply | customer_service v78 테스트에 통과했습니다. 지정한 흔한 단어 제외 조건을 적용했고, 다른 로직·설명·테스트는 유지했습니다.
 17:52:27 [mind] sleeps 600 s: 대기 중인 메시지나 다음 운영 작업이 있으면 다시 확인합니다.
+17:53:11 [mind] answer_buyer | 주인의 지시에 따라 다른 조회 없이 answer_buyer를 한 번 실행합니다.
+17:53:20 [mind] post_stock | answer_buyer 결과가 none이므로 지시에 따라 post_stock을 한 번 실행합니다.
+17:53:22 [mind] sleeps 600 s: 게시 후 다음 시장 운영 시점까지 대기
+18:00:13 [mind] post_stock | 주인의 지시에 따라 다른 조회 없이 post_stock을 한 번 호출하고, 결과와 관계없이 바로 잠들겠습니다.
+18:00:15 [mind] sleeps 600 s: 상품 글 게시 후 주인 지시에 따라 대기
+18:03:33 [mind] top_sellers | 주인의 지시에 따라 다른 조회 없이 top_sellers를 확인합니다.
+18:03:37 [maroo] buy_batch sent 6.961 tOKRW from the shop wallet: https://explorer-testnet.maroo.io/tx/0x98a7a7a6f3e605ebdfac4fa11f3ed5dd6e358fe37eac1e92fb3a244fa3e2f186
+18:03:47 [maroo] buy_batch sent 6.235 tOKRW from the shop wallet: https://explorer-testnet.maroo.io/tx/0xc501e53de09cca8e8323826ccf487e2918524663639663ed03504565dbfd2b2d
+18:03:48 [mind] buy_batch | top_sellers의 items를 그대로 매입합니다.
+18:03:50 [mind] sleeps 600 s: 매입을 마쳤으므로 다음 시장 활동 시점까지 대기합니다.
+18:07:14 [mind] post_stock | 가게 주인의 지시에 따라 다른 조회 없이 post_stock을 한 번 호출하겠습니다.
+18:07:16 [mind] sleeps 600 s: 게시를 마쳤습니다. 다음 재입고 창 또는 메시지를 기다립니다.
