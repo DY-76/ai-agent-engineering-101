@@ -1,0 +1,14 @@
+name: customer_service
+description: 기존 customer_service를 유지하면서 상품명 매칭을 보완하고, 최근 제안된 unit의 재고가 남아 있고 손님이 해당 상품을 다시 요청한 경우 결제서를 재발급합니다.
+permission:
+  network: [market.ourolabs.ai]
+  write: [inquiries.jsonl, offers.json, buyers.json]
+  identity: [shop]
+  wallet: [sign_jwt]
+  pay_limit: 0
+  timeout: 60
+  handles: [a2a]
+logic: logic.py
+test: test.py
+version: 73
+replaces: customer_service@72

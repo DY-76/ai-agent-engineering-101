@@ -11,7 +11,7 @@ def run(args,kit):
  t0=str(args.get('text',''));t1=str(args.get('text',''));n1=r.get('reply','').split(' / ')[0];r=g['run'](dict(args,text=re.sub('[0-9A-Za-z.]+',' ',t1)),kit) if (r.get('data') or {}).get('checkout_jwt') and not any(w in t1 for w in re.findall('[가-힣]{2,}',n1)) and not any(w in n1 for w in re.findall('[가-힣]{2,}',t1)) else r
  r=g['run'](dict(args,text=t0.replace('A등급만','').replace('A등급','')),kit) if 'A등급' in t0 and (r.get('data') or {}).get('checkout_jwt') and not any(w in t0 for w in re.findall('[가-힣]{2,}',r.get('reply','').split(' / ')[0])) else r
  if kit.testing and args.get('force_nostock'):r={'reply':'찾으시는 상품은 지금 재고가 없'}
- try:return fa(args,kit,g,ag(args,kit,g,r))
+ try:return nh(args,kit,fa(args,kit,g,ag(args,kit,g,r)))
  except Exception:return r
 def ag(args,kit,g,r):
  who=args.get('claimed_from');t=str(args.get('text','')).replace(' ','');now=time.time()
@@ -36,3 +36,10 @@ def fa(args,kit,g,r):
  i=httpx.get(kit.market+'/api/inventory',headers={'authorization':'Bearer '+kit.token('shop')},timeout=20).json();i=i.get('units',[]) if isinstance(i,dict) else i
  if not any(x.get('unit') in m and x.get('sku')==c.get('item') and x.get('grade')=='A' for x in i):return r
  r2=g['run'](dict(args,text=t+' A등급만'),kit);return r2 if (r2.get('data') or {}).get('checkout_jwt') else r
+def nh(args,kit,r):
+ t=str(args.get('text',''));y=r.get('reply','')
+ if (r.get('data') or {}).get('checkout_jwt') or not y.startswith('현재 안내 가능한 상품입니다'):return r
+ k=set(re.findall('[가-힣]{2,}',' '.join(p.get('name','') for p in httpx.get(kit.market+'/api/catalog',timeout=20).json())))
+ s=('국내산','국산','가정용','제철과일','실제','재고','신선','상품','가격','등급','기한','소비기한','결제서','수량','포장','공지','오늘','가족','있는','먹을','판매','나온')
+ w=[x for x in re.findall('[가-힣]{2,}',t) if x in k and x not in y and x not in s]
+ return dict(r,reply='찾으시는 '+w[0]+' 상품은 지금 재고가 없습니다.'+chr(10)+y) if w else r
