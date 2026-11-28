@@ -1,0 +1,14 @@
+name: customer_service
+description: 기존 customer_service 로직을 유지하며, 상품명이 손님 글과 겹치지 않아 재고 안내로 재시도할 때 일반 재고 문의 문구를 사용합니다.
+permission:
+  network: [market.ourolabs.ai]
+  write: [inquiries.jsonl, offers.json, buyers.json]
+  identity: [shop]
+  wallet: [sign_jwt]
+  pay_limit: 0
+  timeout: 60
+  handles: [a2a]
+logic: logic.py
+test: test.py
+version: 79
+replaces: customer_service@78
