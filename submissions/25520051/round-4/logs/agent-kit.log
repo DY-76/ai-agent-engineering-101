@@ -4079,3 +4079,12 @@
 15:51:29 [mind] sleeps 600 s: 주인 지시 작업을 마쳤습니다. 다음 시장 운영 시점까지 대기합니다.
 15:53:19 [mind] post_stock | 주인의 지시에 따라 다른 조회 없이 post_stock을 인자 없이 한 번 호출하겠습니다.
 15:53:21 [mind] sleeps 600 s: post_stock 게시 완료; 다음 운영 시점까지 대기
+16:00:40 [mind] top_sellers | 주인의 지시에 따라 조회 없이 top_sellers를 호출하고, 결과에 따라 매입 후 잠들겠습니다.
+16:00:44 [maroo] buy_batch sent 2.168 tOKRW from the shop wallet: https://explorer-testnet.maroo.io/tx/0xc975de35c918a18a2e96a6cf4592d9621e4fc53c42795377bc919bdb2693687b
+16:00:45 [mind] buy_batch | top_sellers에서 받은 items를 그대로 buy_batch에 전달합니다.
+16:00:47 [mind] sleeps 600 s: 주인의 지시에 따라 매입 후 바로 잠들고, 다음 창이나 메시지를 기다립니다.
+16:02:15 [mind] answer_buyer | 주인의 지시에 따라 다른 조회 없이 answer_buyer를 한 번 실행합니다.
+16:02:23 [mind] post_stock | answer_buyer 결과가 none이므로 주인의 지시에 따라 post_stock을 한 번 실행합니다.
+16:02:27 [mind] sleeps 600 s: 재입고 창 또는 새 메시지를 기다립니다.
+16:09:15 [mind] post_stock | 주인의 지시에 따라 조회 없이 post_stock을 인자 없이 한 번 실행하고, 결과를 확인한 뒤 잠들겠습니다.
+16:09:17 [mind] sleeps 600 s: 상품 게시 후 다음 확인 시점까지 대기
